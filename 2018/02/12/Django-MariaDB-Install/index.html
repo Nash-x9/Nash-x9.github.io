@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Django安装部署 | 小九博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="format-detection" content="telphone=no, email=no">
+    <meta name="root" content="/">
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/img/avatar.jpg"><meta name="keywords" content="小九博客,PHP,程序员,yii2,教程,黑客,信息安全,安全开发"><meta name="theme-color" content="#282a2c">
+
+    
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/bootstrap.min.css?ver=4.5.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/fontawesome.min.css?ver=5.13.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/iconfont.min.css?ver=3.1.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/layer.min.css?ver=3.1.1" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/kratos.min.css?ver=3.2.5" type="text/css" media="all">
+        
+    
+    <script src="/js/jquery.min.js?ver=3.4.1"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+
+<div class="k-header">
+    <nav class="k-nav navbar navbar-expand-lg navbar-light fixed-top" style=&#34;background: #282a2c&#34;>
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                
+                    <h1>小九博客</h1>
+                
+            </a>
+            
+                <button class="navbar-toggler navbar-toggler-right" id="navbutton" type="button" data-toggle="collapse"
+                        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="line first-line"></span>
+                    <span class="line second-line"></span>
+                    <span class="line third-line"></span>
+                </button>
+                <div id="navbarResponsive" class="collapse navbar-collapse">
+                    <ul id="menu" class="navbar-nav ml-auto">
+                        <li class="nav-item"><a title="首页" href="/" class="nav-link" aria-current="page">首页</a></li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/develop" title="编程开发"
+                                       class="nav-link" aria-current="page">编程开发</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/security" title="信息安全"
+                                       class="nav-link" aria-current="page">信息安全</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/resources" title="工具资源"
+                                       class="nav-link" aria-current="page">工具资源</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/myspace" title="随笔"
+                                       class="nav-link" aria-current="page">随笔</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item dropdown">
+                                
+                                    <a href="#" title="在线工具" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false" class="dropdown-toggle nav-link">在线工具</a>
+                                    <ul class="dropdown-menu" aria-labelledby="menu-item-dropdown-13" role="menu">
+                                        
+                                            <li class="nav-item"><a title="Json解析"
+                                                                    target="_blank" rel="noopener" href="http://www.bejson.com"
+                                                                    class="dropdown-item">Json解析</a></li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/about" title="关于"
+                                       class="nav-link" aria-current="page">关于</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+        </div>
+    </nav>
+    <div class="banner">
+        <div class="overlay"></div>
+        <div class="content text-center" style="background-image: url(https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/img/background.png);">
+            <div class="introduce animated fadeInUp">
+                <div class="title">小九博客</div>
+                <div class="mate">Hack The World!</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="k-main banner" style="background:#f5f5f5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 details">
+                <div class="article">
+    
+        <div class="breadcrumb-box">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a class="text-dark" href="/"> 首页</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a class="text-dark"
+                       href="/categories/develop">编程开发</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page"> 正文</li>
+            </ol>
+        </div>
+    
+    <div class="header">
+        <h1 class="title">Django安装部署</h1>
+        <div class="meta">
+            <div class="a-meta post-meta">
+        <span class=" d-none d-md-block">
+            <span class="mr-2"><i class="kicon i-calendar"></i>2018年02月12日</span>
+            <!--            <span class="mr-2"><i class="kicon i-comments"></i><?php comments_number('0', '1', '%'); _e('条评论', 'kratos'); ?></span>-->
+        </span>
+    <span class="  d-block">
+        </span>
+    
+</div>
+        </div>
+    </div>
+    <div class="content">
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>近期在做个一个分布式爬虫项目，欲使用Django做爬虫的控制和数据展示。</p>
+<p>因此本文将记录在安装编写Django应用时遇到的坑。</p>
+<p>本文环境为Python2.7+Django1.11.10+Mariadb10.2.7</p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ol>
+<li><p><strong>查看是否安装Django</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">&quot;import django; print(django.get_version())&quot;</span></span><br></pre></td></tr></table></figure>
+<p>如果有版本号输出，说明已经安装过了，安装步骤就可以跳过。</p>
+<p>如果没有则 pip 进行安装</p>
+</li>
+<li><p><strong>安装</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install django</span><br></pre></td></tr></table></figure>
+<p>再次使用django.get_version()查看版本信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">user@Joe MINGW64 /d/PythonWorkSpace/wikiCrawler</span><br><span class="line">$ python -c <span class="string">&quot;import django; print(django.get_version())&quot;</span></span><br><span class="line">1.11.10</span><br></pre></td></tr></table></figure>
+<p> <strong>安装成功</strong></p>
+</li>
+<li><p><strong>新建数据库</strong></p>
+<p>本文默认在安装好Mariadb10.2.7的情况下。首先新建一个数据库。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> database crawler</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>创建Django项目</strong></p>
+<p>切换至你想要存放代码的目录，执行如下命令创建Django项目</p>
+<p>crawler可以改成你的项目名称</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject crawler</span><br></pre></td></tr></table></figure>
+<p>创建完毕后可以看到如下目录文件结构</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysite&#x2F;</span><br><span class="line">	manage.py</span><br><span class="line">	crawler&#x2F;</span><br><span class="line">		__init__.py</span><br><span class="line">		settings.py</span><br><span class="line">		urls.py</span><br><span class="line">		wsgi.py</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>修改yourProject/setting.py配置</strong></p>
+</li>
+</ol>
+<ul>
+<li>配置中国时区和语言<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">LANGUAGE_CODE &#x3D; &#39;zh-hans&#39;</span><br><span class="line">TIME_ZONE &#x3D; &#39;Asia&#x2F;Shanghai&#39;</span><br></pre></td></tr></table></figure></li>
+<li>配置数据库<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DATABASES &#x3D; &#123;</span><br><span class="line">  &#39;default&#39;: &#123;</span><br><span class="line">    &#39;ENGINE&#39;: &#39;django.db.backends.mysql&#39;,</span><br><span class="line">    &#39;NAME&#39;: &#39;DB_NAME&#39;,</span><br><span class="line">    &#39;USER&#39;: &#39;DB_USER&#39;,</span><br><span class="line">    &#39;PASSWORD&#39;: &#39;DB_PASS&#39;,</span><br><span class="line">    &#39;HOST&#39;: &#39;127.0.0.1&#39;,</span><br><span class="line">    &#39;PORT&#39;: &#39;3306&#39;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="6">
+<li><p><strong>安装Mysql-python驱动</strong></p>
+<p>在使用pip-install mysql-python的时候，发现这个驱动依赖于VC++9.0<br>安装报错</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">building <span class="string">&#x27;_mysql&#x27;</span> extension</span><br><span class="line">error: Microsoft Visual C++ 9.0 is required. Get it from http://aka.ms/vcpython27</span><br></pre></td></tr></table></figure>
+<p>到 <a target="_blank" rel="noopener" href="http://aka.ms/vcpython27">http://aka.ms/vcpython27</a> 下载相应库。发现还是编译错误。。</p>
+<p>最后还是到官网下载 安装包进行下载。<br><a target="_blank" rel="noopener" href="https://pypi.python.org/pypi/MySQL-python/">https://pypi.python.org/pypi/MySQL-python/</a><br>此时报错消失，成功解决了。</p>
+</li>
+<li><p><strong>migrate 导入数据库</strong></p>
+<p>切换到manage.py所在目录 执行如下命令。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py migrate</span><br></pre></td></tr></table></figure>
+<p>提示如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> Operations to perform:</span><br><span class="line">  Apply all migrations: admin, auth, contenttypes, sessions</span><br><span class="line">Running migrations:</span><br><span class="line">  Applying contenttypes.0001_initial... OK</span><br><span class="line">  Applying auth.0001_initial... OK</span><br><span class="line">  Applying admin.0001_initial... OK</span><br><span class="line">  Applying admin.0002_logentry_remove_auto_add... OK</span><br><span class="line">  Applying contenttypes.0002_remove_content_type_name... OK</span><br><span class="line">  Applying auth.0002_alter_permission_name_max_length... OK</span><br><span class="line">  Applying auth.0003_alter_user_email_max_length... OK</span><br><span class="line">  Applying auth.0004_alter_user_username_opts... OK</span><br><span class="line">  Applying auth.0005_alter_user_last_login_null... OK</span><br><span class="line">  Applying auth.0006_require_contenttypes_0002... OK</span><br><span class="line">  Applying auth.0007_alter_validators_add_error_messages... OK</span><br><span class="line">  Applying auth.0008_alter_user_username_max_length... OK</span><br><span class="line">  Applying sessions.0001_initial... OK</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>自此Django+MariaDB连接成功。</strong></p>
+<h2 id="文档资料参考"><a href="#文档资料参考" class="headerlink" title="文档资料参考"></a>文档资料参考</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="http://python.usyiyi.cn/documents/django_182/index.html">http://python.usyiyi.cn/documents/django_182/index.html</a><br><a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/2.0/">https://docs.djangoproject.com/en/2.0/</a></p>
+</blockquote>
+
+    </div>
+    
+    <div class="footer clearfix">
+        <div class="tags float-left">
+            
+                <span>标签</span>
+                
+                <a href="/tags/Django" rel="tag">Django</a>
+                
+                <a href="/tags/Python" rel="tag">Python</a>
+                
+                <a href="/tags/MariaDB" rel="tag">MariaDB</a>
+                
+            
+        </div>
+        <div class="tool float-right d-none d-lg-block">
+            <div data-toggle="tooltip" data-html="true"
+                 data-original-title="最后更新：2018年02月12日">
+                <span>最后更新：2018年02月12日</span>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="comments" id="comments">
+    
+    <h3 class="title">文章评论</h3>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function () {
+        var disqus_config = function () {
+            this.page.url = 'http://example.com/2018/02/12/Django-MariaDB-Install/';
+            this.page.identifier = '2018/02/12/Django-MariaDB-Install/';
+            this.page.title = 'Django安装部署';
+        };
+        var d = document,
+            s = d.createElement('script');
+        s.async = true;
+
+        s.src = 'https://Uncl3N1n3.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+
+</script>
+
+    <script id="dsq-count-scr" src="https://Uncl3N1n3.disqus.com/count.js" async></script>
+
+
+</div>
+            </div>
+            <div class="col-lg-4 sidebar d-none d-lg-block">
+                
+    
+        
+
+        
+            <div class="widget w-about">
+    <div class="background"
+         style="background:url(/img/about-background.png) no-repeat center center;-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
+    <div class="wrapper text-center">
+        <img src="/img/avatar.jpg">
+    </div>
+    <div class="textwidget text-center"><p class="username">小九</p>
+        <p class="about">Just For Fun</p></div>
+</div>
+        
+    
+        
+
+        
+            
+
+<div class="widget w-search">
+    <div class="item" id="search-form">
+        <div id="result-mask" class="hide"></div>
+        
+        <div class="input-group mt-2 mb-2">
+            <input id="search-key" class="form-control" type="search" autocomplete="off" placeholder="搜点什么呢?">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-primary btn-search" id="search-local">搜索</button>
+            </div>
+        </div>
+        
+    </div>
+    <div id="result-wrap" class="hide">
+        <div id="search-result" class="search-result"></div>
+    </div>
+    <div class="hide">
+        <template id="search-tpl">
+            <div class="item">
+                <a href="/{path}" title="{title}">
+                    <div class="title">{title}</div>
+                    <div class="content">{content}</div>
+                </a>
+            </div>
+        </template>
+    </div>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget widget_categories">
+    <div class="title">
+        <i class="fas fa-book"> </i>
+        分类目录
+    </div>
+    <ul>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/">编程开发</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/Yii2/">Yii2</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/myspace/">随笔</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/resources/">工具资源</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/Django/">Django</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/security/">信息安全</a>
+        </li>
+        
+    </ul>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget w-tags">
+    <div class="title">
+        <i class="fas fa-cloud" id="tags_switch"> </i>
+        标签聚合
+<!--        <div class="tags-random"><i class="fas fa-sync" id="change_tags"> 换一批</i> </div>-->
+    </div>
+    <div class="item">
+        
+        
+        
+            
+                <a href="/tags/GD%E5%BA%93%E6%BC%8F%E6%B4%9E/">GD库漏洞</a>
+            
+                <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+            
+                <a href="/tags/PHP%E6%BC%8F%E6%B4%9E/">PHP漏洞</a>
+            
+                <a href="/tags/getshell/">getshell</a>
+            
+                <a href="/tags/Xdebug/">Xdebug</a>
+            
+                <a href="/tags/github/">github</a>
+            
+        
+    </div>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget w-recommended">
+    <div class="nav nav-tabs d-none d-xl-flex" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-random-tab" data-toggle="tab" href="#nav-random" role="tab"
+           aria-controls="nav-random" aria-selected="true"><i class="kicon i-tabrandom"></i>随机</a>
+        <a class="nav-item nav-link " id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab"
+           aria-controls="nav-new" aria-selected="false"><i class="kicon i-tabnew"></i>最新</a>
+        
+        <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab"
+           aria-controls="nav-hot" aria-selected="false"><i class="kicon i-tabhot"></i>热点</a>
+        
+    </div>
+    <div class="nav nav-tabs d-xl-none" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-random-tab" data-toggle="tab" href="#nav-random" role="tab"
+           aria-controls="nav-random" aria-selected="true">随机</a>
+        <a class="nav-item nav-link " id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab"
+           aria-controls="nav-new" aria-selected="false">最新</a>
+        
+        <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab"
+           aria-controls="nav-hot" aria-selected="false">热点</a>
+        
+    </div>
+    <div class="tab-content" id="nav-tabContent">
+        
+        <div class="tab-pane fade show active" id="nav-random" role="tabpanel" aria-labelledby="nav-random-tab">
+            
+
+
+
+    
+    
+        <a class="bookmark-item" title="Yii2 Event事件-初识"
+           href="/2018/01/09/Yii2-Event%E4%BA%8B%E4%BB%B6-%E5%88%9D%E8%AF%86/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2 Event事件-初识</a>
+    
+        <a class="bookmark-item" title="第一篇Hexo文章"
+           href="/2017/12/28/%E7%AC%AC%E4%B8%80%E7%AF%87Hexo%E6%96%87%E7%AB%A0/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 第一篇Hexo文章</a>
+    
+        <a class="bookmark-item" title="Yii2 Event事件-场景应用"
+           href="/2018/01/24/Yii2-Event%E4%BA%8B%E4%BB%B6-%E5%9C%BA%E6%99%AF%E5%BA%94%E7%94%A8/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2 Event事件-场景应用</a>
+    
+        <a class="bookmark-item" title="Codeception(三)"
+           href="/2018/01/29/Codeception-three/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Codeception(三)</a>
+    
+        <a class="bookmark-item" title="PHP-GD库漏洞可导致服务器宕机"
+           href="/2018/02/02/GD%E5%BA%93%E6%BC%8F%E6%B4%9E%E5%8F%AF%E5%AF%BC%E8%87%B4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%95%E6%9C%BA/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> PHP-GD库漏洞可导致服务器宕机</a>
+    
+        <a class="bookmark-item" title="Django安装部署"
+           href="/2018/02/12/Django-MariaDB-Install/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Django安装部署</a>
+    
+
+        </div>
+        <div class="tab-pane fade" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+            
+    
+        
+        <a class="bookmark-item" title="Hexo加速"
+           href="/2021/02/18/Hexo%E5%8A%A0%E9%80%9F/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Hexo加速</a>
+        
+    
+        
+        <a class="bookmark-item" title="记一次普通的渗透测试"
+           href="/2021/01/18/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%99%AE%E9%80%9A%E7%9A%84%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 记一次普通的渗透测试</a>
+        
+    
+        
+        <a class="bookmark-item" title="Git仓库同步附脚本"
+           href="/2020/08/21/Git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB%E9%99%84%E8%84%9A%E6%9C%AC/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Git仓库同步附脚本</a>
+        
+    
+        
+        <a class="bookmark-item" title="PHP-Xdebug"
+           href="/2018/03/02/PHP-Xdebug/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> PHP-Xdebug</a>
+        
+    
+        
+        <a class="bookmark-item" title="Django安装部署"
+           href="/2018/02/12/Django-MariaDB-Install/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Django安装部署</a>
+        
+    
+        
+        <a class="bookmark-item" title="Glary Utilities PRO注册码"
+           href="/2018/02/11/GlaryUtilitiesKey/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Glary Utilities PRO注册码</a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+
+
+        </div>
+        
+            <div class="tab-pane fade" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
+            </div>
+        
+    </div>
+</div>
+
+        
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="k-footer">
+    <div class="f-toolbox">
+        <div class="gotop ">
+            <div class="gotop-btn">
+                <span class="kicon i-up"></span>
+            </div>
+        </div>
+        
+
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="social">
+                    
+                        
+                        
+                    
+                    <!--                    <?php-->
+                    <!--                    $social = array('s_sina', 's_bilibili', 's_coding', 's_gitee', 's_twitter', 's_telegram', 's_linkedin', 's_youtube', 's_github', 's_stackflow', 's_email');-->
+                    <!--                    foreach ($social as $social) {-->
+                    <!--                        if (kratos_option($social)) {-->
+                    <!--                            echo '<a target="_blank" rel="nofollow" href="' . kratos_option($social . '_url') . '"><i class="kicon i-' . str_replace("s_", "", $social) . '"></i></a>';-->
+                    <!--                    }-->
+                    <!--                    }-->
+                    <!--                    ?>-->
+                </p>
+                <p>
+                    COPYRIGHT © 2021 <a
+                            href="/">小九博客</a> ALL RIGHTS RESERVED.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/bootstrap.bundle.min.js?ver=4.5.0"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/layer.min.js?ver=3.1.1"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/kratos.min.js?ver=3.2.5"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/comments.min.js?ver=3.2.5"></script>
+    
+
+
+
+    <script src="/js/widgets/search.js"></script>
+
+
+    <script src="/js/widgets/tags.js"></script>
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+<script>
+    var hotest = []
+    $(function(){
+        var firebaseConfig = {
+            apiKey: "AIzaSyDNd2Yn4CxzvywabcXbRCnAnHxlqqjcZRY",
+            authDomain: "blog-93530.firebaseapp.com",
+            projectId: "blog-93530",
+            storageBucket: "blog-93530.appspot.com",
+            messagingSenderId: "11551113906",
+            appId: "1:11551113906:web:0a298c6ecf2e73d15dbfab",
+            measurementId: "G-HEYJLNQ883"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        function initHotest(articles){
+            articles.orderBy("count","desc").limit(6).get().then(function(items){
+                items.forEach(function(doc){
+                    $("#nav-hot").append(
+                        "        <a class=\"bookmark-item\" title=\""+doc.id+"\"\n" +
+                        "           href=\"/"+doc.data().path+"\"\n" +
+                        "           rel=\"bookmark\"><i class=\"fas fa-pencil-alt\"> </i> "+doc.id+"</a>"
+                    )
+                })
+            })
+        }
+        function getCount(doc, increaseCount, url_path) {
+            //increaseCount will be false when not in article page
+            return doc.get().then(function (d) {
+                var count
+                if (!d.exists) { //has no data, initialize count
+                    if (increaseCount) {
+                        if (url_path) {
+                            doc.set({
+                                count: 1,
+                                path: url_path
+                            })
+                        }else{
+                            doc.set({
+                                count: 1
+                            })
+                        }
+                        count = 1
+                    }
+                    else {
+                        count = 0
+                    }
+                }
+                else { //has data
+                    count = d.data().count
+                    if (increaseCount) {
+                        if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                            if (url_path) {
+                                doc.set({
+                                    count: count + 1,
+                                    path: url_path
+                                })
+                            }else{
+                                doc.set({
+                                    count: count + 1
+                                })
+                            }
+                            count++
+                        }
+                    }
+                }
+                if (window.localStorage && increaseCount) { //mark as visited
+                    localStorage.setItem(title, true)
+                }
+
+                return count
+            })
+        }
+
+        function appendCountTo(el) {
+            return function (count) {
+                $(el).append(
+                    $('<span>').addClass('post-visitors-count').append(
+
+                    ).append(
+                        $('<span>').addClass('post-meta-item-icon').append(
+                            $('<i>').addClass('kicon i-hot')
+                        )
+                    ).append($('<span>').text(count + '点热度'))
+                )
+            }
+        }
+        var db = firebase.firestore()
+        var articles = db.collection('articles')
+
+        initHotest(articles)
+
+        //https://hexo.io/zh-tw/docs/variables.html
+        var isPost = 'Django安装部署'.length > 0
+        var isArchive = 'false' === 'true'
+        var isCategory = 'false' === 'true'
+        var isTag = 'false' === 'true'
+        if (isPost) { //is article page
+            var title = 'Django安装部署'
+            var path = '2018/02/12/Django-MariaDB-Install/'
+            var doc = articles.doc(title)
+            getCount(doc, true,path).then(appendCountTo($('.post-meta')))
+        } else { //is index page
+            var titles = []; //array to titles
+            
+            var promises = titles.map(function (title) {
+                return articles.doc(title)
+            }).map(function (doc) {
+                return getCount(doc)
+            })
+            Promise.all(promises).then(function (counts) {
+                var metas = $('.post-meta')
+                counts.forEach(function (val, idx) {
+                    appendCountTo(metas[idx])(val)
+                })
+            })
+        }
+    })
+</script>
+
+</body>
+
+</html>

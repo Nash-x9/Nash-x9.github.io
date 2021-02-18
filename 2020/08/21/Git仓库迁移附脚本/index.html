@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Git仓库同步附脚本 | 小九博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="format-detection" content="telphone=no, email=no">
+    <meta name="root" content="/">
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/img/avatar.jpg"><meta name="keywords" content="小九博客,PHP,程序员,yii2,教程,黑客,信息安全,安全开发"><meta name="theme-color" content="#282a2c">
+
+    
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/bootstrap.min.css?ver=4.5.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/fontawesome.min.css?ver=5.13.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/iconfont.min.css?ver=3.1.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/layer.min.css?ver=3.1.1" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/kratos.min.css?ver=3.2.5" type="text/css" media="all">
+        
+    
+    <script src="/js/jquery.min.js?ver=3.4.1"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+
+<div class="k-header">
+    <nav class="k-nav navbar navbar-expand-lg navbar-light fixed-top" style=&#34;background: #282a2c&#34;>
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                
+                    <h1>小九博客</h1>
+                
+            </a>
+            
+                <button class="navbar-toggler navbar-toggler-right" id="navbutton" type="button" data-toggle="collapse"
+                        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="line first-line"></span>
+                    <span class="line second-line"></span>
+                    <span class="line third-line"></span>
+                </button>
+                <div id="navbarResponsive" class="collapse navbar-collapse">
+                    <ul id="menu" class="navbar-nav ml-auto">
+                        <li class="nav-item"><a title="首页" href="/" class="nav-link" aria-current="page">首页</a></li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/develop" title="编程开发"
+                                       class="nav-link" aria-current="page">编程开发</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/security" title="信息安全"
+                                       class="nav-link" aria-current="page">信息安全</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/resources" title="工具资源"
+                                       class="nav-link" aria-current="page">工具资源</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/myspace" title="随笔"
+                                       class="nav-link" aria-current="page">随笔</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item dropdown">
+                                
+                                    <a href="#" title="在线工具" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false" class="dropdown-toggle nav-link">在线工具</a>
+                                    <ul class="dropdown-menu" aria-labelledby="menu-item-dropdown-13" role="menu">
+                                        
+                                            <li class="nav-item"><a title="Json解析"
+                                                                    target="_blank" rel="noopener" href="http://www.bejson.com"
+                                                                    class="dropdown-item">Json解析</a></li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/about" title="关于"
+                                       class="nav-link" aria-current="page">关于</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+        </div>
+    </nav>
+    <div class="banner">
+        <div class="overlay"></div>
+        <div class="content text-center" style="background-image: url(https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/img/background.png);">
+            <div class="introduce animated fadeInUp">
+                <div class="title">小九博客</div>
+                <div class="mate">Hack The World!</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="k-main banner" style="background:#f5f5f5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 details">
+                <div class="article">
+    
+        <div class="breadcrumb-box">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a class="text-dark" href="/"> 首页</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a class="text-dark"
+                       href="/categories/develop">编程开发</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page"> 正文</li>
+            </ol>
+        </div>
+    
+    <div class="header">
+        <h1 class="title">Git仓库同步附脚本</h1>
+        <div class="meta">
+            <div class="a-meta post-meta">
+        <span class=" d-none d-md-block">
+            <span class="mr-2"><i class="kicon i-calendar"></i>2020年08月21日</span>
+            <!--            <span class="mr-2"><i class="kicon i-comments"></i><?php comments_number('0', '1', '%'); _e('条评论', 'kratos'); ?></span>-->
+        </span>
+    <span class="  d-block">
+        </span>
+    
+</div>
+        </div>
+    </div>
+    <div class="content">
+        <h1 id="记一次Git仓库同步"><a href="#记一次Git仓库同步" class="headerlink" title="记一次Git仓库同步"></a>记一次Git仓库同步</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
+<p>在开发过程中，可能遇到Git仓库搬家或Git仓库同步的窘境，本文记录一次Git仓库同步过程，同样也可用于仓库迁移。</p>
+</blockquote>
+<h3 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h3><ul>
+<li>环境：<br>仅拥有仓库A的读权限，不具备修改和推送的权限。</li>
+<li>目标：<br>将仓库A的代码定期推送/同步至仓库B</li>
+</ul>
+<blockquote>
+<p>不论何种方法都需要定期更新代码，这块可以使用crontab来简单实现，因此不做详细记录。</p>
+</blockquote>
+<p>需求到了以后，刚毕业的码媛小A接下了此任务，对于不熟悉Git命令的她打算这样开始：</p>
+<p>​        1.将源码目录code拷贝至code_1</p>
+<p>​        2.删除code_1目录下的.git文件夹</p>
+<p>​        3.删除仓库B所有文件</p>
+<p>​        4.重新初始化code_1目录Git仓库并设置远程仓库为仓库B</p>
+<p>​        5.commit文件，推送至远程仓库B</p>
+<p>经过一个下午的努力，第一版的同步脚本成功交付，并稳定运行了一段时间。然而过了不久同事过来提了一个<strong>严重</strong>的问题，这样虽然可以实现需求，但是<strong>原始的commit的信息无法保留</strong>，当仓库代码发生变动时，无法得知代码变更，这样和传统的FTP传输文件区别不大。</p>
+<p>小A抓紧学习了一天Git命令，发现<code>git push --mirror</code> 可以实现代码同步，同时对于仓库A不具有侵入性，便产生了如下思路。</p>
+<p>​        1.获取仓库A最后一次提交的时间</p>
+<p>​        2.使用<code>git push --mirror</code> 将代码推送至仓库B，同时将仓库A最后一次提交时间写入到临时文件<code>/tmp/LAST_MODIFY_TIME</code></p>
+<p>​        3.在下次执行脚本时，获取最后一次提交时间后，检查提交时间和临时文件里的内容是否一致，一旦不一致继续执行第二步，如果一致则没有代码变更退出程序即可。</p>
+<h3 id="Shell脚本实现Git仓库同步-迁移"><a href="#Shell脚本实现Git仓库同步-迁移" class="headerlink" title="Shell脚本实现Git仓库同步/迁移"></a>Shell脚本实现Git仓库同步/迁移</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">TEMP_FILE=<span class="string">&quot;/tmp/LAST_MODIFY_TIME&quot;</span></span><br><span class="line"><span class="built_in">cd</span> ~/code/ &amp;&amp; modify_time=`git <span class="built_in">log</span> -1 --format=<span class="string">&quot;%ct&quot;</span>`<span class="comment">#切换至code目录，并获取最后一次提交时间的时间戳</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;代码最后一次提交时间:&quot;</span>`git <span class="built_in">log</span> -1 --format=<span class="string">&quot;%ai&quot;</span>` <span class="comment">#输出代码最后一次提交时间</span></span><br><span class="line"><span class="keyword">if</span> [ -f <span class="string">&quot;<span class="variable">$TEMP_FILE</span>&quot;</span> ];<span class="keyword">then</span>	<span class="comment">#判断临时文件是否存在，如果存在则读取推送记录修改时间</span></span><br><span class="line">    last_time=`cat <span class="variable">$TEMP_FILE</span>`</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> [[ <span class="variable">$last_time</span> -ne <span class="variable">$modify_time</span> ]];<span class="keyword">then</span>  <span class="comment">#判断推送记录修改时间和最后一次提交时间是否相同，不同则使用git push --mirror 推送至仓库B</span></span><br><span class="line">    git push --mirror ssh://git@192.168.1.2/develop/code_B.git</span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;推送成功&quot;</span> &amp;&amp; <span class="built_in">echo</span> <span class="variable">$modify_time</span> &gt; <span class="variable">$TEMP_FILE</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;已经是最新代码，无需推送&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<h3 id="小记"><a href="#小记" class="headerlink" title="小记"></a>小记</h3><p>自此小A学会了很多git参数和命令，笔记如下：</p>
+<p><strong>1.git log命令可一接受一个–pretty选项，来确定输出的格式.</strong></p>
+<blockquote>
+<p>引用自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ckAng/p/11205055.html">https://www.cnblogs.com/ckAng/p/11205055.html</a></p>
+</blockquote>
+<p>比如 ：</p>
+<p>如果我们只想输出hash.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --pretty&#x3D;format:&quot;%h&quot; </span><br></pre></td></tr></table></figure>
+<p>详细 命令 ：</p>
+<ul>
+<li>%H: commit hash</li>
+<li>%h: 缩短的commit hash</li>
+<li>%T: tree hash</li>
+<li>%t: 缩短的 tree hash</li>
+<li>%P: parent hashes</li>
+<li>%p: 缩短的 parent hashes</li>
+<li>%an: 作者名字</li>
+<li>%aN: mailmap的作者名字 (.mailmap对应，详情参照<a target="_blank" rel="noopener" href="http://linux.die.net/man/1/git-shortlog">git-shortlog(1)</a>或者<a target="_blank" rel="noopener" href="http://linux.die.net/man/1/git-blame">git-blame(1)</a>)</li>
+<li>%ae: 作者邮箱</li>
+<li>%aE: 作者邮箱 (.mailmap对应，详情参照<a target="_blank" rel="noopener" href="http://linux.die.net/man/1/git-shortlog">git-shortlog(1)</a>或者<a target="_blank" rel="noopener" href="http://linux.die.net/man/1/git-blame">git-blame(1)</a>)</li>
+<li>%ad: 日期 (–date= 制定的格式)</li>
+<li>%aD: 日期, RFC2822格式</li>
+<li>%ar: 日期, 相对格式(1 day ago)</li>
+<li>%at: 日期, UNIX timestamp</li>
+<li>%ai: 日期, ISO 8601 格式</li>
+<li>%cn: 提交者名字</li>
+<li>%cN: 提交者名字 (.mailmap对应，详情参照<a target="_blank" rel="noopener" href="http://linux.die.net/man/1/git-shortlog">git-shortlog(1)</a>或者<a target="_blank" rel="noopener" href="http://linux.die.net/man/1/git-blame">git-blame(1)</a>)</li>
+<li>%ce: 提交者 email</li>
+<li>%cE: 提交者 email (.mailmap对应，详情参照<a target="_blank" rel="noopener" href="http://linux.die.net/man/1/git-shortlog">git-shortlog(1)</a>或者<a target="_blank" rel="noopener" href="http://linux.die.net/man/1/git-blame">git-blame(1)</a>)</li>
+<li>%cd: 提交日期 (–date= 制定的格式)</li>
+<li>%cD: 提交日期, RFC2822格式</li>
+<li>%cr: 提交日期, 相对格式(1 day ago)</li>
+<li>%ct: 提交日期, UNIX timestamp</li>
+<li>%ci: 提交日期, ISO 8601 格式</li>
+<li>%d: ref名称</li>
+<li>%e: encoding</li>
+<li>%s: commit信息标题</li>
+<li>%f: sanitized subject line, suitable for a filename</li>
+<li>%b: commit信息内容</li>
+<li>%N: commit notes</li>
+<li>%gD: reflog selector, e.g., refs/stash@{1}</li>
+<li>%gd: shortened reflog selector, e.g., stash@{1}</li>
+<li>%gs: reflog subject</li>
+<li>%Cred: 切换到红色</li>
+<li>%Cgreen: 切换到绿色</li>
+<li>%Cblue: 切换到蓝色</li>
+<li>%Creset: 重设颜色</li>
+<li>%C(…): 制定颜色, as described in color.branch.* config option</li>
+<li>%m: left, right or boundary mark</li>
+<li>%n: 换行</li>
+<li>%%: a raw %</li>
+<li>%x00: print a byte from a hex code</li>
+<li>%w([[,[,]]]): switch line wrapping, like the -w option of git-shortlog(1)</li>
+</ul>
+<p><strong>2.写shell脚本的过程中，小A无意间还学会了linux中date命令的详细使用</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">date +%s  #获取当前时间戳 1598016486</span><br><span class="line">date +%x  #获取日期 2020&#x2F;08&#x2F;21</span><br><span class="line">date +%X  #获取时间 21:27:27</span><br><span class="line">date +%s -r file.jar #获取file.jar文件的时间戳</span><br></pre></td></tr></table></figure>
+    </div>
+    
+    <div class="footer clearfix">
+        <div class="tags float-left">
+            
+                <span>标签</span>
+                
+                <a href="/tags/git" rel="tag">git</a>
+                
+                <a href="/tags/%E4%BB%93%E5%BA%93%E5%90%8C%E6%AD%A5" rel="tag">仓库同步</a>
+                
+                <a href="/tags/git-mirror" rel="tag">git-mirror</a>
+                
+                <a href="/tags/sync" rel="tag">sync</a>
+                
+            
+        </div>
+        <div class="tool float-right d-none d-lg-block">
+            <div data-toggle="tooltip" data-html="true"
+                 data-original-title="最后更新：2020年08月21日">
+                <span>最后更新：2020年08月21日</span>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="comments" id="comments">
+    
+    <h3 class="title">文章评论</h3>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function () {
+        var disqus_config = function () {
+            this.page.url = 'http://example.com/2020/08/21/Git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB%E9%99%84%E8%84%9A%E6%9C%AC/';
+            this.page.identifier = '2020/08/21/Git仓库迁移附脚本/';
+            this.page.title = 'Git仓库同步附脚本';
+        };
+        var d = document,
+            s = d.createElement('script');
+        s.async = true;
+
+        s.src = 'https://Uncl3N1n3.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+
+</script>
+
+    <script id="dsq-count-scr" src="https://Uncl3N1n3.disqus.com/count.js" async></script>
+
+
+</div>
+            </div>
+            <div class="col-lg-4 sidebar d-none d-lg-block">
+                
+    
+        
+
+        
+            <div class="widget w-about">
+    <div class="background"
+         style="background:url(/img/about-background.png) no-repeat center center;-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
+    <div class="wrapper text-center">
+        <img src="/img/avatar.jpg">
+    </div>
+    <div class="textwidget text-center"><p class="username">小九</p>
+        <p class="about">Just For Fun</p></div>
+</div>
+        
+    
+        
+
+        
+            
+
+<div class="widget w-search">
+    <div class="item" id="search-form">
+        <div id="result-mask" class="hide"></div>
+        
+        <div class="input-group mt-2 mb-2">
+            <input id="search-key" class="form-control" type="search" autocomplete="off" placeholder="搜点什么呢?">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-primary btn-search" id="search-local">搜索</button>
+            </div>
+        </div>
+        
+    </div>
+    <div id="result-wrap" class="hide">
+        <div id="search-result" class="search-result"></div>
+    </div>
+    <div class="hide">
+        <template id="search-tpl">
+            <div class="item">
+                <a href="/{path}" title="{title}">
+                    <div class="title">{title}</div>
+                    <div class="content">{content}</div>
+                </a>
+            </div>
+        </template>
+    </div>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget widget_categories">
+    <div class="title">
+        <i class="fas fa-book"> </i>
+        分类目录
+    </div>
+    <ul>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/">编程开发</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/Yii2/">Yii2</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/myspace/">随笔</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/resources/">工具资源</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/Django/">Django</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/security/">信息安全</a>
+        </li>
+        
+    </ul>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget w-tags">
+    <div class="title">
+        <i class="fas fa-cloud" id="tags_switch"> </i>
+        标签聚合
+<!--        <div class="tags-random"><i class="fas fa-sync" id="change_tags"> 换一批</i> </div>-->
+    </div>
+    <div class="item">
+        
+        
+        
+            
+                <a href="/tags/PHP/">PHP</a>
+            
+                <a href="/tags/php%E6%A1%86%E6%9E%B6/">php框架</a>
+            
+                <a href="/tags/yii2-editable/">yii2-editable</a>
+            
+                <a href="/tags/CDN/">CDN</a>
+            
+                <a href="/tags/git-mirror/">git-mirror</a>
+            
+                <a href="/tags/Hexo-admin/">Hexo-admin</a>
+            
+        
+    </div>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget w-recommended">
+    <div class="nav nav-tabs d-none d-xl-flex" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-random-tab" data-toggle="tab" href="#nav-random" role="tab"
+           aria-controls="nav-random" aria-selected="true"><i class="kicon i-tabrandom"></i>随机</a>
+        <a class="nav-item nav-link " id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab"
+           aria-controls="nav-new" aria-selected="false"><i class="kicon i-tabnew"></i>最新</a>
+        
+        <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab"
+           aria-controls="nav-hot" aria-selected="false"><i class="kicon i-tabhot"></i>热点</a>
+        
+    </div>
+    <div class="nav nav-tabs d-xl-none" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-random-tab" data-toggle="tab" href="#nav-random" role="tab"
+           aria-controls="nav-random" aria-selected="true">随机</a>
+        <a class="nav-item nav-link " id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab"
+           aria-controls="nav-new" aria-selected="false">最新</a>
+        
+        <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab"
+           aria-controls="nav-hot" aria-selected="false">热点</a>
+        
+    </div>
+    <div class="tab-content" id="nav-tabContent">
+        
+        <div class="tab-pane fade show active" id="nav-random" role="tabpanel" aria-labelledby="nav-random-tab">
+            
+
+
+
+    
+    
+        <a class="bookmark-item" title="Yii2 DatePicker小部件的使用"
+           href="/2018/01/02/Yii2-DatePicker%E5%B0%8F%E9%83%A8%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2 DatePicker小部件的使用</a>
+    
+        <a class="bookmark-item" title="【[转]PHP资源大全】Awesome PHP 项目"
+           href="/2018/01/03/awesomePHP/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 【[转]PHP资源大全】Awesome PHP 项目</a>
+    
+        <a class="bookmark-item" title="Codeception(三)"
+           href="/2018/01/29/Codeception-three/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Codeception(三)</a>
+    
+        <a class="bookmark-item" title="Codeception安装使用（一）"
+           href="/2018/01/22/Codeception-first/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Codeception安装使用（一）</a>
+    
+        <a class="bookmark-item" title="Git仓库同步附脚本"
+           href="/2020/08/21/Git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB%E9%99%84%E8%84%9A%E6%9C%AC/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Git仓库同步附脚本</a>
+    
+        <a class="bookmark-item" title="PHP反射机制"
+           href="/2018/01/15/PHPReflection/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> PHP反射机制</a>
+    
+
+        </div>
+        <div class="tab-pane fade" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+            
+    
+        
+        <a class="bookmark-item" title="Hexo加速"
+           href="/2021/02/18/Hexo%E5%8A%A0%E9%80%9F/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Hexo加速</a>
+        
+    
+        
+        <a class="bookmark-item" title="记一次普通的渗透测试"
+           href="/2021/01/18/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%99%AE%E9%80%9A%E7%9A%84%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 记一次普通的渗透测试</a>
+        
+    
+        
+        <a class="bookmark-item" title="Git仓库同步附脚本"
+           href="/2020/08/21/Git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB%E9%99%84%E8%84%9A%E6%9C%AC/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Git仓库同步附脚本</a>
+        
+    
+        
+        <a class="bookmark-item" title="PHP-Xdebug"
+           href="/2018/03/02/PHP-Xdebug/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> PHP-Xdebug</a>
+        
+    
+        
+        <a class="bookmark-item" title="Django安装部署"
+           href="/2018/02/12/Django-MariaDB-Install/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Django安装部署</a>
+        
+    
+        
+        <a class="bookmark-item" title="Glary Utilities PRO注册码"
+           href="/2018/02/11/GlaryUtilitiesKey/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Glary Utilities PRO注册码</a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+
+
+        </div>
+        
+            <div class="tab-pane fade" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
+            </div>
+        
+    </div>
+</div>
+
+        
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="k-footer">
+    <div class="f-toolbox">
+        <div class="gotop ">
+            <div class="gotop-btn">
+                <span class="kicon i-up"></span>
+            </div>
+        </div>
+        
+
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="social">
+                    
+                        
+                        
+                    
+                    <!--                    <?php-->
+                    <!--                    $social = array('s_sina', 's_bilibili', 's_coding', 's_gitee', 's_twitter', 's_telegram', 's_linkedin', 's_youtube', 's_github', 's_stackflow', 's_email');-->
+                    <!--                    foreach ($social as $social) {-->
+                    <!--                        if (kratos_option($social)) {-->
+                    <!--                            echo '<a target="_blank" rel="nofollow" href="' . kratos_option($social . '_url') . '"><i class="kicon i-' . str_replace("s_", "", $social) . '"></i></a>';-->
+                    <!--                    }-->
+                    <!--                    }-->
+                    <!--                    ?>-->
+                </p>
+                <p>
+                    COPYRIGHT © 2021 <a
+                            href="/">小九博客</a> ALL RIGHTS RESERVED.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/bootstrap.bundle.min.js?ver=4.5.0"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/layer.min.js?ver=3.1.1"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/kratos.min.js?ver=3.2.5"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/comments.min.js?ver=3.2.5"></script>
+    
+
+
+
+    <script src="/js/widgets/search.js"></script>
+
+
+    <script src="/js/widgets/tags.js"></script>
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+<script>
+    var hotest = []
+    $(function(){
+        var firebaseConfig = {
+            apiKey: "AIzaSyDNd2Yn4CxzvywabcXbRCnAnHxlqqjcZRY",
+            authDomain: "blog-93530.firebaseapp.com",
+            projectId: "blog-93530",
+            storageBucket: "blog-93530.appspot.com",
+            messagingSenderId: "11551113906",
+            appId: "1:11551113906:web:0a298c6ecf2e73d15dbfab",
+            measurementId: "G-HEYJLNQ883"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        function initHotest(articles){
+            articles.orderBy("count","desc").limit(6).get().then(function(items){
+                items.forEach(function(doc){
+                    $("#nav-hot").append(
+                        "        <a class=\"bookmark-item\" title=\""+doc.id+"\"\n" +
+                        "           href=\"/"+doc.data().path+"\"\n" +
+                        "           rel=\"bookmark\"><i class=\"fas fa-pencil-alt\"> </i> "+doc.id+"</a>"
+                    )
+                })
+            })
+        }
+        function getCount(doc, increaseCount, url_path) {
+            //increaseCount will be false when not in article page
+            return doc.get().then(function (d) {
+                var count
+                if (!d.exists) { //has no data, initialize count
+                    if (increaseCount) {
+                        if (url_path) {
+                            doc.set({
+                                count: 1,
+                                path: url_path
+                            })
+                        }else{
+                            doc.set({
+                                count: 1
+                            })
+                        }
+                        count = 1
+                    }
+                    else {
+                        count = 0
+                    }
+                }
+                else { //has data
+                    count = d.data().count
+                    if (increaseCount) {
+                        if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                            if (url_path) {
+                                doc.set({
+                                    count: count + 1,
+                                    path: url_path
+                                })
+                            }else{
+                                doc.set({
+                                    count: count + 1
+                                })
+                            }
+                            count++
+                        }
+                    }
+                }
+                if (window.localStorage && increaseCount) { //mark as visited
+                    localStorage.setItem(title, true)
+                }
+
+                return count
+            })
+        }
+
+        function appendCountTo(el) {
+            return function (count) {
+                $(el).append(
+                    $('<span>').addClass('post-visitors-count').append(
+
+                    ).append(
+                        $('<span>').addClass('post-meta-item-icon').append(
+                            $('<i>').addClass('kicon i-hot')
+                        )
+                    ).append($('<span>').text(count + '点热度'))
+                )
+            }
+        }
+        var db = firebase.firestore()
+        var articles = db.collection('articles')
+
+        initHotest(articles)
+
+        //https://hexo.io/zh-tw/docs/variables.html
+        var isPost = 'Git仓库同步附脚本'.length > 0
+        var isArchive = 'false' === 'true'
+        var isCategory = 'false' === 'true'
+        var isTag = 'false' === 'true'
+        if (isPost) { //is article page
+            var title = 'Git仓库同步附脚本'
+            var path = '2020/08/21/Git仓库迁移附脚本/'
+            var doc = articles.doc(title)
+            getCount(doc, true,path).then(appendCountTo($('.post-meta')))
+        } else { //is index page
+            var titles = []; //array to titles
+            
+            var promises = titles.map(function (title) {
+                return articles.doc(title)
+            }).map(function (doc) {
+                return getCount(doc)
+            })
+            Promise.all(promises).then(function (counts) {
+                var metas = $('.post-meta')
+                counts.forEach(function (val, idx) {
+                    appendCountTo(metas[idx])(val)
+                })
+            })
+        }
+    })
+</script>
+
+</body>
+
+</html>

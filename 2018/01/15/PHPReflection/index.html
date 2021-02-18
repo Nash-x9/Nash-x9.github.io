@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PHP反射机制 | 小九博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="format-detection" content="telphone=no, email=no">
+    <meta name="root" content="/">
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/img/avatar.jpg"><meta name="keywords" content="小九博客,PHP,程序员,yii2,教程,黑客,信息安全,安全开发"><meta name="theme-color" content="#282a2c">
+
+    
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/bootstrap.min.css?ver=4.5.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/fontawesome.min.css?ver=5.13.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/iconfont.min.css?ver=3.1.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/layer.min.css?ver=3.1.1" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/kratos.min.css?ver=3.2.5" type="text/css" media="all">
+        
+    
+    <script src="/js/jquery.min.js?ver=3.4.1"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+
+<div class="k-header">
+    <nav class="k-nav navbar navbar-expand-lg navbar-light fixed-top" style=&#34;background: #282a2c&#34;>
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                
+                    <h1>小九博客</h1>
+                
+            </a>
+            
+                <button class="navbar-toggler navbar-toggler-right" id="navbutton" type="button" data-toggle="collapse"
+                        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="line first-line"></span>
+                    <span class="line second-line"></span>
+                    <span class="line third-line"></span>
+                </button>
+                <div id="navbarResponsive" class="collapse navbar-collapse">
+                    <ul id="menu" class="navbar-nav ml-auto">
+                        <li class="nav-item"><a title="首页" href="/" class="nav-link" aria-current="page">首页</a></li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/develop" title="编程开发"
+                                       class="nav-link" aria-current="page">编程开发</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/security" title="信息安全"
+                                       class="nav-link" aria-current="page">信息安全</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/resources" title="工具资源"
+                                       class="nav-link" aria-current="page">工具资源</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/myspace" title="随笔"
+                                       class="nav-link" aria-current="page">随笔</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item dropdown">
+                                
+                                    <a href="#" title="在线工具" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false" class="dropdown-toggle nav-link">在线工具</a>
+                                    <ul class="dropdown-menu" aria-labelledby="menu-item-dropdown-13" role="menu">
+                                        
+                                            <li class="nav-item"><a title="Json解析"
+                                                                    target="_blank" rel="noopener" href="http://www.bejson.com"
+                                                                    class="dropdown-item">Json解析</a></li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/about" title="关于"
+                                       class="nav-link" aria-current="page">关于</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+        </div>
+    </nav>
+    <div class="banner">
+        <div class="overlay"></div>
+        <div class="content text-center" style="background-image: url(https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/img/background.png);">
+            <div class="introduce animated fadeInUp">
+                <div class="title">小九博客</div>
+                <div class="mate">Hack The World!</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="k-main banner" style="background:#f5f5f5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 details">
+                <div class="article">
+    
+        <div class="breadcrumb-box">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a class="text-dark" href="/"> 首页</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a class="text-dark"
+                       href="/categories/develop">编程开发</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page"> 正文</li>
+            </ol>
+        </div>
+    
+    <div class="header">
+        <h1 class="title">PHP反射机制</h1>
+        <div class="meta">
+            <div class="a-meta post-meta">
+        <span class=" d-none d-md-block">
+            <span class="mr-2"><i class="kicon i-calendar"></i>2018年01月15日</span>
+            <!--            <span class="mr-2"><i class="kicon i-comments"></i><?php comments_number('0', '1', '%'); _e('条评论', 'kratos'); ?></span>-->
+        </span>
+    <span class="  d-block">
+        </span>
+    
+</div>
+        </div>
+    </div>
+    <div class="content">
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在PHP5以后，加入了一个反射（Reflection）类，使用此类可以方便的获取某类的属性、常量、方法等。基本涵盖了想要获取类的所有信息。也可以扩展自身类，为使用类的人提供更多信息，而不必阅读源代码。</p>
+<p>可以使用的场景非常多，比如自动生成文档，自动化插件等。</p>
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><ul>
+<li><a href="#getConstants"><strong>获取常量列表</strong></a></li>
+<li><a href="#getMethods"><strong>获取方法列表</strong></a></li>
+<li><a href="#getProperties"><strong>获取属性列表</strong></a></li>
+</ul>
+<p>由于使用比较简单，其它请参考官方文档。<br><a target="_blank" rel="noopener" href="http://php.net/manual/zh/class.reflectionclass.php"><strong>完整的方法列表请点击查看</strong></a></p>
+<p>我们定义一个学生类，代码如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span></span>&#123;</span><br><span class="line"><span class="keyword">const</span> SCHOOL = <span class="string">&#x27;BeiJing Primary School&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> OBLIGATORY_COURSE = <span class="string">&#x27;CHINESE&#x27;</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$name</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$sex</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$id</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getName</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;name;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getSex</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;sex;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">getId</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;id;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setName</span>(<span class="params"><span class="variable">$name</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setSex</span>(<span class="params"><span class="variable">$sex</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;sex = <span class="variable">$sex</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">setId</span>(<span class="params"><span class="variable">$id</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;id = <span class="variable">$id</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>首先new一个反射类，里面参数写上你想获取类的类名。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$objectClass</span> = <span class="keyword">new</span> \ReflectionClass(<span class="string">&#x27;Student&#x27;</span>);</span><br><span class="line"><span class="comment">//$objectClass-&gt;[方法]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><span id='getConstants'></span><strong>获取常量列表</strong> =&gt; public array getConstants ( void ) </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$constArray &#x3D; $objectClass-&gt;getConstants();</span><br><span class="line">var_dump($constArray);</span><br></pre></td></tr></table></figure>
+<p> 将打印如下结果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">array(2) &#123;</span><br><span class="line">[&quot;SCHOOL&quot;]&#x3D;&gt;</span><br><span class="line">string(22) &quot;BeiJing Primary School&quot;</span><br><span class="line">[&quot;OBLIGATORY_COURSE&quot;]&#x3D;&gt;</span><br><span class="line">string(7) &quot;CHINESE&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><span id='getMethods'></span><strong>获取方法列表</strong> =&gt; public array ReflectionClass::getMethods ([ int $filter ] )<br>参数filter，对方法列表进行过滤，默认不过滤。<br> 可使用提供的常量进行过滤<br> - ReflectionMethod::IS_STATIC</p>
+<ul>
+<li>ReflectionMethod::IS_PUBLIC</li>
+<li>ReflectionMethod::IS_PROTECTED</li>
+<li>ReflectionMethod::IS_PRIVATE</li>
+<li>ReflectionMethod::IS_ABSTRACT</li>
+<li>ReflectionMethod::IS_FINAL<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$methodArray &#x3D; $objectClass-&gt;getMethods();</span><br><span class="line">var_dump($methodArray);</span><br></pre></td></tr></table></figure>
+将打印如下结果:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">    array(6) &#123;</span><br><span class="line">  [0]&#x3D;&gt;</span><br><span class="line">  object(ReflectionMethod)#2 (2) &#123;</span><br><span class="line">    [&quot;name&quot;]&#x3D;&gt;</span><br><span class="line">    string(7) &quot;getName&quot;</span><br><span class="line">    [&quot;class&quot;]&#x3D;&gt;</span><br><span class="line">    string(7) &quot;Student&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  [1]&#x3D;&gt;</span><br><span class="line">  object(ReflectionMethod)#3 (2) &#123;</span><br><span class="line">    [&quot;name&quot;]&#x3D;&gt;</span><br><span class="line">    string(6) &quot;getSex&quot;</span><br><span class="line">    [&quot;class&quot;]&#x3D;&gt;</span><br><span class="line">    string(7) &quot;Student&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  [2]&#x3D;&gt;</span><br><span class="line">  object(ReflectionMethod)#4 (2) &#123;</span><br><span class="line">    [&quot;name&quot;]&#x3D;&gt;</span><br><span class="line">    string(5) &quot;getId&quot;</span><br><span class="line">    [&quot;class&quot;]&#x3D;&gt;</span><br><span class="line">    string(7) &quot;Student&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  [3]&#x3D;&gt;</span><br><span class="line">  object(ReflectionMethod)#5 (2) &#123;</span><br><span class="line">    [&quot;name&quot;]&#x3D;&gt;</span><br><span class="line">    string(7) &quot;setName&quot;</span><br><span class="line">    [&quot;class&quot;]&#x3D;&gt;</span><br><span class="line">    string(7) &quot;Student&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  [4]&#x3D;&gt;</span><br><span class="line">  object(ReflectionMethod)#6 (2) &#123;</span><br><span class="line">    [&quot;name&quot;]&#x3D;&gt;</span><br><span class="line">    string(6) &quot;setSex&quot;</span><br><span class="line">    [&quot;class&quot;]&#x3D;&gt;</span><br><span class="line">    string(7) &quot;Student&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  [5]&#x3D;&gt;</span><br><span class="line">  object(ReflectionMethod)#7 (2) &#123;</span><br><span class="line">    [&quot;name&quot;]&#x3D;&gt;</span><br><span class="line">    string(5) &quot;setId&quot;</span><br><span class="line">    [&quot;class&quot;]&#x3D;&gt;</span><br><span class="line">    string(7) &quot;Student&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><span id='getProperties'></span><strong>获取属性列表</strong> =&gt; public array ReflectionClass::getProperties ([ int $filter ] )</p>
+<p> 参数filter用于过滤结果，可用常量如下：</p>
+<ul>
+<li><p>ReflectionProperty::IS_STATIC<br>指示了 static 的属性。</p>
+</li>
+<li><p>ReflectionProperty::IS_PUBLIC<br>指示了 public 的属性。</p>
+</li>
+<li><p>ReflectionProperty::IS_PROTECTED<br>指示了 protected 的属性。</p>
+</li>
+<li><p>ReflectionProperty::IS_PRIVATE<br>指示了 private 的属性。</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$propertyArray &#x3D; $objectClass-&gt;getProperties();</span><br><span class="line">var_dump($propertyArray);</span><br></pre></td></tr></table></figure>
+<p>将打印如下结果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">array(3) &#123;</span><br><span class="line">  [0]&#x3D;&gt;</span><br><span class="line">  object(ReflectionProperty)#2 (2) &#123;</span><br><span class="line">    [&quot;name&quot;]&#x3D;&gt;</span><br><span class="line">    string(4) &quot;name&quot;</span><br><span class="line">    [&quot;class&quot;]&#x3D;&gt;</span><br><span class="line">    string(7) &quot;Student&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  [1]&#x3D;&gt;</span><br><span class="line">  object(ReflectionProperty)#3 (2) &#123;</span><br><span class="line">    [&quot;name&quot;]&#x3D;&gt;</span><br><span class="line">    string(3) &quot;sex&quot;</span><br><span class="line">    [&quot;class&quot;]&#x3D;&gt;</span><br><span class="line">    string(7) &quot;Student&quot;</span><br><span class="line">  &#125;</span><br><span class="line">  [2]&#x3D;&gt;</span><br><span class="line">  object(ReflectionProperty)#4 (2) &#123;</span><br><span class="line">    [&quot;name&quot;]&#x3D;&gt;</span><br><span class="line">    string(2) &quot;id&quot;</span><br><span class="line">    [&quot;class&quot;]&#x3D;&gt;</span><br><span class="line">    string(7) &quot;Student&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+    
+    <div class="footer clearfix">
+        <div class="tags float-left">
+            
+                <span>标签</span>
+                
+                <a href="/tags/PHP" rel="tag">PHP</a>
+                
+            
+        </div>
+        <div class="tool float-right d-none d-lg-block">
+            <div data-toggle="tooltip" data-html="true"
+                 data-original-title="最后更新：2018年01月15日">
+                <span>最后更新：2018年01月15日</span>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="comments" id="comments">
+    
+    <h3 class="title">文章评论</h3>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function () {
+        var disqus_config = function () {
+            this.page.url = 'http://example.com/2018/01/15/PHPReflection/';
+            this.page.identifier = '2018/01/15/PHPReflection/';
+            this.page.title = 'PHP反射机制';
+        };
+        var d = document,
+            s = d.createElement('script');
+        s.async = true;
+
+        s.src = 'https://Uncl3N1n3.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+
+</script>
+
+    <script id="dsq-count-scr" src="https://Uncl3N1n3.disqus.com/count.js" async></script>
+
+
+</div>
+            </div>
+            <div class="col-lg-4 sidebar d-none d-lg-block">
+                
+    
+        
+
+        
+            <div class="widget w-about">
+    <div class="background"
+         style="background:url(/img/about-background.png) no-repeat center center;-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
+    <div class="wrapper text-center">
+        <img src="/img/avatar.jpg">
+    </div>
+    <div class="textwidget text-center"><p class="username">小九</p>
+        <p class="about">Just For Fun</p></div>
+</div>
+        
+    
+        
+
+        
+            
+
+<div class="widget w-search">
+    <div class="item" id="search-form">
+        <div id="result-mask" class="hide"></div>
+        
+        <div class="input-group mt-2 mb-2">
+            <input id="search-key" class="form-control" type="search" autocomplete="off" placeholder="搜点什么呢?">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-primary btn-search" id="search-local">搜索</button>
+            </div>
+        </div>
+        
+    </div>
+    <div id="result-wrap" class="hide">
+        <div id="search-result" class="search-result"></div>
+    </div>
+    <div class="hide">
+        <template id="search-tpl">
+            <div class="item">
+                <a href="/{path}" title="{title}">
+                    <div class="title">{title}</div>
+                    <div class="content">{content}</div>
+                </a>
+            </div>
+        </template>
+    </div>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget widget_categories">
+    <div class="title">
+        <i class="fas fa-book"> </i>
+        分类目录
+    </div>
+    <ul>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/">编程开发</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/Yii2/">Yii2</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/myspace/">随笔</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/resources/">工具资源</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/Django/">Django</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/security/">信息安全</a>
+        </li>
+        
+    </ul>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget w-tags">
+    <div class="title">
+        <i class="fas fa-cloud" id="tags_switch"> </i>
+        标签聚合
+<!--        <div class="tags-random"><i class="fas fa-sync" id="change_tags"> 换一批</i> </div>-->
+    </div>
+    <div class="item">
+        
+        
+        
+            
+                <a href="/tags/github/">github</a>
+            
+                <a href="/tags/Yii2%E6%95%99%E7%A8%8B/">Yii2教程</a>
+            
+                <a href="/tags/yii2-editable/">yii2-editable</a>
+            
+                <a href="/tags/MariaDB/">MariaDB</a>
+            
+                <a href="/tags/docker-compose/">docker-compose</a>
+            
+                <a href="/tags/jsdelivr/">jsdelivr</a>
+            
+        
+    </div>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget w-recommended">
+    <div class="nav nav-tabs d-none d-xl-flex" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-random-tab" data-toggle="tab" href="#nav-random" role="tab"
+           aria-controls="nav-random" aria-selected="true"><i class="kicon i-tabrandom"></i>随机</a>
+        <a class="nav-item nav-link " id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab"
+           aria-controls="nav-new" aria-selected="false"><i class="kicon i-tabnew"></i>最新</a>
+        
+        <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab"
+           aria-controls="nav-hot" aria-selected="false"><i class="kicon i-tabhot"></i>热点</a>
+        
+    </div>
+    <div class="nav nav-tabs d-xl-none" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-random-tab" data-toggle="tab" href="#nav-random" role="tab"
+           aria-controls="nav-random" aria-selected="true">随机</a>
+        <a class="nav-item nav-link " id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab"
+           aria-controls="nav-new" aria-selected="false">最新</a>
+        
+        <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab"
+           aria-controls="nav-hot" aria-selected="false">热点</a>
+        
+    </div>
+    <div class="tab-content" id="nav-tabContent">
+        
+        <div class="tab-pane fade show active" id="nav-random" role="tabpanel" aria-labelledby="nav-random-tab">
+            
+
+
+
+    
+    
+        <a class="bookmark-item" title="记一次普通的渗透测试"
+           href="/2021/01/18/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%99%AE%E9%80%9A%E7%9A%84%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 记一次普通的渗透测试</a>
+    
+        <a class="bookmark-item" title="Codeception(三)"
+           href="/2018/01/29/Codeception-three/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Codeception(三)</a>
+    
+        <a class="bookmark-item" title="Glary Utilities PRO注册码"
+           href="/2018/02/11/GlaryUtilitiesKey/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Glary Utilities PRO注册码</a>
+    
+        <a class="bookmark-item" title="Django安装部署"
+           href="/2018/02/12/Django-MariaDB-Install/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Django安装部署</a>
+    
+        <a class="bookmark-item" title="Yii2 Event事件-场景应用"
+           href="/2018/01/24/Yii2-Event%E4%BA%8B%E4%BB%B6-%E5%9C%BA%E6%99%AF%E5%BA%94%E7%94%A8/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2 Event事件-场景应用</a>
+    
+        <a class="bookmark-item" title="PHP-GD库漏洞可导致服务器宕机"
+           href="/2018/02/02/GD%E5%BA%93%E6%BC%8F%E6%B4%9E%E5%8F%AF%E5%AF%BC%E8%87%B4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%95%E6%9C%BA/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> PHP-GD库漏洞可导致服务器宕机</a>
+    
+
+        </div>
+        <div class="tab-pane fade" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+            
+    
+        
+        <a class="bookmark-item" title="Hexo加速"
+           href="/2021/02/18/Hexo%E5%8A%A0%E9%80%9F/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Hexo加速</a>
+        
+    
+        
+        <a class="bookmark-item" title="记一次普通的渗透测试"
+           href="/2021/01/18/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%99%AE%E9%80%9A%E7%9A%84%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 记一次普通的渗透测试</a>
+        
+    
+        
+        <a class="bookmark-item" title="Git仓库同步附脚本"
+           href="/2020/08/21/Git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB%E9%99%84%E8%84%9A%E6%9C%AC/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Git仓库同步附脚本</a>
+        
+    
+        
+        <a class="bookmark-item" title="PHP-Xdebug"
+           href="/2018/03/02/PHP-Xdebug/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> PHP-Xdebug</a>
+        
+    
+        
+        <a class="bookmark-item" title="Django安装部署"
+           href="/2018/02/12/Django-MariaDB-Install/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Django安装部署</a>
+        
+    
+        
+        <a class="bookmark-item" title="Glary Utilities PRO注册码"
+           href="/2018/02/11/GlaryUtilitiesKey/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Glary Utilities PRO注册码</a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+
+
+        </div>
+        
+            <div class="tab-pane fade" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
+            </div>
+        
+    </div>
+</div>
+
+        
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="k-footer">
+    <div class="f-toolbox">
+        <div class="gotop ">
+            <div class="gotop-btn">
+                <span class="kicon i-up"></span>
+            </div>
+        </div>
+        
+
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="social">
+                    
+                        
+                        
+                    
+                    <!--                    <?php-->
+                    <!--                    $social = array('s_sina', 's_bilibili', 's_coding', 's_gitee', 's_twitter', 's_telegram', 's_linkedin', 's_youtube', 's_github', 's_stackflow', 's_email');-->
+                    <!--                    foreach ($social as $social) {-->
+                    <!--                        if (kratos_option($social)) {-->
+                    <!--                            echo '<a target="_blank" rel="nofollow" href="' . kratos_option($social . '_url') . '"><i class="kicon i-' . str_replace("s_", "", $social) . '"></i></a>';-->
+                    <!--                    }-->
+                    <!--                    }-->
+                    <!--                    ?>-->
+                </p>
+                <p>
+                    COPYRIGHT © 2021 <a
+                            href="/">小九博客</a> ALL RIGHTS RESERVED.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/bootstrap.bundle.min.js?ver=4.5.0"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/layer.min.js?ver=3.1.1"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/kratos.min.js?ver=3.2.5"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/comments.min.js?ver=3.2.5"></script>
+    
+
+
+
+    <script src="/js/widgets/search.js"></script>
+
+
+    <script src="/js/widgets/tags.js"></script>
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+<script>
+    var hotest = []
+    $(function(){
+        var firebaseConfig = {
+            apiKey: "AIzaSyDNd2Yn4CxzvywabcXbRCnAnHxlqqjcZRY",
+            authDomain: "blog-93530.firebaseapp.com",
+            projectId: "blog-93530",
+            storageBucket: "blog-93530.appspot.com",
+            messagingSenderId: "11551113906",
+            appId: "1:11551113906:web:0a298c6ecf2e73d15dbfab",
+            measurementId: "G-HEYJLNQ883"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        function initHotest(articles){
+            articles.orderBy("count","desc").limit(6).get().then(function(items){
+                items.forEach(function(doc){
+                    $("#nav-hot").append(
+                        "        <a class=\"bookmark-item\" title=\""+doc.id+"\"\n" +
+                        "           href=\"/"+doc.data().path+"\"\n" +
+                        "           rel=\"bookmark\"><i class=\"fas fa-pencil-alt\"> </i> "+doc.id+"</a>"
+                    )
+                })
+            })
+        }
+        function getCount(doc, increaseCount, url_path) {
+            //increaseCount will be false when not in article page
+            return doc.get().then(function (d) {
+                var count
+                if (!d.exists) { //has no data, initialize count
+                    if (increaseCount) {
+                        if (url_path) {
+                            doc.set({
+                                count: 1,
+                                path: url_path
+                            })
+                        }else{
+                            doc.set({
+                                count: 1
+                            })
+                        }
+                        count = 1
+                    }
+                    else {
+                        count = 0
+                    }
+                }
+                else { //has data
+                    count = d.data().count
+                    if (increaseCount) {
+                        if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                            if (url_path) {
+                                doc.set({
+                                    count: count + 1,
+                                    path: url_path
+                                })
+                            }else{
+                                doc.set({
+                                    count: count + 1
+                                })
+                            }
+                            count++
+                        }
+                    }
+                }
+                if (window.localStorage && increaseCount) { //mark as visited
+                    localStorage.setItem(title, true)
+                }
+
+                return count
+            })
+        }
+
+        function appendCountTo(el) {
+            return function (count) {
+                $(el).append(
+                    $('<span>').addClass('post-visitors-count').append(
+
+                    ).append(
+                        $('<span>').addClass('post-meta-item-icon').append(
+                            $('<i>').addClass('kicon i-hot')
+                        )
+                    ).append($('<span>').text(count + '点热度'))
+                )
+            }
+        }
+        var db = firebase.firestore()
+        var articles = db.collection('articles')
+
+        initHotest(articles)
+
+        //https://hexo.io/zh-tw/docs/variables.html
+        var isPost = 'PHP反射机制'.length > 0
+        var isArchive = 'false' === 'true'
+        var isCategory = 'false' === 'true'
+        var isTag = 'false' === 'true'
+        if (isPost) { //is article page
+            var title = 'PHP反射机制'
+            var path = '2018/01/15/PHPReflection/'
+            var doc = articles.doc(title)
+            getCount(doc, true,path).then(appendCountTo($('.post-meta')))
+        } else { //is index page
+            var titles = []; //array to titles
+            
+            var promises = titles.map(function (title) {
+                return articles.doc(title)
+            }).map(function (doc) {
+                return getCount(doc)
+            })
+            Promise.all(promises).then(function (counts) {
+                var metas = $('.post-meta')
+                counts.forEach(function (val, idx) {
+                    appendCountTo(metas[idx])(val)
+                })
+            })
+        }
+    })
+</script>
+
+</body>
+
+</html>
