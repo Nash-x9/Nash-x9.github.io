@@ -2295,6 +2295,13 @@ a {
 .toc-item{
     list-style: none;
     display: block;
+
+}
+
+.widget_toc{
+    position : sticky ;
+    top : 10px ;
+    z-index: 9999;
 }
 
 /*--------------------------------------------------------------
