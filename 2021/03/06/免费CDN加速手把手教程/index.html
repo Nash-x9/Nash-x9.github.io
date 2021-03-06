@@ -208,7 +208,7 @@
 <p>再添加一条A记录，并且选择线路为<code>境内</code>或者你<code>当前网络的运营商名称</code>，<code>dmz.mytool.cc</code>解析到步骤1找到的高速IP<code>104.18.151.135</code></p>
 <p>最终配置如图：</p>
 <p><img src="https://i.loli.net/2021/03/06/jXYNLkF4xM6t2QU.png" alt="DNS配置.png"></p>
-<p>至此完成了对源站HTTP请求对加速，如果只是为网站加速，到此就可以了。后面内容为小飞机加速。</p>
+<p>至此完成了对源站HTTP请求的加速，如果只是为网站加速，到此就可以了。后面内容为小飞机加速。</p>
 <p><strong>3.1.5 小飞机反向代理及SSL配置</strong></p>
 <p>在之前，我使用的是v2一键环境，使用的是WebSocket动态端口协议，我们在配置完成CDN后，还需要部署反向代理，以便正常解析协议，后续采用WebSocket+TLS协议。</p>
 <p>首先给我们的域名配置SSL。</p>
@@ -223,7 +223,7 @@
 <p><strong>3.1.6 协议修改</strong></p>
 <p>这里我使用一键端配置较为方便，我们直接贴关键配置</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">        &quot;inbounds&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                        &quot;listen&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">                        &quot;port&quot;: 2021,</span><br><span class="line">                        &quot;protocol&quot;: &quot;vmess&quot;,</span><br><span class="line">                        &#125;,</span><br><span class="line">                        &quot;streamSettings&quot;: &#123;</span><br><span class="line">                                &quot;network&quot;: &quot;ws&quot;,</span><br><span class="line">                                &quot;wsSettings&quot;: &#123;</span><br><span class="line">                                  &quot;path&quot;: &quot;&#x2F;lovestory&quot;</span><br><span class="line">                                &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                &#125;</span><br><span class="line">        ],</span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>支持就完成了所有配置，重启v2和nginx服务，使得配置生效即可。</p>
+<p>至此就完成了所有配置，重启v2和nginx服务，使得配置生效即可。</p>
 <h2 id="4-讲在最后"><a href="#4-讲在最后" class="headerlink" title="4.讲在最后"></a>4.讲在最后</h2><p>在阅读各种教程文章的时候，我发现我们写博客常常会写某某技术教程，对于没有展现渠道和粉丝的博客（<del>比如我，小丑竟是我自己</del>），很多人在没接触到这个概念或技术名词到时候，很难去直接检索该名词，以获得该技能。</p>
 <p>例如本文中讲到的CloudFlare自选IP，这个技术已经流行了几年之久了，网上教程也铺天盖地，然而我却不了解。因此不断学习，增加获得知识面的渠道真的很重要（这里还是要感谢90Team）。</p>
 <p><strong>PS：本文中的mytool.cc欲出售，2k给有缘人。^_^</strong></p>
@@ -405,17 +405,17 @@
         
         
             
-                <a href="/tags/typora/">typora</a>
+                <a href="/tags/phpStorm-Xdebug/">phpStorm+Xdebug</a>
+            
+                <a href="/tags/DatePicker/">DatePicker</a>
+            
+                <a href="/tags/git/">git</a>
+            
+                <a href="/tags/yii2-%E4%BA%8B%E4%BB%B6/">yii2-事件</a>
             
                 <a href="/tags/%E6%97%81%E7%AB%99/">旁站</a>
             
-                <a href="/tags/getshell/">getshell</a>
-            
-                <a href="/tags/Django/">Django</a>
-            
-                <a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
-            
-                <a href="/tags/docker-compose/">docker-compose</a>
+                <a href="/tags/sync/">sync</a>
             
         
     </div>
@@ -457,29 +457,29 @@
 
     
     
+        <a class="bookmark-item" title="【算法】变量交换"
+           href="/2018/01/24/algorithmExchange-variables/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 【算法】变量交换</a>
+    
         <a class="bookmark-item" title="Codeception(三)"
            href="/2018/01/29/Codeception-three/"
            rel="bookmark"><i class="fas fa-pencil-alt"> </i> Codeception(三)</a>
-    
-        <a class="bookmark-item" title="Git仓库同步附脚本"
-           href="/2020/08/21/Git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB%E9%99%84%E8%84%9A%E6%9C%AC/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Git仓库同步附脚本</a>
-    
-        <a class="bookmark-item" title="Django安装部署"
-           href="/2018/02/12/Django-MariaDB-Install/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Django安装部署</a>
-    
-        <a class="bookmark-item" title="【[转]PHP资源大全】Awesome PHP 项目"
-           href="/2018/01/03/awesomePHP/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 【[转]PHP资源大全】Awesome PHP 项目</a>
     
         <a class="bookmark-item" title="Yii2-Editable插件【GridView编辑】"
            href="/2018/01/16/Yii2-Editable%E6%8F%92%E4%BB%B6/"
            rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2-Editable插件【GridView编辑】</a>
     
-        <a class="bookmark-item" title="【算法】变量交换"
-           href="/2018/01/24/algorithmExchange-variables/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 【算法】变量交换</a>
+        <a class="bookmark-item" title="记一次普通的渗透测试"
+           href="/2021/01/18/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%99%AE%E9%80%9A%E7%9A%84%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 记一次普通的渗透测试</a>
+    
+        <a class="bookmark-item" title="Yii2 Event事件-初识"
+           href="/2018/01/09/Yii2-Event%E4%BA%8B%E4%BB%B6-%E5%88%9D%E8%AF%86/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2 Event事件-初识</a>
+    
+        <a class="bookmark-item" title="Glary Utilities PRO注册码"
+           href="/2018/02/11/GlaryUtilitiesKey/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Glary Utilities PRO注册码</a>
     
 
         </div>
