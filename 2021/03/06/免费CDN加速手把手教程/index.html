@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>免费CDN加速手把手教程 | 小九博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="format-detection" content="telphone=no, email=no">
+    <meta name="root" content="/">
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/img/avatar.jpg"><meta name="keywords" content="小九博客,PHP,程序员,yii2,教程,黑客,信息安全,安全开发"><meta name="theme-color" content="#282a2c">
+
+    
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/bootstrap.min.css?ver=4.5.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/fontawesome.min.css?ver=5.13.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/iconfont.min.css?ver=3.1.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/layer.min.css?ver=3.1.1" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/kratos.min.css?ver=3.2.5" type="text/css" media="all">
+        
+    
+    <script src="/js/jquery.min.js?ver=3.4.1"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+
+<div class="k-header">
+    <nav class="k-nav navbar navbar-expand-lg navbar-light fixed-top" style=&#34;background: #282a2c&#34;>
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                
+                    <h1>小九博客</h1>
+                
+            </a>
+            
+                <button class="navbar-toggler navbar-toggler-right" id="navbutton" type="button" data-toggle="collapse"
+                        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="line first-line"></span>
+                    <span class="line second-line"></span>
+                    <span class="line third-line"></span>
+                </button>
+                <div id="navbarResponsive" class="collapse navbar-collapse">
+                    <ul id="menu" class="navbar-nav ml-auto">
+                        <li class="nav-item"><a title="首页" href="/" class="nav-link" aria-current="page">首页</a></li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/develop" title="编程开发"
+                                       class="nav-link" aria-current="page">编程开发</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/security" title="信息安全"
+                                       class="nav-link" aria-current="page">信息安全</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/resources" title="工具资源"
+                                       class="nav-link" aria-current="page">工具资源</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/myspace" title="随笔"
+                                       class="nav-link" aria-current="page">随笔</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item dropdown">
+                                
+                                    <a href="#" title="在线工具" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false" class="dropdown-toggle nav-link">在线工具</a>
+                                    <ul class="dropdown-menu" aria-labelledby="menu-item-dropdown-13" role="menu">
+                                        
+                                            <li class="nav-item"><a title="Json解析"
+                                                                    target="_blank" rel="noopener" href="http://www.bejson.com"
+                                                                    class="dropdown-item">Json解析</a></li>
+                                        
+                                            <li class="nav-item"><a title="JavaRuntimeExec"
+                                                                    href="/JavaRuntimeExecPayload.html"
+                                                                    class="dropdown-item">JavaRuntimeExec</a></li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/about" title="关于"
+                                       class="nav-link" aria-current="page">关于</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+        </div>
+    </nav>
+    <div class="banner">
+        <div class="overlay"></div>
+        <div class="content text-center" style="background-image: url(https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/img/background.png);">
+            <div class="introduce animated fadeInUp">
+                <div class="title">小九博客</div>
+                <div class="mate">Hack The World!</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="k-main banner" style="background:#f5f5f5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 details">
+                <div class="article">
+    
+        <div class="breadcrumb-box">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a class="text-dark" href="/"> 首页</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a class="text-dark"
+                       href="/categories/myspace">随笔</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page"> 正文</li>
+            </ol>
+        </div>
+    
+    <div class="header">
+        <h1 class="title">免费CDN加速手把手教程</h1>
+        <div class="meta">
+            <div class="a-meta post-meta">
+        <span class=" d-none d-md-block">
+            <span class="mr-2"><i class="kicon i-calendar"></i>2021年03月06日</span>
+            <!--            <span class="mr-2"><i class="kicon i-comments"></i><?php comments_number('0', '1', '%'); _e('条评论', 'kratos'); ?></span>-->
+        </span>
+    <span class="  d-block">
+        </span>
+    
+</div>
+        </div>
+    </div>
+    <div class="content">
+        <blockquote>
+<p>作为一个普通的IT Guy，我不禁时常怀疑，为何别人的飞机场要比自己搭建的小飞机速度快那么多呢？难道飞机场主都是究极土豪，人均CN2 GIA线路？直到我在90Sec看到一篇内务帖…</p>
+</blockquote>
+<p>现有90论坛处于CloudFlare CDN默认加速防护下，众所周知的原因，CloudFlareCDN对于国内用户，很多时候不仅不会加速，还会增加延迟。</p>
+<p><a target="_blank" rel="noopener" href="https://forum.90sec.com/u/c0bra/">@c0bra</a>大佬提出：在接入CDN后，可以接入CloudFlare Partner平台，再通过智能DNS解析，设置CloudFlare自选IP，以达到加速目的。</p>
+<p>这是我第一次接入到<code>CloudFlare自选IP</code>这个概念，看完大佬说的步骤也甚是迷惑，在经过各种Google和Baidu，终于产生了该文章。</p>
+<h2 id="1-为何国内用户直接使用CloudFlare（CF）CDN加速效果不理想？"><a href="#1-为何国内用户直接使用CloudFlare（CF）CDN加速效果不理想？" class="headerlink" title="1.为何国内用户直接使用CloudFlare（CF）CDN加速效果不理想？"></a>1.为何国内用户直接使用CloudFlare（CF）CDN加速效果不理想？</h2><p>CDN优点非常多，包括加速网站访问，减轻源站压力，隐藏真实IP等。CloudFlare因其优质免费的服务，吸引了大量国内用户，几年前我第一次知道该平台时，兴冲冲的将博客域名托管到了CloudFlare下，然而仅仅过了半年，网站就时常无法访问，我使用真实IP直接访问也比走CDN速度快，我便对该服务的好坏产生了怀疑，我们来看看CloudFlareCDN是如何实现加速的。</p>
+<p><img src="https://i.loli.net/2021/03/06/CnKhJWrZSEzjvAe.png" alt="cloudflare加速.png"></p>
+<p>CloudFlare官网默认不提供CNAME和A记录接入CDN的方式，而免费的套餐CDN节点很有限，有限的节点中很多对于国内用户也不是很友好，随机分配节点因此也成了网站间歇性故障的主要原因。</p>
+<h2 id="2-CloudFlare-CDN自选IP是如何实现加速的？"><a href="#2-CloudFlare-CDN自选IP是如何实现加速的？" class="headerlink" title="2.CloudFlare CDN自选IP是如何实现加速的？"></a>2.CloudFlare CDN自选IP是如何实现加速的？</h2><p>既然随机分配的节点无法保证可用率，那么我们是否可以自己选择速度快的节点进行接入呢？</p>
+<p>免费套餐下，在官网是无法实现该功能了，但是我们可以利用智能DNS+CloudFlare Partner平台来实现通过CNAME和A记录接入CloudFlare，以实现自选IP的目的。</p>
+<p><img src="https://i.loli.net/2021/03/06/f5zbQ7kmAwsOEnR.png" alt="自选IP加速.png"></p>
+<h2 id="3-学会自选IP加速我们能做什么？"><a href="#3-学会自选IP加速我们能做什么？" class="headerlink" title="3.学会自选IP加速我们能做什么？"></a>3.学会自选IP加速我们能做什么？</h2><ul>
+<li>小飞机加速</li>
+<li>网站提速</li>
+<li>真实IP被Q使用CDN访问</li>
+<li>..各种需要CDN的场景</li>
+</ul>
+<h3 id="3-1-小飞机加速手把手教程"><a href="#3-1-小飞机加速手把手教程" class="headerlink" title="3.1 小飞机加速手把手教程"></a>3.1 小飞机加速手把手教程</h3><p><strong>3.1.1 寻找CDN高速IP节点</strong></p>
+<p>首先，我们需要知道如何找高速节点，这里我们推荐一款找高速IP的利器，<a target="_blank" rel="noopener" href="https://github.com/Spedoske/CloudflareScanner">CloudFlareScanner</a>，我个人的做法是在家里和公司分别运行该扫描，找到不同网络运营商下载速度较快的IP，该方法比较笨，但是十分有效。</p>
+<blockquote>
+<p>聪明些的方法是什么呢？我这里想到可以在家里NAS上设置定时任务，定期扫描高速IP节点，通过Dnspod的接口自动设置高速IP。</p>
+</blockquote>
+<p>在<code>https://github.com/Spedoske/CloudflareScanner/releases/</code>根据系统版本，直接下载编译好的程序。我这里是Mac于是下载<a target="_blank" rel="noopener" href="https://github.com/Spedoske/CloudflareScanner/releases/download/1.1.2/CloudflareScanner_v1.1.2_MacOS_x64.tar.gz">CloudflareScanner_v1.1.2_MacOS_x64.tar.gz</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#增加执行权限</span></span><br><span class="line">chmod +x CloudflareScanner</span><br><span class="line"><span class="comment">#执行扫描</span></span><br><span class="line">./CloudflareScanner</span><br><span class="line"><span class="comment">#请输入扫描协程数(数字越大越快,默认400):</span></span><br><span class="line"><span class="comment">#400</span></span><br><span class="line"><span class="comment">#请输入tcping次数(默认10):</span></span><br><span class="line"><span class="comment">#10</span></span><br><span class="line"><span class="comment">#请输入要测试的下载节点个数(默认10):</span></span><br><span class="line"><span class="comment">#10</span></span><br><span class="line"><span class="comment">#请输入下载测试时间(默认10,单位为秒):</span></span><br><span class="line"><span class="comment">#10</span></span><br><span class="line"><span class="comment">#开始tcping</span></span><br></pre></td></tr></table></figure>
+<p>该软件每次下载的节点不一定存在访问速度快的IP，因此多运行几次效果更佳。最终会在程序目录下生成result.csv,我们按照下载速度进行排序，就得到当前网络下的高速节点的IP了。如下图所示，本次检索到的IP为:<code>104.18.151.135</code></p>
+<blockquote>
+<p>如果有多个IP下载速度差别不大，尽量选择PING延迟低的IP。</p>
+</blockquote>
+<p><img src="https://i.loli.net/2021/03/06/rEo4gF2QNPdAlX6.png" alt="高速节点IP扫描结果.png"></p>
+<p><strong>3.1.2 选择智能DNS服务商</strong></p>
+<p>选择智能DNS的原因是其可以针对不同运营商线路分别进行解析，实现不同运营商下自选IP。</p>
+<p>这里我选择的是Dnspod平台进行接入，在域名注册商里设置域名NS为以下两条记录：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lilith.dnspod.net</span><br><span class="line">degree.dnspod.net</span><br><span class="line">#请注意，随着时间变化，这两条记录可能会发生变化，具体请参考Dnspod添加域名的指南，一般添加域名后会提示如何操作。</span><br></pre></td></tr></table></figure>
+<p><strong>3.1.3 CloudFlarePartner平台接入</strong></p>
+<blockquote>
+<p>个人认为CloudFlarePartner目前认证体系设计的并不恰当，需要使用自己的CF账号密码去登录第三方平台，很容易产生密码泄漏风险。我首先填写了一份CloudFlarePartner申请，如果通过申请，就可以自己搭建平台了。申请的周期比较长，为了尝鲜我暂时修改CF密码为临时密码，使用第三方平台（如<a target="_blank" rel="noopener" href="https://cdn.moeelf.com/">萌精灵</a>）进行接入。<strong>使用第三方平台，务必小心自己账号密码安全</strong></p>
+</blockquote>
+<p><code>使用CF账号密码登录</code>=&gt;<code>添加域名</code>=&gt;<code>DNS管理</code>=&gt;<code>添加新记录</code></p>
+<p>这里添加一个A记录，直接输入你的域名 例如<code>dmz.mytool.cc</code>,A 记录填写你服务器的真实IP。</p>
+<p><strong>3.1.4 智能DNS解析配置</strong></p>
+<p>回到Dnspod,添加一条CNAME解析记录，<code>dmz.mytool.cc</code>解析到<code>dmz.mytool.cc.cdn.cloudflare.net</code>。</p>
+<p>再添加一条A记录，并且选择线路为<code>境内</code>或者你<code>当前网络的运营商名称</code>，<code>dmz.mytool.cc</code>解析到步骤1找到的高速IP<code>104.18.151.135</code></p>
+<p>最终配置如图：</p>
+<p><img src="https://i.loli.net/2021/03/06/jXYNLkF4xM6t2QU.png" alt="DNS配置.png"></p>
+<p>至此完成了对源站HTTP请求对加速，如果只是为网站加速，到此就可以了。后面内容为小飞机加速。</p>
+<p><strong>3.1.5 小飞机反向代理及SSL配置</strong></p>
+<p>在之前，我使用的是v2一键环境，使用的是WebSocket动态端口协议，我们在配置完成CDN后，还需要部署反向代理，以便正常解析协议，后续采用WebSocket+TLS协议。</p>
+<p>首先给我们的域名配置SSL。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">这里使用acme脚本来申请Let<span class="string">&#x27;s Encrypt证书</span></span></span><br><span class="line">curl https://get.acme.sh | sh -s email=admin@war9.cn</span><br><span class="line"><span class="meta">#</span><span class="bash">申请证书</span></span><br><span class="line">~/.acme.sh/acme.sh --issue --nginx -d dmz.mytool.cc</span><br><span class="line"><span class="meta">#</span><span class="bash">申请后的原始证书需要安装到其他目录，根据官方文档，请勿使用原始的证书。</span></span><br><span class="line">~/.acme.sh/acme.sh --install-cert -d dmz.mytool.cc --key-file       /var/ssl/dmz.mytool.cc/key.pem  --fullchain-file /var/ssl/dmz.mytool.cc/cert.pem</span><br><span class="line"><span class="meta">#</span><span class="bash">至此证书文件就保存至/var/ssl/dmz.mytool.cc目录了。</span></span><br></pre></td></tr></table></figure>
+<p>接下来是Nginx配置。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">    <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">    <span class="attribute">root</span> /var/www/html;</span><br><span class="line">    <span class="attribute">ssl_certificate</span> /var/ssl/dmz.mytool.cc/cert.pem;</span><br><span class="line">    <span class="attribute">ssl_certificate_key</span> /var/ssl/dmz.mytool.cc/key.pem;</span><br><span class="line">    <span class="attribute">ssl_prefer_server_ciphers</span> <span class="literal">on</span>;</span><br><span class="line">    <span class="attribute">ssl_ciphers</span> EECDH+AESGCM:EDH+AESGCM;</span><br><span class="line">    <span class="attribute">server_name</span> _;</span><br><span class="line">    <span class="attribute">location</span><span class="regexp"> ^~</span> /.well-known/acme-challenge/ &#123;</span><br><span class="line">        <span class="attribute">default_type</span> <span class="string">&quot;text/plain&quot;</span>;</span><br><span class="line">        <span class="attribute">root</span> /var/www/html;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="attribute">location</span> = /.well-known/acme-challenge/ &#123;</span><br><span class="line">        <span class="attribute">return</span> <span class="number">404</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="attribute">location</span> /lovestory &#123;</span><br><span class="line">        <span class="attribute">proxy_redirect</span> <span class="literal">off</span>;</span><br><span class="line">        <span class="attribute">proxy_http_version</span> <span class="number">1</span>.<span class="number">1</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Upgrade $http_upgrade;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Connection <span class="string">&quot;upgrade&quot;</span>;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> Host $http_host;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Real-IP $remote_addr;</span><br><span class="line">        <span class="attribute">proxy_set_header</span> X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">set</span> $is_v2ray <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">if</span> ($http_upgrade = <span class="string">&quot;websocket&quot;</span>) &#123;</span><br><span class="line">        <span class="attribute">set</span> $is_v2ray <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> ($is_v2ray = <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="comment"># 仅当请求为 WebSocket 时才反代到 V2Ray</span></span><br><span class="line">        <span class="attribute">proxy_pass</span> http://127.0.0.1:2021;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">        <span class="attribute">if</span> ($is_v2ray = <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="comment"># 否则显示正常网页</span></span><br><span class="line">            <span class="attribute">return</span> <span class="number">301</span> https://dmz.mytool.cc;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>除了SSL配置外，解释几个关键的配置作用：</p>
+<ul>
+<li>location ./well-known:Let’s Encrypt申请证书时，需要验证该路径。</li>
+<li>location /lovestory: 后续要配置v2的路径伪装，我们将v2的流量伪装到lovestory路径下，其他流量走正常网站页面。</li>
+</ul>
+<p><strong>3.1.6 协议修改</strong></p>
+<p>这里我使用一键端配置较为方便，我们直接贴关键配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">        &quot;inbounds&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                        &quot;listen&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">                        &quot;port&quot;: 2021,</span><br><span class="line">                        &quot;protocol&quot;: &quot;vmess&quot;,</span><br><span class="line">                        &#125;,</span><br><span class="line">                        &quot;streamSettings&quot;: &#123;</span><br><span class="line">                                &quot;network&quot;: &quot;ws&quot;,</span><br><span class="line">                                &quot;wsSettings&quot;: &#123;</span><br><span class="line">                                  &quot;path&quot;: &quot;&#x2F;lovestory&quot;</span><br><span class="line">                                &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                &#125;</span><br><span class="line">        ],</span><br><span class="line">        </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>支持就完成了所有配置，重启v2和nginx服务，使得配置生效即可。</p>
+<h2 id="4-讲在最后"><a href="#4-讲在最后" class="headerlink" title="4.讲在最后"></a>4.讲在最后</h2><p>在阅读各种教程文章的时候，我发现我们写博客常常会写某某技术教程，对于没有展现渠道和粉丝的博客（<del>比如我，小丑竟是我自己</del>），很多人在没接触到这个概念或技术名词到时候，很难去直接检索该名词，以获得该技能。</p>
+<p>例如本文中讲到的CloudFlare自选IP，这个技术已经流行了几年之久了，网上教程也铺天盖地，然而我却不了解。因此不断学习，增加获得知识面的渠道真的很重要（这里还是要感谢90Team）。</p>
+<p><strong>PS：本文中的mytool.cc欲出售，2k给有缘人。^_^</strong></p>
+
+    </div>
+    
+    <div class="footer clearfix">
+        <div class="tags float-left">
+            
+                <span>标签</span>
+                
+                <a href="/tags/v2ray" rel="tag">v2ray</a>
+                
+                <a href="/tags/cdn" rel="tag">cdn</a>
+                
+                <a href="/tags/cloudflare" rel="tag">cloudflare</a>
+                
+                <a href="/tags/cloudflarepartner" rel="tag">cloudflarepartner</a>
+                
+                <a href="/tags/dnspod" rel="tag">dnspod</a>
+                
+            
+        </div>
+        <div class="tool float-right d-none d-lg-block">
+            <div data-toggle="tooltip" data-html="true"
+                 data-original-title="最后更新：2021年03月06日">
+                <span>最后更新：2021年03月06日</span>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="comments" id="comments">
+    
+    <h3 class="title">文章评论</h3>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function () {
+        var disqus_config = function () {
+            this.page.url = 'http://example.com/2021/03/06/%E5%85%8D%E8%B4%B9CDN%E5%8A%A0%E9%80%9F%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E7%A8%8B/';
+            this.page.identifier = '2021/03/06/免费CDN加速手把手教程/';
+            this.page.title = '免费CDN加速手把手教程';
+        };
+        var d = document,
+            s = d.createElement('script');
+        s.async = true;
+
+        s.src = 'https://Uncl3N1n3.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+
+</script>
+
+    <script id="dsq-count-scr" src="https://Uncl3N1n3.disqus.com/count.js" async></script>
+
+
+</div>
+            </div>
+            <div class="col-lg-4 sidebar d-none d-lg-block">
+                
+    
+        
+
+        
+            <div class="widget w-about">
+    <div class="background"
+         style="background:url(/img/about-background.png) no-repeat center center;-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
+    <div class="wrapper text-center">
+        <img src="/img/avatar.jpg">
+    </div>
+    <div class="textwidget text-center"><p class="username">小九</p>
+        <p class="about">Just For Fun</p></div>
+</div>
+        
+    
+        
+
+        
+            
+    <div class="widget widget_toc">
+        <div class="title">
+            <i class="fas fa-book"> </i>
+            文章大纲
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%BA%E4%BD%95%E5%9B%BD%E5%86%85%E7%94%A8%E6%88%B7%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8CloudFlare%EF%BC%88CF%EF%BC%89CDN%E5%8A%A0%E9%80%9F%E6%95%88%E6%9E%9C%E4%B8%8D%E7%90%86%E6%83%B3%EF%BC%9F"><span class="toc-text">1.为何国内用户直接使用CloudFlare（CF）CDN加速效果不理想？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-CloudFlare-CDN%E8%87%AA%E9%80%89IP%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%8A%A0%E9%80%9F%E7%9A%84%EF%BC%9F"><span class="toc-text">2.CloudFlare CDN自选IP是如何实现加速的？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%AD%A6%E4%BC%9A%E8%87%AA%E9%80%89IP%E5%8A%A0%E9%80%9F%E6%88%91%E4%BB%AC%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">3.学会自选IP加速我们能做什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%B0%8F%E9%A3%9E%E6%9C%BA%E5%8A%A0%E9%80%9F%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E7%A8%8B"><span class="toc-text">3.1 小飞机加速手把手教程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%AE%B2%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-text">4.讲在最后</span></a></li></ol>
+    </div>
+
+
+        
+    
+        
+
+        
+            
+
+<div class="widget w-search">
+    <div class="item" id="search-form">
+        <div id="result-mask" class="hide"></div>
+        
+        <div class="input-group mt-2 mb-2">
+            <input id="search-key" class="form-control" type="search" autocomplete="off" placeholder="搜点什么呢?">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-primary btn-search" id="search-local">搜索</button>
+            </div>
+        </div>
+        
+    </div>
+    <div id="result-wrap" class="hide">
+        <div id="search-result" class="search-result"></div>
+    </div>
+    <div class="hide">
+        <template id="search-tpl">
+            <div class="item">
+                <a href="/{path}" title="{title}">
+                    <div class="title">{title}</div>
+                    <div class="content">{content}</div>
+                </a>
+            </div>
+        </template>
+    </div>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget widget_categories">
+    <div class="title">
+        <i class="fas fa-book"> </i>
+        分类目录
+    </div>
+    <ul>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/">编程开发</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/Yii2/">Yii2</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/myspace/">随笔</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/resources/">工具资源</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/Django/">Django</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/security/">信息安全</a>
+        </li>
+        
+    </ul>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget w-tags">
+    <div class="title">
+        <i class="fas fa-cloud" id="tags_switch"> </i>
+        标签聚合
+<!--        <div class="tags-random"><i class="fas fa-sync" id="change_tags"> 换一批</i> </div>-->
+    </div>
+    <div class="item">
+        
+        
+        
+            
+                <a href="/tags/typora/">typora</a>
+            
+                <a href="/tags/%E6%97%81%E7%AB%99/">旁站</a>
+            
+                <a href="/tags/getshell/">getshell</a>
+            
+                <a href="/tags/Django/">Django</a>
+            
+                <a href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/">渗透测试</a>
+            
+                <a href="/tags/docker-compose/">docker-compose</a>
+            
+        
+    </div>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget w-recommended">
+    <div class="nav nav-tabs d-none d-xl-flex" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-random-tab" data-toggle="tab" href="#nav-random" role="tab"
+           aria-controls="nav-random" aria-selected="true"><i class="kicon i-tabrandom"></i>随机</a>
+        <a class="nav-item nav-link " id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab"
+           aria-controls="nav-new" aria-selected="false"><i class="kicon i-tabnew"></i>最新</a>
+        
+        <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab"
+           aria-controls="nav-hot" aria-selected="false"><i class="kicon i-tabhot"></i>热点</a>
+        
+    </div>
+    <div class="nav nav-tabs d-xl-none" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-random-tab" data-toggle="tab" href="#nav-random" role="tab"
+           aria-controls="nav-random" aria-selected="true">随机</a>
+        <a class="nav-item nav-link " id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab"
+           aria-controls="nav-new" aria-selected="false">最新</a>
+        
+        <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab"
+           aria-controls="nav-hot" aria-selected="false">热点</a>
+        
+    </div>
+    <div class="tab-content" id="nav-tabContent">
+        
+        <div class="tab-pane fade show active" id="nav-random" role="tabpanel" aria-labelledby="nav-random-tab">
+            
+
+
+
+    
+    
+        <a class="bookmark-item" title="Codeception(三)"
+           href="/2018/01/29/Codeception-three/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Codeception(三)</a>
+    
+        <a class="bookmark-item" title="Git仓库同步附脚本"
+           href="/2020/08/21/Git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB%E9%99%84%E8%84%9A%E6%9C%AC/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Git仓库同步附脚本</a>
+    
+        <a class="bookmark-item" title="Django安装部署"
+           href="/2018/02/12/Django-MariaDB-Install/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Django安装部署</a>
+    
+        <a class="bookmark-item" title="【[转]PHP资源大全】Awesome PHP 项目"
+           href="/2018/01/03/awesomePHP/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 【[转]PHP资源大全】Awesome PHP 项目</a>
+    
+        <a class="bookmark-item" title="Yii2-Editable插件【GridView编辑】"
+           href="/2018/01/16/Yii2-Editable%E6%8F%92%E4%BB%B6/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2-Editable插件【GridView编辑】</a>
+    
+        <a class="bookmark-item" title="【算法】变量交换"
+           href="/2018/01/24/algorithmExchange-variables/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 【算法】变量交换</a>
+    
+
+        </div>
+        <div class="tab-pane fade" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+            
+    
+        
+        <a class="bookmark-item" title="免费CDN加速手把手教程"
+           href="/2021/03/06/%E5%85%8D%E8%B4%B9CDN%E5%8A%A0%E9%80%9F%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E7%A8%8B/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 免费CDN加速手把手教程</a>
+        
+    
+        
+        <a class="bookmark-item" title="Hexo加速"
+           href="/2021/02/18/Hexo%E5%8A%A0%E9%80%9F/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Hexo加速</a>
+        
+    
+        
+        <a class="bookmark-item" title="记一次普通的渗透测试"
+           href="/2021/01/18/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%99%AE%E9%80%9A%E7%9A%84%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 记一次普通的渗透测试</a>
+        
+    
+        
+        <a class="bookmark-item" title="Git仓库同步附脚本"
+           href="/2020/08/21/Git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB%E9%99%84%E8%84%9A%E6%9C%AC/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Git仓库同步附脚本</a>
+        
+    
+        
+        <a class="bookmark-item" title="PHP-Xdebug"
+           href="/2018/03/02/PHP-Xdebug/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> PHP-Xdebug</a>
+        
+    
+        
+        <a class="bookmark-item" title="Django安装部署"
+           href="/2018/02/12/Django-MariaDB-Install/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Django安装部署</a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+
+
+        </div>
+        
+            <div class="tab-pane fade" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
+            </div>
+        
+    </div>
+</div>
+
+        
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="k-footer">
+    <div class="f-toolbox">
+        <div class="gotop ">
+            <div class="gotop-btn">
+                <span class="kicon i-up"></span>
+            </div>
+        </div>
+        
+
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="social">
+                    
+                        
+                        
+                    
+                    <!--                    <?php-->
+                    <!--                    $social = array('s_sina', 's_bilibili', 's_coding', 's_gitee', 's_twitter', 's_telegram', 's_linkedin', 's_youtube', 's_github', 's_stackflow', 's_email');-->
+                    <!--                    foreach ($social as $social) {-->
+                    <!--                        if (kratos_option($social)) {-->
+                    <!--                            echo '<a target="_blank" rel="nofollow" href="' . kratos_option($social . '_url') . '"><i class="kicon i-' . str_replace("s_", "", $social) . '"></i></a>';-->
+                    <!--                    }-->
+                    <!--                    }-->
+                    <!--                    ?>-->
+                </p>
+                <p>
+                    COPYRIGHT © 2021 <a
+                            href="/">小九博客</a> ALL RIGHTS RESERVED.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/bootstrap.bundle.min.js?ver=4.5.0"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/layer.min.js?ver=3.1.1"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/kratos.min.js?ver=3.2.5"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/comments.min.js?ver=3.2.5"></script>
+    
+
+
+
+    <script src="/js/widgets/search.js"></script>
+
+
+    <script src="/js/widgets/tags.js"></script>
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+<script>
+    var hotest = []
+    $(function(){
+        var firebaseConfig = {
+            apiKey: "AIzaSyDNd2Yn4CxzvywabcXbRCnAnHxlqqjcZRY",
+            authDomain: "blog-93530.firebaseapp.com",
+            projectId: "blog-93530",
+            storageBucket: "blog-93530.appspot.com",
+            messagingSenderId: "11551113906",
+            appId: "1:11551113906:web:0a298c6ecf2e73d15dbfab",
+            measurementId: "G-HEYJLNQ883"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        function initHotest(articles){
+            articles.orderBy("count","desc").limit(6).get().then(function(items){
+                items.forEach(function(doc){
+                    $("#nav-hot").append(
+                        "        <a class=\"bookmark-item\" title=\""+doc.id+"\"\n" +
+                        "           href=\"/"+doc.data().path+"\"\n" +
+                        "           rel=\"bookmark\"><i class=\"fas fa-pencil-alt\"> </i> "+doc.id+"</a>"
+                    )
+                })
+            })
+        }
+        function getCount(doc, increaseCount, url_path) {
+            //increaseCount will be false when not in article page
+            return doc.get().then(function (d) {
+                var count
+                if (!d.exists) { //has no data, initialize count
+                    if (increaseCount) {
+                        if (url_path) {
+                            doc.set({
+                                count: 1,
+                                path: url_path
+                            })
+                        }else{
+                            doc.set({
+                                count: 1
+                            })
+                        }
+                        count = 1
+                    }
+                    else {
+                        count = 0
+                    }
+                }
+                else { //has data
+                    count = d.data().count
+                    if (increaseCount) {
+                        if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                            if (url_path) {
+                                doc.set({
+                                    count: count + 1,
+                                    path: url_path
+                                })
+                            }else{
+                                doc.set({
+                                    count: count + 1
+                                })
+                            }
+                            count++
+                        }
+                    }
+                }
+                if (window.localStorage && increaseCount) { //mark as visited
+                    localStorage.setItem(title, true)
+                }
+
+                return count
+            })
+        }
+
+        function appendCountTo(el) {
+            return function (count) {
+                $(el).append(
+                    $('<span>').addClass('post-visitors-count').append(
+
+                    ).append(
+                        $('<span>').addClass('post-meta-item-icon').append(
+                            $('<i>').addClass('kicon i-hot')
+                        )
+                    ).append($('<span>').text(count + '点热度'))
+                )
+            }
+        }
+        var db = firebase.firestore()
+        var articles = db.collection('articles')
+
+        initHotest(articles)
+
+        //https://hexo.io/zh-tw/docs/variables.html
+        var isPost = '免费CDN加速手把手教程'.length > 0
+        var isArchive = 'false' === 'true'
+        var isCategory = 'false' === 'true'
+        var isTag = 'false' === 'true'
+        if (isPost) { //is article page
+            var title = '免费CDN加速手把手教程'
+            var path = '2021/03/06/免费CDN加速手把手教程/'
+            var doc = articles.doc(title)
+            getCount(doc, true,path).then(appendCountTo($('.post-meta')))
+        } else { //is index page
+            var titles = []; //array to titles
+            
+            var promises = titles.map(function (title) {
+                return articles.doc(title)
+            }).map(function (doc) {
+                return getCount(doc)
+            })
+            Promise.all(promises).then(function (counts) {
+                var metas = $('.post-meta')
+                counts.forEach(function (val, idx) {
+                    appendCountTo(metas[idx])(val)
+                })
+            })
+        }
+    })
+</script>
+
+</body>
+
+</html>
