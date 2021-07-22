@@ -164,9 +164,15 @@
     </div>
     <div class="content">
         <p><img src="https://argoproj.github.io/argo-workflows/assets/argo.png" alt="Argo-Framework"></p>
-<h2 id="安装K8s"><a href="#安装K8s" class="headerlink" title="安装K8s"></a>安装K8s</h2><p>官方提供<a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/tasks/tools/">三个工具</a>，<a target="_blank" rel="noopener" href="https://kind.sigs.k8s.io/docs/user/quick-start/">Kind</a>、<a target="_blank" rel="noopener" href="https://minikube.sigs.k8s.io/docs/start/">Minikube</a>、<a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/install-kubeadm/">Kubeadm</a></p>
+<h2 id="安装K8s"><a href="#安装K8s" class="headerlink" title="安装K8s"></a>安装K8s</h2><p>安装K8s客户端，此处为下载最新版本。更多安装信息可查看<a target="_blank" rel="noopener" href="https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/">官网文档</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -LO <span class="string">&quot;https://dl.k8s.io/release/<span class="subst">$(curl -L -s https://dl.k8s.io/release/stable.txt)</span>/bin/linux/amd64/kubectl&quot;</span></span><br><span class="line">chmod +x kubectl</span><br><span class="line">sudo install kubectl /usr/<span class="built_in">local</span>/bin/</span><br></pre></td></tr></table></figure>
+
+<p>安装服务端，官方提供了<a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/tasks/tools/">三个工具</a>，<a target="_blank" rel="noopener" href="https://kind.sigs.k8s.io/docs/user/quick-start/">Kind</a>、<a target="_blank" rel="noopener" href="https://minikube.sigs.k8s.io/docs/start/">Minikube</a>、<a target="_blank" rel="noopener" href="https://kubernetes.io/zh/docs/setup/production-environment/tools/kubeadm/install-kubeadm/">Kubeadm</a></p>
 <p>学习时可使用Minikube，安装较为方便。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#下载Minikube</span></span><br><span class="line">curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64</span><br><span class="line">sudo install minikube-linux-amd64 /usr/<span class="built_in">local</span>/bin/minikube</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动时不能使用ROOT权限，需要创建非ROOT用户进行。</span></span><br><span class="line">useradd minikube</span><br><span class="line"><span class="comment"># 给创建的minikube用户增加docker权限</span></span><br><span class="line">sudo usermod -aG docker minikube &amp;&amp; newgrp docker</span><br><span class="line"></span><br><span class="line"><span class="comment">#以Docker驱动启动 并且设置阿里云镜像源</span></span><br><span class="line">minikube start --driver=docker --image-mirror-country=<span class="string">&#x27;cn&#x27;</span> --image-repository=<span class="string">&#x27;registry.cn-hangzhou.aliyuncs.com/google_containers&#x27;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里有一个坑，使用阿里云国内镜像源启动k8s服务时，阿里云国内的镜像源可能没有同步至最新版本，导致版本不匹配，所以选择版本时请随时查看阿里云支持的版本。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#下载Minikube</span></span><br><span class="line">curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64</span><br><span class="line">sudo install minikube-linux-amd64 /usr/<span class="built_in">local</span>/bin/minikube</span><br><span class="line"></span><br><span class="line"><span class="comment">#启动时不能使用ROOT权限，需要创建非ROOT用户进行。</span></span><br><span class="line">useradd minikube</span><br><span class="line"><span class="comment"># 给创建的minikube用户增加docker权限</span></span><br><span class="line">sudo usermod -aG docker minikube &amp;&amp; newgrp docker</span><br><span class="line"></span><br><span class="line">su minikube</span><br><span class="line"></span><br><span class="line"><span class="comment">#以Docker驱动启动 并且设置阿里云镜像源</span></span><br><span class="line">minikube start --driver=docker --image-mirror-country=<span class="string">&#x27;cn&#x27;</span> --image-repository=<span class="string">&#x27;registry.cn-hangzhou.aliyuncs.com/google_containers&#x27;</span></span><br></pre></td></tr></table></figure>
 <h2 id="Argo-framework部署"><a href="#Argo-framework部署" class="headerlink" title="Argo-framework部署"></a>Argo-framework部署</h2><blockquote>
 <p><a target="_blank" rel="noopener" href="https://github.com/argoproj/argo-workflows/releases">https://github.com/argoproj/argo-workflows/releases</a></p>
 </blockquote>
@@ -373,17 +379,17 @@
         
         
             
-                <a href="/tags/%E4%B8%83%E7%89%9B%E4%BA%91/">七牛云</a>
+                <a href="/tags/CDN/">CDN</a>
             
-                <a href="/tags/Django/">Django</a>
+                <a href="/tags/Hexo%E5%8A%A0%E9%80%9F/">Hexo加速</a>
             
-                <a href="/tags/%E5%AE%B9%E5%99%A8%E9%80%83%E9%80%B8/">容器逃逸</a>
+                <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">单元测试</a>
             
-                <a href="/tags/sync/">sync</a>
+                <a href="/tags/yii2-event/">yii2-event</a>
             
-                <a href="/tags/yii2-editable/">yii2-editable</a>
+                <a href="/tags/%E6%97%81%E7%AB%99/">旁站</a>
             
-                <a href="/tags/Hexo-admin/">Hexo-admin</a>
+                <a href="/tags/git-mirror/">git-mirror</a>
             
         
     </div>
@@ -425,6 +431,22 @@
 
     
     
+        <a class="bookmark-item" title="Django安装部署"
+           href="/2018/02/12/Django-MariaDB-Install/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Django安装部署</a>
+    
+        <a class="bookmark-item" title="PHP-Xdebug"
+           href="/2018/03/02/PHP-Xdebug/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> PHP-Xdebug</a>
+    
+        <a class="bookmark-item" title="常见容器漏洞总结"
+           href="/2021/05/07/%E5%B8%B8%E8%A7%81%E5%AE%B9%E5%99%A8%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 常见容器漏洞总结</a>
+    
+        <a class="bookmark-item" title="Git仓库同步附脚本"
+           href="/2020/08/21/Git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB%E9%99%84%E8%84%9A%E6%9C%AC/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Git仓库同步附脚本</a>
+    
         <a class="bookmark-item" title="自动化编排学习（一）部署篇"
            href="/2021/06/07/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E6%8E%92%E5%AD%A6%E4%B9%A0%E9%83%A8%E7%BD%B2%E7%AF%87/"
            rel="bookmark"><i class="fas fa-pencil-alt"> </i> 自动化编排学习（一）部署篇</a>
@@ -432,22 +454,6 @@
         <a class="bookmark-item" title="Glary Utilities PRO注册码"
            href="/2018/02/11/GlaryUtilitiesKey/"
            rel="bookmark"><i class="fas fa-pencil-alt"> </i> Glary Utilities PRO注册码</a>
-    
-        <a class="bookmark-item" title="Codeception(三)"
-           href="/2018/01/29/Codeception-three/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Codeception(三)</a>
-    
-        <a class="bookmark-item" title="【算法】变量交换"
-           href="/2018/01/24/algorithmExchange-variables/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 【算法】变量交换</a>
-    
-        <a class="bookmark-item" title="Yii2 DatePicker小部件的使用"
-           href="/2018/01/02/Yii2-DatePicker%E5%B0%8F%E9%83%A8%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2 DatePicker小部件的使用</a>
-    
-        <a class="bookmark-item" title="Yii2 Audit插件的使用【日志记录插件】"
-           href="/2018/01/02/yii2-audit%E6%8F%92%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2 Audit插件的使用【日志记录插件】</a>
     
 
         </div>
