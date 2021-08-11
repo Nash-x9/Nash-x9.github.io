@@ -200,7 +200,7 @@
 <li><p>添加logstash输入输出配置</p>
 <p>贴一下我的配置，使用时需要删除注释,不然会报错。</p>
 <p>文件位置:<code>/etc/logstash/conf.d/mysql_es.conf</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">input &#123;</span><br><span class="line">      stdin &#123;&#125;</span><br><span class="line">      jdbc &#123;</span><br><span class="line">        # JDBC 连接字符串</span><br><span class="line">        jdbc_connection_string &#x3D;&gt; &quot;jdbc:mysql:&#x2F;&#x2F;127.0.0.1:3306&#x2F;test?characterEncoding&#x3D;UTF-8&amp;useSSL&#x3D;false&amp;autoReconnect&#x3D;true&quot;</span><br><span class="line">        jdbc_user &#x3D;&gt; &quot;username&quot;</span><br><span class="line">        jdbc_password &#x3D;&gt; &quot;password&quot;</span><br><span class="line">        # JDBC驱动位置</span><br><span class="line">        jdbc_driver_library &#x3D;&gt; &quot;&#x2F;etc&#x2F;logstash&#x2F;pipeline&#x2F;mysql-connector-java-8.0.26.jar&quot;</span><br><span class="line">        jdbc_driver_class &#x3D;&gt; &quot;com.mysql.jdbc.Driver&quot;</span><br><span class="line">        # 支持分页执行</span><br><span class="line">        jdbc_paging_enabled &#x3D;&gt; &quot;true&quot;</span><br><span class="line">        # 每页数量</span><br><span class="line">        jdbc_page_size &#x3D;&gt; &quot;50000&quot;</span><br><span class="line">        codec &#x3D;&gt; plain &#123; charset &#x3D;&gt; &quot;UTF-8&quot;&#125;</span><br><span class="line">        # 需要跟踪的字段，增量更新时,需要借助该字段进行判断。</span><br><span class="line">        tracking_column &#x3D;&gt; created_at</span><br><span class="line">        # 是否记录最后一次执行</span><br><span class="line">        record_last_run &#x3D;&gt; true</span><br><span class="line">        # 最后一次执行 存放的地址，这里首次需要自行创建该文件，由于我使用日期时间进行判断，因此需要写默认值 1970-01-01 00:00:00</span><br><span class="line">        last_run_metadata_path &#x3D;&gt; &quot;&#x2F;opt&#x2F;logstash&#x2F;lastrun&#x2F;.logstash_jdbc_last_run&quot;</span><br><span class="line">        # 设置时区</span><br><span class="line">        jdbc_default_timezone &#x3D;&gt; &quot;Asia&#x2F;Shanghai&quot;</span><br><span class="line">        # 很多教程建议使用statement_filepath，在SQL文件里写判断语句，我在实际使用过程中发现这种方式会在SQL语句后面加入一个\n换行符。这里我采用statement直接写SQL的方式进行。filepath的方式作为备份。</span><br><span class="line">        # statement_filepath &#x3D;&gt; &quot;&#x2F;etc&#x2F;logstash&#x2F;pipeline&#x2F;jdbc.sql&quot;</span><br><span class="line">        statement &#x3D;&gt; &quot;select * from orders where created_at &gt; :sql_last_value&quot;</span><br><span class="line">        # 执行的时候是否清空先前的</span><br><span class="line">        clean_run &#x3D;&gt; false</span><br><span class="line">        # 定时执行Cron规则</span><br><span class="line">        schedule &#x3D;&gt; &quot;* * * * *&quot;</span><br><span class="line">        type &#x3D;&gt; &quot;std&quot;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">output &#123;</span><br><span class="line"></span><br><span class="line">    elasticsearch &#123;</span><br><span class="line"></span><br><span class="line">        hosts &#x3D;&gt; &quot;127.0.0.1:9200&quot;</span><br><span class="line"></span><br><span class="line">				# ElasticSearch 索引</span><br><span class="line">        index &#x3D;&gt; &quot;test&quot;</span><br><span class="line">				# 文档类型 需要注意的是ES7.0 之前，一个 Index 可以创建多个 Document Type，但在 7.0 开始及之后，一个Index 只能对应一个 Document Type，且默认是 _doc 。同时后续不建议继续使用。</span><br><span class="line">        document_type &#x3D;&gt; &quot;order&quot;</span><br><span class="line">				# 对应数据库表中的ID</span><br><span class="line">        document_id &#x3D;&gt; &quot;%&#123;id&#125;&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    stdout &#123;</span><br><span class="line"></span><br><span class="line">        codec &#x3D;&gt; json_lines</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">input &#123;</span><br><span class="line">      stdin &#123;&#125;</span><br><span class="line">      jdbc &#123;</span><br><span class="line">        # JDBC 连接字符串</span><br><span class="line">        jdbc_connection_string &#x3D;&gt; &quot;jdbc:mysql:&#x2F;&#x2F;127.0.0.1:3306&#x2F;test?characterEncoding&#x3D;UTF-8&amp;useSSL&#x3D;false&amp;autoReconnect&#x3D;true&quot;</span><br><span class="line">        jdbc_user &#x3D;&gt; &quot;username&quot;</span><br><span class="line">        jdbc_password &#x3D;&gt; &quot;password&quot;</span><br><span class="line">        # JDBC驱动位置</span><br><span class="line">        jdbc_driver_library &#x3D;&gt; &quot;&#x2F;etc&#x2F;logstash&#x2F;pipeline&#x2F;mysql-connector-java-8.0.26.jar&quot;</span><br><span class="line">        jdbc_driver_class &#x3D;&gt; &quot;com.mysql.jdbc.Driver&quot;</span><br><span class="line"></span><br><span class="line">        # 支持分页执行</span><br><span class="line">        jdbc_paging_enabled &#x3D;&gt; &quot;true&quot;</span><br><span class="line">        # 每页数量</span><br><span class="line">        jdbc_page_size &#x3D;&gt; &quot;50000&quot;</span><br><span class="line">        codec &#x3D;&gt; plain &#123; charset &#x3D;&gt; &quot;UTF-8&quot;&#125;</span><br><span class="line">        </span><br><span class="line">        # 是否需要记录某个字段值,如果为true,我们可以自定义要记录的字段值，例如日期字段。如果为false，记录的是上次执行的timestamp.</span><br><span class="line">        use_column_value &#x3D;&gt; &quot;true&quot;</span><br><span class="line">        # 需要跟踪的字段，增量更新时,需要借助该字段进行判断。</span><br><span class="line">        tracking_column &#x3D;&gt; &quot;created_at&quot;</span><br><span class="line">        # 跟踪的字段类型</span><br><span class="line">        tracking_column_type &#x3D;&gt; &quot;timestamp&quot;</span><br><span class="line">        # 是否记录最后一次执行</span><br><span class="line">        record_last_run &#x3D;&gt; &quot;true&quot;</span><br><span class="line">        # 最后一次执行 存放的地址，这里首次需要自行创建该文件，由于我使用日期时间进行判断，因此需要写默认值 1970-01-01 00:00:00</span><br><span class="line">        last_run_metadata_path &#x3D;&gt; &quot;&#x2F;opt&#x2F;logstash&#x2F;lastrun&#x2F;.logstash_jdbc_last_run&quot;</span><br><span class="line">        </span><br><span class="line">        # 设置时区</span><br><span class="line">        jdbc_default_timezone &#x3D;&gt; &quot;Asia&#x2F;Shanghai&quot;</span><br><span class="line">        # 很多教程建议使用statement_filepath，在SQL文件里写判断语句，我在实际使用过程中发现这种方式会在SQL语句后面加入一个\n换行符。这里我采用statement直接写SQL的方式进行。filepath的方式作为备份。</span><br><span class="line">        # statement_filepath &#x3D;&gt; &quot;&#x2F;etc&#x2F;logstash&#x2F;pipeline&#x2F;jdbc.sql&quot;</span><br><span class="line">        statement &#x3D;&gt; &quot;select * from orders where created_at &gt; :sql_last_value&quot;</span><br><span class="line">        # 执行的时候是否清空先前的</span><br><span class="line">        clean_run &#x3D;&gt; false</span><br><span class="line">        # 定时执行Cron规则</span><br><span class="line">        schedule &#x3D;&gt; &quot;* * * * *&quot;</span><br><span class="line">        type &#x3D;&gt; &quot;std&quot;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">output &#123;</span><br><span class="line"></span><br><span class="line">    elasticsearch &#123;</span><br><span class="line"></span><br><span class="line">        hosts &#x3D;&gt; &quot;127.0.0.1:9200&quot;</span><br><span class="line"></span><br><span class="line">				# ElasticSearch 索引</span><br><span class="line">        index &#x3D;&gt; &quot;test&quot;</span><br><span class="line">				# 文档类型 需要注意的是ES7.0 之前，一个 Index 可以创建多个 Document Type，但在 7.0 开始及之后，一个Index 只能对应一个 Document Type，且默认是 _doc 。同时后续不建议继续使用。</span><br><span class="line">        document_type &#x3D;&gt; &quot;order&quot;</span><br><span class="line">				# 对应数据库表中的ID</span><br><span class="line">        document_id &#x3D;&gt; &quot;%&#123;id&#125;&quot;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    stdout &#123;</span><br><span class="line"></span><br><span class="line">        codec &#x3D;&gt; json_lines</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>在这个过程中也遇到了一个坑，最初的配置由网上的文章复制而来，其 把sql_last_value写成了last_sql_value。。导致一直提示SQL语法错误。这里分享一个调试命令，我通过此方法成功发现了该问题。</p>
 <p><code>bin/logstash -f /etc/logstash/conf.d/mysql_es.conf --verbose --debug</code></p>
@@ -212,6 +212,11 @@
 <p>一般情况，这里就配置完毕了，但是在某些Logstash官方提供的Docker镜像中，默认开启了x-pack组件，如果ES没有用到该组件需要修改如下配置<code>vi config/logstash.yaml</code>，将Xpack相关的配置都注释掉:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 注释~</span><br><span class="line"># xpack.monitoring.elasticsearch.hosts: [ &quot;http:&#x2F;&#x2F;127.0.0.1:9200&quot; ]</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
 <li><p>启动Logstash，开始同步数据</p>
+</li>
+<li><p>查看数据是否同步成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看索引结构</span></span><br><span class="line"><span class="comment"># curl localhost:9200/索引名称?pretty</span></span><br><span class="line">curl localhost:9200/<span class="built_in">test</span>?pretty</span><br><span class="line"><span class="comment"># 查看所有索引信息</span></span><br><span class="line">curl -XGET http://localhost:9200/_cat/indices?v</span><br></pre></td></tr></table></figure>
+
+
 </li>
 </ol>
 <h2 id="一些其他的坑和知识"><a href="#一些其他的坑和知识" class="headerlink" title="一些其他的坑和知识"></a>一些其他的坑和知识</h2><ol>
@@ -399,17 +404,17 @@
         
         
             
-                <a href="/tags/yii2-audit/">yii2-audit</a>
-            
-                <a href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91OSS/">阿里云OSS</a>
-            
-                <a href="/tags/php%E6%A1%86%E6%9E%B6/">php框架</a>
-            
-                <a href="/tags/Yii2/">Yii2</a>
+                <a href="/tags/PHPUnit/">PHPUnit</a>
             
                 <a href="/tags/argo-framework/">argo-framework</a>
             
-                <a href="/tags/%E6%97%81%E7%AB%99/">旁站</a>
+                <a href="/tags/cloudflare/">cloudflare</a>
+            
+                <a href="/tags/%E4%B8%83%E7%89%9B%E4%BA%91/">七牛云</a>
+            
+                <a href="/tags/cdn/">cdn</a>
+            
+                <a href="/tags/DatePicker/">DatePicker</a>
             
         
     </div>
@@ -451,29 +456,29 @@
 
     
     
-        <a class="bookmark-item" title="PHP-GD库漏洞可导致服务器宕机"
-           href="/2018/02/02/GD%E5%BA%93%E6%BC%8F%E6%B4%9E%E5%8F%AF%E5%AF%BC%E8%87%B4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%95%E6%9C%BA/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> PHP-GD库漏洞可导致服务器宕机</a>
+        <a class="bookmark-item" title="常见容器漏洞总结"
+           href="/2021/05/07/%E5%B8%B8%E8%A7%81%E5%AE%B9%E5%99%A8%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 常见容器漏洞总结</a>
     
-        <a class="bookmark-item" title="自动化编排学习（一）部署篇"
-           href="/2021/06/07/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E6%8E%92%E5%AD%A6%E4%B9%A0%E9%83%A8%E7%BD%B2%E7%AF%87/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 自动化编排学习（一）部署篇</a>
+        <a class="bookmark-item" title="Codeception（二）"
+           href="/2018/01/23/Codeception-second/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Codeception（二）</a>
     
-        <a class="bookmark-item" title="Yii2-Editable插件【GridView编辑】"
-           href="/2018/01/16/Yii2-Editable%E6%8F%92%E4%BB%B6/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2-Editable插件【GridView编辑】</a>
+        <a class="bookmark-item" title="Yii2 Event事件-场景应用"
+           href="/2018/01/24/Yii2-Event%E4%BA%8B%E4%BB%B6-%E5%9C%BA%E6%99%AF%E5%BA%94%E7%94%A8/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2 Event事件-场景应用</a>
     
-        <a class="bookmark-item" title="Yii2 DatePicker小部件的使用"
-           href="/2018/01/02/Yii2-DatePicker%E5%B0%8F%E9%83%A8%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2 DatePicker小部件的使用</a>
+        <a class="bookmark-item" title="Django安装部署"
+           href="/2018/02/12/Django-MariaDB-Install/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Django安装部署</a>
     
-        <a class="bookmark-item" title="Git仓库同步附脚本"
-           href="/2020/08/21/Git%E4%BB%93%E5%BA%93%E8%BF%81%E7%A7%BB%E9%99%84%E8%84%9A%E6%9C%AC/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Git仓库同步附脚本</a>
+        <a class="bookmark-item" title="第一篇Hexo文章"
+           href="/2017/12/28/%E7%AC%AC%E4%B8%80%E7%AF%87Hexo%E6%96%87%E7%AB%A0/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 第一篇Hexo文章</a>
     
-        <a class="bookmark-item" title="Codeception(三)"
-           href="/2018/01/29/Codeception-three/"
-           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Codeception(三)</a>
+        <a class="bookmark-item" title="Hexo加速"
+           href="/2021/02/18/Hexo%E5%8A%A0%E9%80%9F/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Hexo加速</a>
     
 
         </div>
