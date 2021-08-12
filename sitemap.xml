@@ -4,7 +4,7 @@
   <url>
     <loc>https://war9.cn/2021/08/11/MySQL%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%88%B0ElasticSearch-Logstash%E6%96%B9%E6%A1%88-%E7%88%AC%E5%9D%91%E7%BA%AA%E5%AE%9E/</loc>
     
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     
   </url>
   
@@ -179,7 +179,7 @@
 
   <url>
     <loc>https://war9.cn/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -187,448 +187,462 @@
   
   <url>
     <loc>https://war9.cn/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/codeception/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/PHPUnit/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/Yii2/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/Django/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/Python/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/MariaDB/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/PHP/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/PHP%E6%BC%8F%E6%B4%9E/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/GD%E5%BA%93%E6%BC%8F%E6%B4%9E/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/git/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/%E4%BB%93%E5%BA%93%E5%90%8C%E6%AD%A5/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/git-mirror/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/sync/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/Xdebug/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/PHP%E8%B0%83%E8%AF%95/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/phpStorm-Xdebug/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/Hexo/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/Hexo%E5%8A%A0%E9%80%9F/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/Docker/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/docker-compose/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/CDN/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/jsdelivr/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/%E4%B8%83%E7%89%9B%E4%BA%91/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/%E9%98%BF%E9%87%8C%E4%BA%91OSS/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/%E8%85%BE%E8%AE%AF%E4%BA%91COS/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/Hexo-admin/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/typora/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/GlaryUtilitiesPro/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/%E6%B3%A8%E5%86%8C%E7%A0%81/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/yii2-editable/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/DatePicker/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/widget/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/yii2-event/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/yii2%E4%BA%8B%E4%BB%B6/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/Yii2%E6%95%99%E7%A8%8B/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/Yii2%E5%B7%A5%E5%85%B7/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/yii2-%E4%BA%8B%E4%BB%B6/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/yii2-audit/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/github/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/fastadmin/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/getshell/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/%E6%97%81%E7%AB%99/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/PHP%E8%B5%84%E6%BA%90/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/php%E7%BB%84%E4%BB%B6/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/php%E6%A1%86%E6%9E%B6/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/v2ray/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/cdn/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/cloudflare/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/cloudflarepartner/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/dnspod/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/%E5%AE%B9%E5%99%A8%E6%BC%8F%E6%B4%9E/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/%E5%AE%B9%E5%99%A8%E9%80%83%E9%80%B8/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/Docker%E6%BC%8F%E6%B4%9E/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/k8s/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/workflow/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/argo-framework/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/k8s%E9%83%A8%E7%BD%B2/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/ElasticSearch/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/MySQL%E5%90%8C%E6%AD%A5/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/tags/Logstash/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://war9.cn/tags/%E5%90%8C%E6%AD%A5%E6%95%B0%E6%8D%AE/</loc>
+    <lastmod>2021-08-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://war9.cn/tags/mysql-es/</loc>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -637,42 +651,42 @@
   
   <url>
     <loc>https://war9.cn/categories/develop/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/categories/develop/Yii2/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/categories/myspace/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/categories/resources/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/categories/develop/Django/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://war9.cn/categories/security/</loc>
-    <lastmod>2021-08-11</lastmod>
+    <lastmod>2021-08-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
