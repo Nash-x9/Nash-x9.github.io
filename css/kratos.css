@@ -2056,7 +2056,7 @@ a {
     display: inline-block;
     margin: 0 1px 10px 0;
     padding: 2px 0;
-    width: 164px;
+    width: 140px;
     border: 1px solid #eeeeee;
     color: #333;
     list-style: none;
@@ -2101,7 +2101,7 @@ a {
 }
 
 .nav-tabs .nav-link {
-    padding: 8px 28px;
+    padding: 8px 20px;
     border: 0;
     border-bottom: 2px solid #f2f2f2;
 }
@@ -2225,7 +2225,7 @@ a {
     overflow: hidden;
     margin: 0 1px 4px 0;
     padding: 4px 0;
-    width: 164px;
+    width: 140px;
     border: 1px solid #eeeeee;
     list-style: none;
     text-align: center;
