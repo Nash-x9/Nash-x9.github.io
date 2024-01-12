@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>OpenSearch集群部署 | 小九博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="format-detection" content="telphone=no, email=no">
+    <meta name="root" content="/">
+    <link rel="shortcut icon" href="/img/avatar.jpg"><meta name="keywords" content="小九博客,PHP,程序员,yii2,教程,黑客,信息安全,安全开发"><meta name="theme-color" content="#282a2c">
+
+    
+        
+            <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/bootstrap/4.5.3/css/bootstrap.min.css" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="/css/fontawesome.min.css" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="/css/iconfont.min.css?ver=3.1.0" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/layer/3.1.1/theme/default/layer.min.css" type="text/css" media="all">
+        
+            <link rel="stylesheet" href="/css/kratos.min.css?ver=3.2.5" type="text/css" media="all">
+        
+    
+    <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.4.1/jquery.min.js"></script>
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+
+<div class="k-header">
+    <nav class="k-nav navbar navbar-expand-lg navbar-light fixed-top" style=&#34;background: #282a2c&#34;>
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                
+                    <h1>小九博客</h1>
+                
+            </a>
+            
+                <button class="navbar-toggler navbar-toggler-right" id="navbutton" type="button" data-toggle="collapse"
+                        data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="line first-line"></span>
+                    <span class="line second-line"></span>
+                    <span class="line third-line"></span>
+                </button>
+                <div id="navbarResponsive" class="collapse navbar-collapse">
+                    <ul id="menu" class="navbar-nav ml-auto">
+                        <li class="nav-item"><a title="首页" href="/" class="nav-link" aria-current="page">首页</a></li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/develop" title="编程开发"
+                                       class="nav-link" aria-current="page">编程开发</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/security" title="信息安全"
+                                       class="nav-link" aria-current="page">信息安全</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/resources" title="工具资源"
+                                       class="nav-link" aria-current="page">工具资源</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/categories/myspace" title="随笔"
+                                       class="nav-link" aria-current="page">随笔</a>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item dropdown">
+                                
+                                    <a href="#" title="在线工具" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false" class="dropdown-toggle nav-link">在线工具</a>
+                                    <ul class="dropdown-menu" aria-labelledby="menu-item-dropdown-13" role="menu">
+                                        
+                                            <li class="nav-item"><a title="在线图片水印"
+                                                                    href="/watermark.html"
+                                                                    class="dropdown-item">在线图片水印</a></li>
+                                        
+                                            <li class="nav-item"><a title="Json解析"
+                                                                    target="_blank" rel="noopener" href="http://www.bejson.com"
+                                                                    class="dropdown-item">Json解析</a></li>
+                                        
+                                            <li class="nav-item"><a title="JavaRuntimeExec"
+                                                                    href="/JavaRuntimeExecPayload.html"
+                                                                    class="dropdown-item">JavaRuntimeExec</a></li>
+                                        
+                                    </ul>
+                                
+                            </li>
+                        
+                            
+                            
+                            <li class="nav-item ">
+                                
+                                    <a href="/about" title="关于"
+                                       class="nav-link" aria-current="page">关于</a>
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            
+        </div>
+    </nav>
+    <div class="banner">
+        <div class="overlay"></div>
+        <div class="content text-center" style="background-image: url(/img/background.png);">
+            <div class="introduce animated fadeInUp">
+                <div class="title">小九博客</div>
+                <div class="mate">Hack The World!</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="k-main banner" style="background:#f5f5f5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 details">
+                <div class="article">
+    
+        <div class="breadcrumb-box">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a class="text-dark" href="/"> 首页</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a class="text-dark"
+                       href="/develop">develop</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page"> 正文</li>
+            </ol>
+        </div>
+    
+    <div class="header">
+        <h1 class="title">OpenSearch集群部署</h1>
+        <div class="meta">
+            <div class="a-meta post-meta">
+        <span class=" d-none d-md-block">
+            <span class="mr-2"><i class="kicon i-calendar"></i>2024年01月12日</span>
+            <!--            <span class="mr-2"><i class="kicon i-comments"></i><?php comments_number('0', '1', '%'); _e('条评论', 'kratos'); ?></span>-->
+        </span>
+    <span class="  d-block">
+        </span>
+    
+</div>
+        </div>
+    </div>
+    <div class="content">
+        <h1 id="OpenSearch集群部署"><a href="#OpenSearch集群部署" class="headerlink" title="OpenSearch集群部署"></a>OpenSearch集群部署</h1><p>OpenSearch 项目是ElasticSearch 7.10.2版本的一个分支而发展来的，包括企业安全、告警、机器学习、SQL、索引状态管理等功能。OpenSearch 项目中的所有软件均采用了 Apache License 2.0 开源许可协议。</p>
+<p>ElasticSearch中的身份验证、授权、索引管理、告警等功能是付费订阅中的功能。尽管后续开放并免费提供基本的安全认证功能，但如果需要保障更多的安全性和管理易用性，免费版本仍然不足以支撑，因此本项目选用了OpenSearch。</p>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1.概述"></a>1.概述</h2><p>本次目标是部署一个跨主机的高可用OpenSearch小集群，根据官方提供的文档，最终采用了3个OpenSearch节点，2台服务器进行部署。以下内容均根据该目标进行设计，环境信息如下：</p>
+<table>
+<thead>
+<tr>
+<th>主机IP</th>
+<th>配置</th>
+<th>OS</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>192.168.1.2</td>
+<td>8核心16G内存</td>
+<td>Ubuntu22.04 LTS jammy</td>
+<td>用于部署1个OpenSearch节点和1个OpenSearch面板(类Kibana)</td>
+</tr>
+<tr>
+<td>192.168.1.3</td>
+<td>8核心16G内存</td>
+<td>Ubuntu22.04 LTS jammy</td>
+<td>用于部署2个OpenSearch节点</td>
+</tr>
+</tbody></table>
+<p>因为涉及跨主机网络通信，根据自身技术栈选择了Docker Swarm作为了集群管理和编排工具。</p>
+<p>3节点集群建设时，根据官方文档提供的建议主要包括以下几点：</p>
+<ul>
+<li>建议3节点都为数据节点</li>
+<li>建议每个索引<strong>均不是</strong> 可搜索快照(searchable snapshot index)索引</li>
+<li>建议将3节点都配置允许成为Master节点(Master-eligible node)</li>
+</ul>
+<blockquote>
+<p>注：文章中可能同时出现了OpenSearch、ElasticSearch，你没有看错，这不是笔误，而是两边的文档需要同时参考，互为补充..</p>
+<p>本文实际搭建时采用OpenSearch2.6版本。</p>
+<p>主要参考如下版本的文档：</p>
+<p><a target="_blank" rel="noopener" href="https://opensearch.org/docs/2.6/">https://opensearch.org/docs/2.6/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.10/index.html">https://www.elastic.co/guide/en/elasticsearch/reference/7.10/index.html</a></p>
+</blockquote>
+<h3 id="1-1-本章概念解释及参考引用"><a href="#1-1-本章概念解释及参考引用" class="headerlink" title="1.1 .本章概念解释及参考引用"></a>1.1 .本章概念解释及参考引用</h3><h4 id="1-1-1-Master-Node-Master-eligible-node概念及区别"><a href="#1-1-1-Master-Node-Master-eligible-node概念及区别" class="headerlink" title="1.1.1 Master Node/Master-eligible node概念及区别"></a>1.1.1 Master Node/Master-eligible node概念及区别</h4><p>节点具有一个或多个角色(Role)，角色包括以下几种</p>
+<ul>
+<li><code>master</code></li>
+<li><code>data</code></li>
+<li><code>data_content</code></li>
+<li><code>data_hot</code></li>
+<li><code>data_warm</code></li>
+<li><code>data_cold</code></li>
+<li><code>data_frozen</code></li>
+<li><code>ingest</code></li>
+<li><code>ml</code></li>
+<li><code>remote_cluster_client</code></li>
+<li><code>transform</code></li>
+</ul>
+<p>当一个节点(Node)被赋予master角色时，并不代表其一定是Master主节点，而是赋予了其<strong>被选举权</strong>,也就是Master-eligible node。</p>
+<p>如果集群只有1个节点 Role为master，那么其一定是master节点。</p>
+<p>如果集群中有2个节点，全部设置为master，当任意节点不可用时，选举将失败，如果两个节点能够进行独立选举，失去连接会导致脑裂问题，导致数据丢失。Elasticsearch避免了这种情况来保护数据，它不选择任何一个节点作为主节点，直到该节点能够确定它拥有最新的集群状态，并且集群中没有其他主节点。这可能会导致集群没有master，直到连接恢复。</p>
+<p>如果集群中有3个节点，全部设置为master，则集群允许单个节点丢失。</p>
+<h4 id="1-1-2-引用"><a href="#1-1-2-引用" class="headerlink" title="1.1.2 引用"></a>1.1.2 引用</h4><blockquote>
+<p>ElasticNode概念及说明: <a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.10/modules-node.html">https://www.elastic.co/guide/en/elasticsearch/reference/7.10/modules-node.html</a></p>
+<p>3节点高可用集群设计: <a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.10/high-availability-cluster-small-clusters.html#high-availability-cluster-design-three-nodes">https://www.elastic.co/guide/en/elasticsearch/reference/7.10/high-availability-cluster-small-clusters.html#high-availability-cluster-design-three-nodes</a></p>
+<p>脑裂问题: <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Split-brain_(computing)">https://en.wikipedia.org/wiki/Split-brain_(computing)</a></p>
+</blockquote>
+<h2 id="2-安装部署"><a href="#2-安装部署" class="headerlink" title="2.安装部署"></a>2.安装部署</h2><p>部署前解释下为什么要采用Docker Swarm，在部署OpenSearch集群时，有多个配置需要指定集群中节点的IP，以快速服务发现来实现节点通信。</p>
+<p>但问题在于如果节点IP使用非标准端口，那么就需要在修改对应配置，特别是<code>transport.port</code>他的默认端口是<code>9300-9400</code>的范围IP。在配置环境变量时，如果对于这些端口不熟悉，很容易错误使用，特别是在第一次完成Docker部署OpenSearch后出现了<code>9200、9300、9301、9600</code>等端口。</p>
+<p>为了解决以上问题，通过Docker Swarm构建一个跨主机的虚拟网络，对于每个容器便拥有了虚拟网络中的独立IP，不会出现标准端口占用问题，在配置环境变量或者OpenSearch配置时，可直接使用容器的<code>ServiceName</code>作为<code>Hostname</code>直接进行通信，而无需配置额外的端口。</p>
+<h3 id="2-1-Docker-Swarm跨主机部署"><a href="#2-1-Docker-Swarm跨主机部署" class="headerlink" title="2.1 Docker Swarm跨主机部署"></a>2.1 Docker Swarm跨主机部署</h3><h4 id="2-1-1-修改主机名"><a href="#2-1-1-修改主机名" class="headerlink" title="2.1.1 修改主机名"></a>2.1.1 修改主机名</h4><p>修改主机名以用于区分不同主机</p>
+<blockquote>
+<p>该步骤为前期部署k8s的必要操作，Docker swarm集群暂未去了解是否必须该步骤，建议修改，便于在集群管理器中方便的识别对应主机。</p>
+</blockquote>
+<p>将主机<code>192.168.1.2</code>设置为<code>db-1</code>,主机<code>192.168.1.3</code>设置为<code>db-2</code>，在不同主机编辑<code>/etc/hostname</code>，重启服务器即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/hostname</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="2-1-2-创建Swarm集群"><a href="#2-1-2-创建Swarm集群" class="headerlink" title="2.1.2 创建Swarm集群"></a>2.1.2 创建Swarm集群</h4><h5 id="1-在主机192-168-1-2创建swarm管理节点"><a href="#1-在主机192-168-1-2创建swarm管理节点" class="headerlink" title="1.在主机192.168.1.2创建swarm管理节点"></a>1.在主机<code>192.168.1.2</code>创建swarm管理节点</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker swarm init --advertise-addr=192.168.1.2</span><br></pre></td></tr></table></figure>
+<p>得到如下提示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Swarm initialized: current node (bvz81updecsj6wjz393c09vti) is now a manager.</span><br><span class="line"></span><br><span class="line">To add a worker to this swarm, run the following command:</span><br><span class="line"></span><br><span class="line">    docker swarm join \</span><br><span class="line">    --token SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-1awxwuwd3z9j1z3puu7rcgdbx \</span><br><span class="line">    192.168.1.2:2377</span><br><span class="line"></span><br><span class="line">To add a manager to this swarm, run &#39;docker swarm join-token manager&#39; and follow the instructions.</span><br></pre></td></tr></table></figure>
+<p>提示中出现了两个命令，<code>docker swarm join ...</code>和<code>docker swarm join-token manager</code>，区分见概念解释，默认显示的是以worker角色加入集群的命令。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker swarm join \</span><br><span class="line">    --token SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-1awxwuwd3z9j1z3puu7rcgdbx \</span><br><span class="line">    192.168.1.2:2377</span><br></pre></td></tr></table></figure>
+<h5 id="2-在主机192-168-1-3中执行docker-swarm-join-加入swarm集群。"><a href="#2-在主机192-168-1-3中执行docker-swarm-join-加入swarm集群。" class="headerlink" title="2.在主机192.168.1.3中执行docker swarm join 加入swarm集群。"></a>2.在主机<code>192.168.1.3</code>中执行docker swarm join 加入swarm集群。</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker swarm join \</span><br><span class="line">    --token SWMTKN-1-3pu6hszjas19xyp7ghgosyx9k8atbfcr8p2is99znpy26u2lkl-1awxwuwd3z9j1z3puu7rcgdbx \</span><br><span class="line">    192.168.1.2:2377</span><br></pre></td></tr></table></figure>
+<h5 id="3-为节点增加标签"><a href="#3-为节点增加标签" class="headerlink" title="3.为节点增加标签"></a>3.为节点增加标签</h5><p>在编写部署文件时，可以通过标签来让服务(Service)部署在指定的节点(Docker Node)中。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker node update --label-add db-node=2 un5y8qe03ehgy1i5b7ao6kk8y</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker node update --label-add db-node=1 fp6zni42p2iz319qihx0oek57</span><br></pre></td></tr></table></figure>
+<p>这样<code>192.168.1.2</code>的swarm node节点就有了标签db-node，值为1</p>
+<p><code>192.168.1.3</code>的swarm node节点就有了标签db-node，值为2</p>
+<p>可通过<code>docker inspect un5y8qe03ehgy1i5b7ao6kk8y -f &quot;&#123;&#123;json .Spec.Labels&#125;&#125;&quot;</code>查看节点的标签</p>
+<h5 id="4-创建Swarm-Overlay网络"><a href="#4-创建Swarm-Overlay网络" class="headerlink" title="4.创建Swarm Overlay网络"></a>4.创建Swarm Overlay网络</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network create --driver overlay  --attachable db-cluster</span><br></pre></td></tr></table></figure>
+<p>查看网络信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network inspect db-cluster</span><br></pre></td></tr></table></figure>
+<h5 id="5-编写部署compose文件"><a href="#5-编写部署compose文件" class="headerlink" title="5.编写部署compose文件"></a>5.编写部署compose文件</h5><p>该compose文件配置了3个opensearch数据节点，自动选举主节点。将下面的完整compose文件内容保存为<code>docker-compose-cluster.yml</code>即可。</p>
+<p><strong>注⚠️：本文件禁用了安全插件和默认的参数配置，安全方面主要体现在各个节点没有密码，没有通过SSL进行通讯，并且暴露了每个节点的端口，<font color='red'>存在安全风险，请勿在生产环境中使用！！！</font>安全配置将在后续章节中写明！</strong></p>
+<p>Service下的deploy用于设置部署选项，通过标签来指定服务部署的节点。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  placement:</span><br><span class="line">    constraints: [ node.labels.db-node == 1 ]</span><br></pre></td></tr></table></figure>
+<p>其他字段可参考文件内的注释。</p>
+<blockquote>
+<p>注：这里有个我认为设计不合理的地方，在部署时通过deploy的placement指定了Service部署的节点，但映射出来的端口重复判断依旧是在单机单节点来识别的，导致无法在不同的主机节点同时暴露9200端口。</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">opensearch-data-node1:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">opensearchproject/opensearch:2.6.0</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">cluster.name=opensearch-db</span> <span class="comment"># 集群名称</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">node.name=opensearch-data-node1</span> <span class="comment"># 节点名称</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">node.roles=data,ingest,master</span> <span class="comment">#节点角色,3节点小集群建议设置为数据节点、数据预处理节点、Master-eligible节点。</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">discovery.seed_hosts=opensearch-data-node1,opensearch-data-node2,opensearch-data-node3</span> <span class="comment">#通过主机名(ServiceName)进行服务发现</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">cluster.initial_master_nodes=opensearch-data-node1,opensearch-data-node2,opensearch-data-node3</span> <span class="comment">#初始化master节点列表，这里设置3个以让其自动选举</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">bootstrap.memory_lock=true</span> <span class="comment"># 禁止JVM堆内存交换</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">http.cors.enabled=true</span> <span class="comment"># 支持跨域</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">http.cors.allow-origin=*</span> <span class="comment"># 跨域来源</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">plugins.security.ssl.http.enabled=false</span> <span class="comment"># 禁止SSL通信</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DISABLE_INSTALL_DEMO_CONFIG=true</span> <span class="comment"># 禁止默认配置，如SSL证书等配置</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DISABLE_SECURITY_PLUGIN=true</span> <span class="comment"># 禁止安全插件</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;OPENSEARCH_JAVA_OPTS=-Xms4g -Xmx4g&quot;</span> <span class="comment"># 设置Java堆内存最小值和最大值，官方建议设置为系统内存的一半。</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">placement:</span></span><br><span class="line">        <span class="attr">constraints:</span> [ <span class="string">node.labels.db-node</span> <span class="string">==</span> <span class="number">1</span> ]</span><br><span class="line">    <span class="attr">ulimits:</span></span><br><span class="line">      <span class="attr">memlock:</span></span><br><span class="line">        <span class="attr">soft:</span> <span class="number">-1</span> <span class="comment"># Set memlock to unlimited (no soft or hard limit)</span></span><br><span class="line">        <span class="attr">hard:</span> <span class="number">-1</span></span><br><span class="line">      <span class="attr">nofile:</span></span><br><span class="line">        <span class="attr">soft:</span> <span class="number">65536</span> <span class="comment"># Maximum number of open files for the opensearch user - set to at least 65536</span></span><br><span class="line">        <span class="attr">hard:</span> <span class="number">65536</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">opensearch-node1-data:/usr/share/opensearch/data</span> <span class="comment"># 通过volume挂载opensearch数据</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/data/opensearch_cluster/node1.yml:/usr/share/opensearch/config/opensearch.yml</span> <span class="comment"># 设置默认配置</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">9200</span><span class="string">:9200</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">9300</span><span class="string">:9300</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">9600</span><span class="string">:9600</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">db-cluster</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="attr">opensearch-dashboards:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">opensearchproject/opensearch-dashboards:2.6.0</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">5601</span><span class="string">:5601</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">OPENSEARCH_HOSTS:</span> <span class="string">&#x27;[&quot;http://opensearch-data-node1:9200&quot;,&quot;http://opensearch-data-node2:9200&quot;,&quot;http://opensearch-data-node3:9200&quot;]&#x27;</span></span><br><span class="line">      <span class="attr">opensearch.requestHeadersWhitelist:</span> <span class="string">&#x27;[&quot;securitytenant&quot;,&quot;Authorization&quot;]&#x27;</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">placement:</span></span><br><span class="line">        <span class="attr">constraints:</span> [ <span class="string">node.labels.db-node</span> <span class="string">==</span> <span class="number">1</span> ]</span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db-cluster</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">opensearch-data-node2:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">opensearchproject/opensearch:2.6.0</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">cluster.name=opensearch-db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">node.name=opensearch-data-node2</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">node.roles=data,ingest,master</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">discovery.seed_hosts=opensearch-data-node1,opensearch-data-node2,opensearch-data-node3</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">cluster.initial_cluster_manager_nodes=opensearch-data-node1,opensearch-data-node2,opensearch-data-node3</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">bootstrap.memory_lock=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">http.cors.enabled=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">http.cors.allow-origin=*</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">plugins.security.ssl.http.enabled=false</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DISABLE_INSTALL_DEMO_CONFIG=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DISABLE_SECURITY_PLUGIN=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;OPENSEARCH_JAVA_OPTS=-Xms4g -Xmx4g&quot;</span> <span class="comment"># Set min and max JVM heap sizes to at least 50% of system RAM</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">placement:</span></span><br><span class="line">        <span class="attr">constraints:</span> [ <span class="string">node.labels.db-node</span> <span class="string">==</span> <span class="number">2</span> ]</span><br><span class="line">    <span class="attr">ulimits:</span></span><br><span class="line">      <span class="attr">memlock:</span></span><br><span class="line">        <span class="attr">soft:</span> <span class="number">-1</span> <span class="comment"># Set memlock to unlimited (no soft or hard limit)</span></span><br><span class="line">        <span class="attr">hard:</span> <span class="number">-1</span></span><br><span class="line">      <span class="attr">nofile:</span></span><br><span class="line">        <span class="attr">soft:</span> <span class="number">65536</span> <span class="comment"># Maximum number of open files for the opensearch user - set to at least 65536</span></span><br><span class="line">        <span class="attr">hard:</span> <span class="number">65536</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">opensearch-node2-data:/usr/share/opensearch/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/data/opensearch_cluster/node2.yml:/usr/share/opensearch/config/opensearch.yml</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">10200</span><span class="string">:9200</span> <span class="comment"># REST API</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">10300</span><span class="string">:9300</span> <span class="comment"># Cluster Node</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">10600</span><span class="string">:9600</span> <span class="comment"># Performance Analyzer</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db-cluster</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">opensearch-data-node3:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">opensearchproject/opensearch:2.6.0</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">cluster.name=opensearch-db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">node.name=opensearch-data-node3</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">node.roles=data,ingest,master</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">discovery.seed_hosts=opensearch-data-node1,opensearch-data-node2,opensearch-data-node3</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">cluster.initial_cluster_manager_nodes=opensearch-data-node1,opensearch-data-node2,opensearch-data-node3</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">bootstrap.memory_lock=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">http.cors.enabled=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">http.cors.allow-origin=*</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">plugins.security.ssl.http.enabled=false</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DISABLE_INSTALL_DEMO_CONFIG=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DISABLE_SECURITY_PLUGIN=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;OPENSEARCH_JAVA_OPTS=-Xms4g -Xmx4g&quot;</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">placement:</span></span><br><span class="line">        <span class="attr">constraints:</span> [ <span class="string">node.labels.db-node</span> <span class="string">==</span> <span class="number">2</span> ]</span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">9400</span><span class="string">:9200</span> <span class="comment"># REST API</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">9500</span><span class="string">:9300</span> <span class="comment"># Cluster Node</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">9800</span><span class="string">:9600</span> <span class="comment"># Performance Analyzer</span></span><br><span class="line">    <span class="attr">ulimits:</span></span><br><span class="line">      <span class="attr">memlock:</span></span><br><span class="line">        <span class="attr">soft:</span> <span class="number">-1</span></span><br><span class="line">        <span class="attr">hard:</span> <span class="number">-1</span></span><br><span class="line">      <span class="attr">nofile:</span></span><br><span class="line">        <span class="attr">soft:</span> <span class="number">65536</span></span><br><span class="line">        <span class="attr">hard:</span> <span class="number">65536</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">opensearch-node3-data:/usr/share/opensearch/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/data/opensearch_cluster/node3.yml:/usr/share/opensearch/config/opensearch.yml</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db-cluster</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">opensearch-node1-data:</span></span><br><span class="line">  <span class="attr">opensearch-node2-data:</span></span><br><span class="line">  <span class="attr">opensearch-node3-data:</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用已经创建好的网络</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">db-cluster:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h5 id="6-编写每个节点的配置文件"><a href="#6-编写每个节点的配置文件" class="headerlink" title="6.编写每个节点的配置文件"></a>6.编写每个节点的配置文件</h5><p>复制以下内容到node1.yml、node2.yml、node3.yml,</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">cluster.name:</span> <span class="string">opensearch-db</span></span><br><span class="line"><span class="attr">network.host:</span> <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br><span class="line"><span class="attr">network.publish_host:</span> <span class="string">opensearch-data-node1</span></span><br><span class="line"><span class="attr">http.publish_host:</span> <span class="string">opensearch-data-node1</span></span><br><span class="line"><span class="attr">transport.publish_host:</span> <span class="string">opensearch-data-node1</span></span><br><span class="line"></span><br><span class="line"><span class="attr">compatibility.override_main_response_version:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>将node2.yml中所有的<code>opensearch-data-node1</code>字符替换为<code>opensearch-data-node2</code></p>
+<p>将node3.yml中所有的<code>opensearch-data-node1</code>字符替换为<code>opensearch-data-node3</code></p>
+<p>节点配置和服务名称(ServiceName)保持一致即可，<strong>这个步骤必不可少！</strong>。</p>
+<p>实测如果缺少三个<code>publish_host</code>配置，OpenSearch会在选举时识别到错误的IP，导致选举失败，进而无法启动集群。</p>
+<p><code>compatibility.override_main_response_version</code> 配置为true表示版本号返回兼容模式，对于OpenSearch2.6将返回7.10版本</p>
+<p>后续需要将node1.yml、node2.yml、node3.yml按照部署的对应关系分别放到<code>192.168.1.2</code>和<code>192.168.1.3</code>主机的<code>/data/opensearch_cluster</code>目录。</p>
+<h5 id="7-集群启动、查看"><a href="#7-集群启动、查看" class="headerlink" title="7.集群启动、查看"></a>7.集群启动、查看</h5><p>完成以上步骤便可在compose文件所在目录，执行以下命令启动集群。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stack deploy -c docker-compose-cluster.yml db-cluster</span><br></pre></td></tr></table></figure>
+<p>执行完成，可看到输出信息为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Creating service db-cluster_opensearch-data-node3</span><br><span class="line">Creating service db-cluster_opensearch-data-node1</span><br><span class="line">Creating service db-cluster_opensearch-dashboards</span><br><span class="line">Creating service db-cluster_opensearch-data-node2</span><br></pre></td></tr></table></figure>
+<p>查看所有的任务(Task)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker stack ps &lt;集群名称&gt;</span></span><br><span class="line">docker stack ps db-cluster</span><br></pre></td></tr></table></figure>
+<p>输出信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ID             NAME                                  IMAGE                                           NODE       DESIRED STATE   CURRENT STATE           ERROR     PORTS</span><br><span class="line">j70p5arth4jl   db-cluster_opensearch-dashboards.1   opensearchproject/opensearch-dashboards:2.6.0   db-1   Running         Running 4 minutes ago             </span><br><span class="line">p9yu6h5yokyu   db-cluster_opensearch-data-node1.1   opensearchproject/opensearch:2.6.0              db-1   Running         Running 4 minutes ago             </span><br><span class="line">ad7o1clcr7wi   db-cluster_opensearch-data-node2.1   opensearchproject/opensearch:2.6.0              db-2   Running         Running 3 minutes ago             </span><br><span class="line">dikndljx5x2t   db-cluster_opensearch-data-node3.1   opensearchproject/opensearch:2.6.0              db-2   Running         Running 4 minutes ago </span><br></pre></td></tr></table></figure>
+<p>查看所有Service信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker stack services &lt;集群名称&gt;</span></span><br><span class="line">docker stack services db-cluster</span><br></pre></td></tr></table></figure>
+<p>输出信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ID             NAME                                MODE         REPLICAS   IMAGE                                           PORTS</span><br><span class="line">p6gzkh96c24r   db-cluster_opensearch-dashboards   replicated   1&#x2F;1        opensearchproject&#x2F;opensearch-dashboards:2.6.0   *:5601-&gt;5601&#x2F;tcp</span><br><span class="line">05pzy1h9lm0l   db-cluster_opensearch-data-node1   replicated   1&#x2F;1        opensearchproject&#x2F;opensearch:2.6.0              *:9200-&gt;9200&#x2F;tcp, *:9300-&gt;9300&#x2F;tcp, *:9600-&gt;9600&#x2F;tcp</span><br><span class="line">i9l86hr5ccnm   db-cluster_opensearch-data-node2   replicated   1&#x2F;1        opensearchproject&#x2F;opensearch:2.6.0              *:10200-&gt;9200&#x2F;tcp, *:10300-&gt;9300&#x2F;tcp, *:10600-&gt;9600&#x2F;tcp</span><br><span class="line">ybh9x23mgz9v   db-cluster_opensearch-data-node3   replicated   1&#x2F;1        opensearchproject&#x2F;opensearch:2.6.0              *:9400-&gt;9200&#x2F;tcp, *:9500-&gt;9300&#x2F;tcp, *:9800-&gt;9600&#x2F;tcp</span><br></pre></td></tr></table></figure>
+<p>最后确认下OpenSearch集群状态和OpenSearch节点状态。</p>
+<p>前面9200部署给了主机<code>192.168.1.2</code>,因此访问<code>http://192.168.1.2:9200/_cluster/health?pretty</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;cluster_name&quot;</span>: <span class="string">&quot;db-cluster&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;status&quot;</span>: <span class="string">&quot;green&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;timed_out&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">&quot;number_of_nodes&quot;</span>: <span class="number">3</span>,</span><br><span class="line">  <span class="attr">&quot;number_of_data_nodes&quot;</span>: <span class="number">3</span>,</span><br><span class="line">  <span class="attr">&quot;discovered_master&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;discovered_cluster_manager&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;active_primary_shards&quot;</span>: <span class="number">2</span>,</span><br><span class="line">  <span class="attr">&quot;active_shards&quot;</span>: <span class="number">5</span>,</span><br><span class="line">  <span class="attr">&quot;relocating_shards&quot;</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">&quot;initializing_shards&quot;</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">&quot;unassigned_shards&quot;</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">&quot;delayed_unassigned_shards&quot;</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">&quot;number_of_pending_tasks&quot;</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">&quot;number_of_in_flight_fetch&quot;</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">&quot;task_max_waiting_in_queue_millis&quot;</span>: <span class="number">0</span>,</span><br><span class="line">  <span class="attr">&quot;active_shards_percent_as_number&quot;</span>: <span class="number">100.0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>节点信息访问<code>http://192.168.1.2:9200/_cat/nodes?v</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ip        heap.percent ram.percent cpu load_1m load_5m load_15m node.role node.roles         cluster_manager name</span><br><span class="line">10.0.4.10            6          95   4    1.71    1.26     0.69 dim       data,ingest,master -               opensearch-data-node2</span><br><span class="line">10.0.4.2             7          95   4    1.71    1.26     0.69 dim       data,ingest,master *               opensearch-data-node3</span><br><span class="line">10.0.4.5             3          76   4    0.06    0.09     0.09 dim       data,ingest,master -               opensearch-data-node1</span><br></pre></td></tr></table></figure>
+<p>可以看到集群状态为绿色，显示拥有3个节点，同时<code>opensearch-data-node3</code>被选为了集群的Master节点</p>
+<p><strong>大功告成！</strong></p>
+<h4 id="2-1-3-集群删除"><a href="#2-1-3-集群删除" class="headerlink" title="2.1.3 集群删除"></a>2.1.3 集群删除</h4><p>集群删除时涉及Service、网络、数据卷(Volume)的删除。</p>
+<p>Service 可执行如下命令来删除集群以及集群下的所有服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stack rm db-cluster</span><br></pre></td></tr></table></figure>
+
+
+<p>因为网络是单独创建的，没有通过compose文件，因此需要手动删除，在<code>192.168.1.2</code>和<code>192.168.1.3</code>两台主机分别执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network rm db-cluster</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如果在compose里面创建网络，在删除Service时会同步删除该网络。</p>
+</blockquote>
+<p>数据卷在<code>192.168.1.2</code>和<code>192.168.1.3</code>两台主机中，需要根据Service部署的情况，在对应主机删除对应的volume，执行命令为</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker volume rm db-cluster_opensearch-node1-data</span><br><span class="line">docker volume rm db-cluster_opensearch-node2-data</span><br><span class="line">docker volume rm db-cluster_opensearch-node3-data</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2-2-本章概念解释"><a href="#2-2-本章概念解释" class="headerlink" title="2.2 本章概念解释"></a>2.2 本章概念解释</h3><h4 id="2-2-1-Swarm中的worker和manager角色"><a href="#2-2-1-Swarm中的worker和manager角色" class="headerlink" title="2.2.1 Swarm中的worker和manager角色"></a>2.2.1 Swarm中的worker和manager角色</h4><p><strong>Manager节点</strong>还执行维护集群所需状态所需的编排和集群管理功能。Manager节点会选择一个领导者Leader来执行编排任务。</p>
+<p><strong>Worker节点</strong>接收并执行从Manager节点分派的任务。默认情况下，Manager节点也将服务作为Worker节点运行，但您可以将它们配置为专门运行Manager任务并成为仅Manager节点（manager-only nodes）。Agent在每个工作节点上运行并报告分配给它的任务。工作节点将其分配任务的当前状态通知Manager节点，以便Manager节点可以维护每个Worker节点的所需状态。</p>
+<p>如果要查看manager角色token或者manager角色 token遗忘时，可执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker swarm join-token manager</span><br></pre></td></tr></table></figure>
+<p>如果忘记worker角色token可执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker swarm join-token worker</span><br></pre></td></tr></table></figure>
+<p>如果节点以worker角色加入，想提升worker角色为manager角色的话，可以在管理节点执行如下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker node promote &lt;hostname&gt;</span></span><br><span class="line">docker node promote db-2</span><br></pre></td></tr></table></figure>
+<p>如果节点以manager角色加入，移除该节点时必须将其降级为worker角色，可以在管理节点执行如下命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> docker node demote &lt;hostname&gt;</span></span><br><span class="line">docker node demote db-2</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-2-常用命令"><a href="#2-2-2-常用命令" class="headerlink" title="2.2.2 常用命令"></a>2.2.2 常用命令</h4><p>Docker 网络</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看docker网络列表</span></span><br><span class="line">docker network ls</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除docker网络</span></span><br><span class="line">docker network rm db-cluster</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看网络详情</span></span><br><span class="line">docker inspect db-cluster</span><br></pre></td></tr></table></figure>
+<p>Docker Volume存储卷</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看volume列表</span></span><br><span class="line">docker volume ls</span><br><span class="line"><span class="meta">#</span><span class="bash"> 删除volume卷</span></span><br><span class="line">docker volume rm db-cluster_opensearch-node2-data</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="2-2-3-引用"><a href="#2-2-3-引用" class="headerlink" title="2.2.3 引用"></a>2.2.3 引用</h4><blockquote>
+<p>docker swarm 关键概念: <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/swarm/key-concepts/">https://docs.docker.com/engine/swarm/key-concepts/</a></p>
+<p>docker swarm 初始化: <a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/commandline/swarm_init/">https://docs.docker.com/engine/reference/commandline/swarm_init/</a></p>
+<p>ElasticSearch 网络: <a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.10/modules-network.html">https://www.elastic.co/guide/en/elasticsearch/reference/7.10/modules-network.html</a></p>
+</blockquote>
+<h2 id="3-致谢"><a href="#3-致谢" class="headerlink" title="3.致谢"></a>3.致谢</h2><p>特别感谢提供各类教程和文档的站点以及协助排查问题的朋友，尤其是 @x 7% 在关键坑publish_host提供了有效思路和相关文档链接。</p>
+<blockquote>
+<p>OpenSearch 官方 </p>
+<p><a target="_blank" rel="noopener" href="https://opensearch.org/docs/2.6/tuning-your-cluster/cluster/">Creating a cluster - OpenSearch documentation</a></p>
+<p><a target="_blank" rel="noopener" href="https://opensearch.org/docs/2.6/">https://opensearch.org/docs/2.6/</a></p>
+<p><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/opensearch-project/documentation-website/2.6/assets/examples/docker-compose.yml">https://raw.githubusercontent.com/opensearch-project/documentation-website/2.6/assets/examples/docker-compose.yml</a></p>
+<p>ElasticSearch 官方</p>
+<p><a target="_blank" rel="noopener" href="https://www.elastic.co/guide/en/elasticsearch/reference/7.10/index.html">https://www.elastic.co/guide/en/elasticsearch/reference/7.10/index.html</a></p>
+<p>Elastic开源社区</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wlei0618/article/details/127371710">https://blog.csdn.net/wlei0618/article/details/127371710</a></p>
+<p>面圈网</p>
+<p><a target="_blank" rel="noopener" href="https://www.mianshigee.com/tutorial/ELKstack-guide-cn/elasticsearch-principle-readme.md">架构原理-ELK Stack 中文指南-面试哥 (mianshigee.com)</a></p>
+<p>OpenAI ChatGpt3.5 &amp; 4</p>
+</blockquote>
+
+    </div>
+    
+    <div class="footer clearfix">
+        <div class="tags float-left">
+            
+                <span>标签</span>
+                
+                <a href="/tags/OpenSearch" rel="tag">OpenSearch</a>
+                
+                <a href="/tags/Cluster" rel="tag">Cluster</a>
+                
+                <a href="/tags/DockerSwarm" rel="tag">DockerSwarm</a>
+                
+            
+        </div>
+        <div class="tool float-right d-none d-lg-block">
+            <div data-toggle="tooltip" data-html="true"
+                 data-original-title="最后更新：2024年01月12日">
+                <span>最后更新：2024年01月12日</span>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="comments" id="comments">
+    
+    <h3 class="title">文章评论</h3>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    (function () {
+        var disqus_config = function () {
+            this.page.url = 'https://war9.cn/2024/01/12/OpenSearch%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/';
+            this.page.identifier = '2024/01/12/OpenSearch集群部署/';
+            this.page.title = 'OpenSearch集群部署';
+        };
+        var d = document,
+            s = d.createElement('script');
+        s.async = true;
+
+        s.src = 'https://Uncl3N1n3.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+
+</script>
+
+    <script id="dsq-count-scr" src="https://Uncl3N1n3.disqus.com/count.js" async></script>
+
+
+</div>
+            </div>
+            <div class="col-lg-4 sidebar d-none d-lg-block">
+                
+    
+        
+
+        
+            <div class="widget w-about">
+    <div class="background"
+         style="background:url(/img/about-background.png) no-repeat center center;-webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div>
+    <div class="wrapper text-center">
+        <img src="/img/avatar.jpg">
+    </div>
+    <div class="textwidget text-center"><p class="username">小九</p>
+        <p class="about">Just For Fun</p></div>
+</div>
+        
+    
+        
+
+        
+            
+    <div class="widget widget_toc">
+        <div class="title">
+            <i class="fas fa-book"> </i>
+            文章大纲
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#OpenSearch%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2"><span class="toc-text">OpenSearch集群部署</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="toc-text">1.概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%9C%AC%E7%AB%A0%E6%A6%82%E5%BF%B5%E8%A7%A3%E9%87%8A%E5%8F%8A%E5%8F%82%E8%80%83%E5%BC%95%E7%94%A8"><span class="toc-text">1.1 .本章概念解释及参考引用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-Master-Node-Master-eligible-node%E6%A6%82%E5%BF%B5%E5%8F%8A%E5%8C%BA%E5%88%AB"><span class="toc-text">1.1.1 Master Node&#x2F;Master-eligible node概念及区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-%E5%BC%95%E7%94%A8"><span class="toc-text">1.1.2 引用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2"><span class="toc-text">2.安装部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Docker-Swarm%E8%B7%A8%E4%B8%BB%E6%9C%BA%E9%83%A8%E7%BD%B2"><span class="toc-text">2.1 Docker Swarm跨主机部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="toc-text">2.1.1 修改主机名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-2-%E5%88%9B%E5%BB%BASwarm%E9%9B%86%E7%BE%A4"><span class="toc-text">2.1.2 创建Swarm集群</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E5%9C%A8%E4%B8%BB%E6%9C%BA192-168-1-2%E5%88%9B%E5%BB%BAswarm%E7%AE%A1%E7%90%86%E8%8A%82%E7%82%B9"><span class="toc-text">1.在主机192.168.1.2创建swarm管理节点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E5%9C%A8%E4%B8%BB%E6%9C%BA192-168-1-3%E4%B8%AD%E6%89%A7%E8%A1%8Cdocker-swarm-join-%E5%8A%A0%E5%85%A5swarm%E9%9B%86%E7%BE%A4%E3%80%82"><span class="toc-text">2.在主机192.168.1.3中执行docker swarm join 加入swarm集群。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E4%B8%BA%E8%8A%82%E7%82%B9%E5%A2%9E%E5%8A%A0%E6%A0%87%E7%AD%BE"><span class="toc-text">3.为节点增加标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-%E5%88%9B%E5%BB%BASwarm-Overlay%E7%BD%91%E7%BB%9C"><span class="toc-text">4.创建Swarm Overlay网络</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-%E7%BC%96%E5%86%99%E9%83%A8%E7%BD%B2compose%E6%96%87%E4%BB%B6"><span class="toc-text">5.编写部署compose文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#6-%E7%BC%96%E5%86%99%E6%AF%8F%E4%B8%AA%E8%8A%82%E7%82%B9%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="toc-text">6.编写每个节点的配置文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#7-%E9%9B%86%E7%BE%A4%E5%90%AF%E5%8A%A8%E3%80%81%E6%9F%A5%E7%9C%8B"><span class="toc-text">7.集群启动、查看</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-3-%E9%9B%86%E7%BE%A4%E5%88%A0%E9%99%A4"><span class="toc-text">2.1.3 集群删除</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%9C%AC%E7%AB%A0%E6%A6%82%E5%BF%B5%E8%A7%A3%E9%87%8A"><span class="toc-text">2.2 本章概念解释</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-Swarm%E4%B8%AD%E7%9A%84worker%E5%92%8Cmanager%E8%A7%92%E8%89%B2"><span class="toc-text">2.2.1 Swarm中的worker和manager角色</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">2.2.2 常用命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-%E5%BC%95%E7%94%A8"><span class="toc-text">2.2.3 引用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%87%B4%E8%B0%A2"><span class="toc-text">3.致谢</span></a></li></ol></li></ol>
+    </div>
+
+
+        
+    
+        
+
+        
+            
+
+<div class="widget w-search">
+    <div class="item" id="search-form">
+        <div id="result-mask" class="hide"></div>
+        
+        <div class="input-group mt-2 mb-2">
+            <input id="search-key" class="form-control" type="search" autocomplete="off" placeholder="搜点什么呢?">
+            <div class="input-group-append">
+                <button type="button" class="btn btn-primary btn-search" id="search-local">搜索</button>
+            </div>
+        </div>
+        
+    </div>
+    <div id="result-wrap" class="hide">
+        <div id="search-result" class="search-result"></div>
+    </div>
+    <div class="hide">
+        <template id="search-tpl">
+            <div class="item">
+                <a href="/{path}" title="{title}">
+                    <div class="title">{title}</div>
+                    <div class="content">{content}</div>
+                </a>
+            </div>
+        </template>
+    </div>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget widget_categories">
+    <div class="title">
+        <i class="fas fa-book"> </i>
+        分类目录
+    </div>
+    <ul>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/">编程开发</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/Yii2/">Yii2</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/myspace/">随笔</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/resources/">工具资源</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/Django/">Django</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/security/">信息安全</a>
+        </li>
+        
+        <li class="cat-item cat-item-index"><a
+                    href="/categories/develop/">develop</a>
+        </li>
+        
+    </ul>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget w-tags">
+    <div class="title">
+        <i class="fas fa-cloud" id="tags_switch"> </i>
+        标签聚合
+<!--        <div class="tags-random"><i class="fas fa-sync" id="change_tags"> 换一批</i> </div>-->
+    </div>
+    <div class="item">
+        
+        
+        
+            
+                <a href="/tags/widget/">widget</a>
+            
+                <a href="/tags/mysql-es/">mysql+es</a>
+            
+                <a href="/tags/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">单元测试</a>
+            
+                <a href="/tags/jsdelivr/">jsdelivr</a>
+            
+                <a href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91OSS/">阿里云OSS</a>
+            
+                <a href="/tags/Django/">Django</a>
+            
+        
+    </div>
+</div>
+
+        
+    
+        
+
+        
+            
+<div class="widget w-recommended">
+    <div class="nav nav-tabs d-none d-xl-flex" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-random-tab" data-toggle="tab" href="#nav-random" role="tab"
+           aria-controls="nav-random" aria-selected="true"><i class="kicon i-tabrandom"></i>随机</a>
+        <a class="nav-item nav-link " id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab"
+           aria-controls="nav-new" aria-selected="false"><i class="kicon i-tabnew"></i>最新</a>
+        
+        <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab"
+           aria-controls="nav-hot" aria-selected="false"><i class="kicon i-tabhot"></i>热点</a>
+        
+    </div>
+    <div class="nav nav-tabs d-xl-none" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-random-tab" data-toggle="tab" href="#nav-random" role="tab"
+           aria-controls="nav-random" aria-selected="true">随机</a>
+        <a class="nav-item nav-link " id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab"
+           aria-controls="nav-new" aria-selected="false">最新</a>
+        
+        <a class="nav-item nav-link" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab"
+           aria-controls="nav-hot" aria-selected="false">热点</a>
+        
+    </div>
+    <div class="tab-content" id="nav-tabContent">
+        
+        <div class="tab-pane fade show active" id="nav-random" role="tabpanel" aria-labelledby="nav-random-tab">
+            
+
+
+
+    
+    
+        <a class="bookmark-item" title="DNSRebind攻击"
+           href="/2022/02/23/DNSRebind%E6%94%BB%E5%87%BB/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> DNSRebind攻击</a>
+    
+        <a class="bookmark-item" title="Django安装部署"
+           href="/2018/02/12/Django-MariaDB-Install/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Django安装部署</a>
+    
+        <a class="bookmark-item" title="Yii2 Event事件-初识"
+           href="/2018/01/09/Yii2-Event%E4%BA%8B%E4%BB%B6-%E5%88%9D%E8%AF%86/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Yii2 Event事件-初识</a>
+    
+        <a class="bookmark-item" title="MySQL数据同步到ElasticSearch(Logstash方案)爬坑纪实"
+           href="/2021/08/11/MySQL%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%88%B0ElasticSearch-Logstash%E6%96%B9%E6%A1%88-%E7%88%AC%E5%9D%91%E7%BA%AA%E5%AE%9E/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> MySQL数据同步到ElasticSearch(Logstash方案)爬坑纪实</a>
+    
+        <a class="bookmark-item" title="记一次普通的渗透测试"
+           href="/2021/01/18/%E8%AE%B0%E4%B8%80%E6%AC%A1%E6%99%AE%E9%80%9A%E7%9A%84%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 记一次普通的渗透测试</a>
+    
+        <a class="bookmark-item" title="Hexo加速"
+           href="/2021/02/18/Hexo%E5%8A%A0%E9%80%9F/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> Hexo加速</a>
+    
+
+        </div>
+        <div class="tab-pane fade" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
+            
+    
+        
+        <a class="bookmark-item" title="OpenSearch集群部署"
+           href="/2024/01/12/OpenSearch%E9%9B%86%E7%BE%A4%E9%83%A8%E7%BD%B2/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> OpenSearch集群部署</a>
+        
+    
+        
+        <a class="bookmark-item" title="DNSRebind攻击"
+           href="/2022/02/23/DNSRebind%E6%94%BB%E5%87%BB/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> DNSRebind攻击</a>
+        
+    
+        
+        <a class="bookmark-item" title="MySQL数据同步到ElasticSearch(Logstash方案)爬坑纪实"
+           href="/2021/08/11/MySQL%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5%E5%88%B0ElasticSearch-Logstash%E6%96%B9%E6%A1%88-%E7%88%AC%E5%9D%91%E7%BA%AA%E5%AE%9E/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> MySQL数据同步到ElasticSearch(Logstash方案)爬坑纪实</a>
+        
+    
+        
+        <a class="bookmark-item" title="自动化编排学习（一）部署篇"
+           href="/2021/06/07/%E8%87%AA%E5%8A%A8%E5%8C%96%E7%BC%96%E6%8E%92%E5%AD%A6%E4%B9%A0%E9%83%A8%E7%BD%B2%E7%AF%87/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 自动化编排学习（一）部署篇</a>
+        
+    
+        
+        <a class="bookmark-item" title="常见容器漏洞总结"
+           href="/2021/05/07/%E5%B8%B8%E8%A7%81%E5%AE%B9%E5%99%A8%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 常见容器漏洞总结</a>
+        
+    
+        
+        <a class="bookmark-item" title="免费CDN加速手把手教程"
+           href="/2021/03/06/%E5%85%8D%E8%B4%B9CDN%E5%8A%A0%E9%80%9F%E6%89%8B%E6%8A%8A%E6%89%8B%E6%95%99%E7%A8%8B/"
+           rel="bookmark"><i class="fas fa-pencil-alt"> </i> 免费CDN加速手把手教程</a>
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+
+
+        </div>
+        
+            <div class="tab-pane fade" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
+            </div>
+        
+    </div>
+</div>
+
+        
+    
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="k-footer">
+    <div class="f-toolbox">
+        <div class="gotop ">
+            <div class="gotop-btn">
+                <span class="kicon i-up"></span>
+            </div>
+        </div>
+        
+
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="social">
+                    
+                        
+                        
+                    
+                    <!--                    <?php-->
+                    <!--                    $social = array('s_sina', 's_bilibili', 's_coding', 's_gitee', 's_twitter', 's_telegram', 's_linkedin', 's_youtube', 's_github', 's_stackflow', 's_email');-->
+                    <!--                    foreach ($social as $social) {-->
+                    <!--                        if (kratos_option($social)) {-->
+                    <!--                            echo '<a target="_blank" rel="nofollow" href="' . kratos_option($social . '_url') . '"><i class="kicon i-' . str_replace("s_", "", $social) . '"></i></a>';-->
+                    <!--                    }-->
+                    <!--                    }-->
+                    <!--                    ?>-->
+                </p>
+                <p>
+                    COPYRIGHT © 2021 <a
+                            href="/">小九博客</a> ALL RIGHTS RESERVED.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+        <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-y/bootstrap/4.5.3/js/bootstrap.bundle.min.js"></script>
+    
+        <script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/layer/3.1.1/layer.min.js"></script>
+    
+        <script src="/js/kratos.min.js?ver=3.2.5"></script>
+    
+        <script src="/js/comments.min.js?ver=3.2.5"></script>
+    
+
+
+
+    <script src="/js/widgets/search.js"></script>
+
+
+    <script src="/js/widgets/tags.js"></script>
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+<script>
+    var hotest = []
+    $(function(){
+        var firebaseConfig = {
+            apiKey: "AIzaSyDNd2Yn4CxzvywabcXbRCnAnHxlqqjcZRY",
+            authDomain: "blog-93530.firebaseapp.com",
+            projectId: "blog-93530",
+            storageBucket: "blog-93530.appspot.com",
+            messagingSenderId: "11551113906",
+            appId: "1:11551113906:web:0a298c6ecf2e73d15dbfab",
+            measurementId: "G-HEYJLNQ883"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        function initHotest(articles){
+            articles.orderBy("count","desc").limit(6).get().then(function(items){
+                items.forEach(function(doc){
+                    $("#nav-hot").append(
+                        "        <a class=\"bookmark-item\" title=\""+doc.id+"\"\n" +
+                        "           href=\"/"+doc.data().path+"\"\n" +
+                        "           rel=\"bookmark\"><i class=\"fas fa-pencil-alt\"> </i> "+doc.id+"</a>"
+                    )
+                })
+            })
+        }
+        function getCount(doc, increaseCount, url_path) {
+            //increaseCount will be false when not in article page
+            return doc.get().then(function (d) {
+                var count
+                if (!d.exists) { //has no data, initialize count
+                    if (increaseCount) {
+                        if (url_path) {
+                            doc.set({
+                                count: 1,
+                                path: url_path
+                            })
+                        }else{
+                            doc.set({
+                                count: 1
+                            })
+                        }
+                        count = 1
+                    }
+                    else {
+                        count = 0
+                    }
+                }
+                else { //has data
+                    count = d.data().count
+                    if (increaseCount) {
+                        if (!(window.localStorage && window.localStorage.getItem(title))) { //if first view this article
+                            if (url_path) {
+                                doc.set({
+                                    count: count + 1,
+                                    path: url_path
+                                })
+                            }else{
+                                doc.set({
+                                    count: count + 1
+                                })
+                            }
+                            count++
+                        }
+                    }
+                }
+                if (window.localStorage && increaseCount) { //mark as visited
+                    localStorage.setItem(title, true)
+                }
+
+                return count
+            })
+        }
+
+        function appendCountTo(el) {
+            return function (count) {
+                $(el).append(
+                    $('<span>').addClass('post-visitors-count').append(
+
+                    ).append(
+                        $('<span>').addClass('post-meta-item-icon').append(
+                            $('<i>').addClass('kicon i-hot')
+                        )
+                    ).append($('<span>').text(count + '点热度'))
+                )
+            }
+        }
+        var db = firebase.firestore()
+        var articles = db.collection('articles')
+
+        initHotest(articles)
+
+        //https://hexo.io/zh-tw/docs/variables.html
+        var isPost = 'OpenSearch集群部署'.length > 0
+        var isArchive = 'false' === 'true'
+        var isCategory = 'false' === 'true'
+        var isTag = 'false' === 'true'
+        if (isPost) { //is article page
+            var title = 'OpenSearch集群部署'
+            var path = '2024/01/12/OpenSearch集群部署/'
+            var doc = articles.doc(title)
+            getCount(doc, true,path).then(appendCountTo($('.post-meta')))
+        } else { //is index page
+            var titles = []; //array to titles
+            
+            var promises = titles.map(function (title) {
+                return articles.doc(title)
+            }).map(function (doc) {
+                return getCount(doc)
+            })
+            Promise.all(promises).then(function (counts) {
+                var metas = $('.post-meta')
+                counts.forEach(function (val, idx) {
+                    appendCountTo(metas[idx])(val)
+                })
+            })
+        }
+    })
+</script>
+
+</body>
+
+</html>
